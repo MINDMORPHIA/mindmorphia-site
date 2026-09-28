@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMorphia — Ideias em transformação</title>
+
+  <meta name="description" content="MindMorphia é um estúdio de imaginação aplicada que combina direção artística, tecnologia e inteligência artificial para transformar ideias em experiências, narrativas e possibilidades.">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="MindMorphia — Ideias em transformação">
+  <meta property="og:description" content="Um território criativo onde direção artística, tecnologia e inteligência artificial se encontram para dar forma ao que ainda não existe.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MindMorphia — Ideias em transformação">
+  <meta name="twitter:description" content="Ideias em transformação. Direção artística, tecnologia e inteligência artificial em movimento.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+  <link rel="icon" type="image/png" id="favicon-link" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAAZUlEQVR42u3PMQ0AAAgEsOMfGwe/wA4akLSq9jU8AQIECAgQIECAgAABAgQIECAgQIAAAQIECAgQIECAAAECBAgQIEBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAp8tcqK3g91g57EAAAAASUVORK5CYII=">
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --bg-cream: #F2EEE6;
+      --text-cream: #1A1A1A;
+      --text-cream-muted: #5A5A5A;
+      --border-cream: rgba(0, 0, 0, 0.12);
+      --accent: #D4FF45;
+      --accent-contrast: #0A0A0A;
+      --accent-text: #D4FF45;
+      --lilac: #b794f6;
+      --text: #F5F5F3;
+      --text-muted: #8E8E93;
+      --border: rgba(255, 255, 255, 0.1);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Tipografia de Apoio */
+    .serif {
+      font-family: var(--font-serif);
+    }
+    .serif-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+    }
+    .text-lilac {
+      color: var(--lilac);
+    }
+    .text-lime {
+      color: var(--accent);
+    }
+    .micro-caps {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Linhas Divisórias Ultrafinas */
+    .thin-divider {
+      border: 0;
+      height: 1px;
+      background: var(--border);
+      width: 100%;
+    }
+
+    /* CABEÇALHO FIXO */
+    .header-fixed {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+    }
+    .header-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+    .brand-word {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: #fff;
+    }
+    /* SÍMBOLO OFICIAL: Dois 'M' espelhados em silhueta de máscara/rosto, metal escovado cinza/prata, olhos violeta e fundo preto sólido */
+    .brand-symbol {
+      display: block;
+      object-fit: contain;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      image-rendering: auto;
+    }
+    .brand-symbol-header {
+      width: auto;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .brand-symbol-footer {
+      width: auto;
+      height: 56px;
+      flex-shrink: 0;
+    }
+    .brand-symbol-admin {
+      width: auto;
+      height: 160px;
+      margin: 0 auto;
+    }
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .nav-a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-a:hover {
+      color: #ffffff;
+    }
+    .btn-outline-header {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .btn-outline-header:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(212, 255, 69, 0.06);
+    }
+
+    @media (max-width: 480px) {
+      .header-fixed {
+        padding: 0.55rem 0.5rem;
+      }
+      .brand-group {
+        gap: 0.4rem;
+      }
+      .brand-word {
+        font-size: 0.82rem;
+      }
+      .nav-group {
+        gap: 0.45rem;
+      }
+      .nav-a {
+        font-size: 0.72rem;
+      }
+      .btn-outline-header {
+        font-size: 0.68rem;
+        padding: 0.35rem 0.65rem;
+      }
+    }
+
+    /* HERO */
+    .hero-sec {
+      position: relative;
+      padding: 4.5rem 1.25rem 2.5rem 1.25rem;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+      align-items: center;
+      min-height: 68vh;
+    }
+    .hero-micro {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .dot-lime-bullet {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      display: inline-block;
+    }
+    .hero-title {
+      font-size: clamp(2.6rem, 5.8vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.75rem;
+      color: #fff;
+    }
+    .hero-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2.25rem;
+    }
+    .btn-lime-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--accent);
+      color: #0A0A0A !important;
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 20px rgba(212, 255, 69, 0.25);
+    }
+    .btn-lime-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(212, 255, 69, 0.45);
+    }
+    .btn-lime-primary .arrow {
+      transition: transform 0.2s ease;
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+    .btn-lime-primary:hover .arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* ESFERA ORBITAL */
+    .orbital-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .orbital-float {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: orbitalFloat 6s ease-in-out infinite alternate;
+    }
+    @keyframes orbitalFloat {
+      0% { transform: translateY(-8px); }
+      100% { transform: translateY(8px); }
+    }
+    .central-core {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #e9d5ff 0%, #a855f7 35%, #6b21a8 70%, #1e0938 100%);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), inset -6px -6px 16px rgba(0,0,0,0.7), inset 4px 4px 10px rgba(255,255,255,0.4);
+      z-index: 2;
+    }
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .orbit-ring-1 {
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(183, 148, 246, 0.35);
+      transform: rotateX(68deg) rotateY(-22deg);
+      animation: spinRing 26s linear infinite;
+    }
+    .orbit-ring-2 {
+      width: 290px;
+      height: 290px;
+      border: 1px solid rgba(212, 255, 69, 0.3);
+      transform: rotateX(62deg) rotateY(38deg);
+      animation: spinRingRev 20s linear infinite;
+    }
+    .orbit-ring-3 {
+      width: 350px;
+      height: 350px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      transform: rotateX(75deg) rotateY(5deg);
+      animation: spinRing 32s linear infinite;
+    }
+    @keyframes spinRing {
+      from { transform: rotateX(68deg) rotateY(-22deg) rotate(0deg); }
+      to { transform: rotateX(68deg) rotateY(-22deg) rotate(360deg); }
+    }
+    @keyframes spinRingRev {
+      from { transform: rotateX(62deg) rotateY(38deg) rotate(0deg); }
+      to { transform: rotateX(62deg) rotateY(38deg) rotate(-360deg); }
+    }
+    .dot-orbit {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .dot-orbit-1 {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(212, 255, 69, 0.6);
+      top: -5px;
+      left: calc(50% - 5px);
+    }
+    .dot-orbit-2 {
+      width: 8px;
+      height: 8px;
+      background: #c084fc;
+      box-shadow: 0 0 12px #c084fc, 0 0 20px rgba(192, 132, 252, 0.6);
+      top: -4px;
+      left: calc(50% - 4px);
+    }
+    .dot-orbit-3 {
+      width: 6px;
+      height: 6px;
+      background: #ffffff;
+      box-shadow: 0 0 10px #ffffff;
+      bottom: -3px;
+      left: calc(50% - 3px);
+    }
+    .curved-svg-text {
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      pointer-events: none;
+      animation: textSpin 45s linear infinite;
+    }
+    @keyframes textSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Hero Base */
+    .hero-footer-bar {
+      margin-top: 3.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .hero-keywords-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 0;
+      margin-top: 1.5rem;
+      text-align: center;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .hero-keywords-bar span {
+      letter-spacing: 0.22em;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.65);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* SEÇÃO 01 / A IDEIA */
+    .section-dark {
+      padding: 7rem 1.25rem;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .idea-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+    }
+    .marginalia {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+    .marginalia-label {
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .marginalia-quote {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      border-left: 1px solid var(--border);
+      padding-left: 1rem;
+    }
+    .idea-headline {
+      font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+      line-height: 1.3;
+      margin-bottom: 3.5rem;
+      color: #F0F0EE;
+      font-weight: 400;
+    }
+    .idea-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .pillar-col {
+      padding: 2.25rem 1.75rem;
+      border-right: 1px solid var(--border);
+    }
+    .pillar-col:last-child {
+      border-right: none;
+    }
+    .pillar-num {
+      color: rgba(212, 255, 69, 0.85);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .pillar-title {
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.85rem;
+      color: #fff;
+    }
+    .pillar-text {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* SEÇÃO 02 / CAMPOS DE EXPLORAÇÃO (CREME INVERSÃO) */
+    .section-cream-wrap {
+      background-color: var(--bg-cream);
+      color: var(--text-cream);
+      padding: 7rem 1.25rem;
+      width: 100%;
+    }
+    .section-cream-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .cream-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-cream);
+      flex-wrap: wrap;
+    }
+    .cream-label {
+      color: #1a1a1a;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .cream-lead {
+      max-width: 480px;
+      text-align: right;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-cream-muted);
+      font-weight: 400;
+    }
+    .cream-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .cream-item {
+      padding: 2.75rem 2.5rem 2.75rem 0;
+      border-bottom: 1px solid var(--border-cream);
+    }
+    .cream-item:nth-child(even) {
+      padding-left: 2.5rem;
+      padding-right: 0;
+      border-left: 1px solid var(--border-cream);
+    }
+    .cream-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      color: #7a7a7a;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .cream-item-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      color: #121212;
+    }
+    .cream-item-desc {
+      font-size: 0.95rem;
+      color: var(--text-cream-muted);
+      line-height: 1.6;
+    }
+
+    /* SEÇÃO 03 / PRÓXIMO MOVIMENTO (CTA) */
+    .cta-sec {
+      padding: 7rem 1.25rem 4rem 1.25rem;
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .cta-label {
+      text-align: left;
+      color: var(--accent);
+      margin-bottom: 4rem;
+    }
+    .cta-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.18;
+      max-width: 860px;
+      margin: 0 auto 1.5rem auto;
+      color: #fff;
+    }
+    .cta-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--accent);
+    }
+    .cta-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2.75rem;
+      font-weight: 300;
+    }
+
+    /* SEÇÃO 04 / SUA SOLICITAÇÃO */
+    .solicitation-sec {
+      padding: 2rem 1.25rem 8rem 1.25rem;
+      max-width: 1240px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .solicitation-card {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .solicitation-label {
+      color: var(--accent);
+      margin-bottom: 2.5rem;
+    }
+    .form-step {
+      margin-bottom: 2.5rem;
+    }
+    .form-step-title {
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+    .chip-option {
+      position: relative;
+      cursor: pointer;
+    }
+    .chip-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .chip-capsule {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 1.15rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 400;
+      transition: all 0.22s ease;
+      user-select: none;
+    }
+    .chip-option:hover .chip-capsule {
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .chip-option input[type="radio"]:focus-visible + .chip-capsule {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .chip-option input[type="radio"]:checked + .chip-capsule {
+      background: var(--accent);
+      color: #0A0A0A;
+      border-color: var(--accent);
+      font-weight: 600;
+      box-shadow: 0 0 16px rgba(212, 255, 69, 0.3);
+    }
+    .chip-error-hint {
+      color: var(--lilac);
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    .chip-error-hint.visible {
+      display: block;
+    }
+
+    /* Campos Minimalistas */
+    .field-row {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .field-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      transition: color 0.2s ease;
+    }
+    .field-row:focus-within .field-label {
+      color: var(--accent);
+    }
+    .field-input,
+    .field-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      padding: 0.65rem 0;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .field-input:focus,
+    .field-textarea:focus {
+      border-bottom-color: var(--accent);
+      box-shadow: 0 1px 0 var(--accent);
+    }
+    .field-input::placeholder,
+    .field-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+      font-weight: 300;
+    }
+    .field-textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .field-error-msg {
+      font-size: 0.75rem;
+      color: var(--lilac);
+      margin-top: 0.35rem;
+      display: none;
+    }
+    .field-error-msg.visible {
+      display: block;
+    }
+    .field-row.has-error .field-input,
+    .field-row.has-error .field-textarea {
+      border-bottom-color: var(--lilac);
+    }
+    .char-counter {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 0.35rem;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.2s ease;
+    }
+    .char-counter.warning {
+      color: var(--lilac);
+    }
+    .char-counter.maxed {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .form-actions {
+      margin-top: 2.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .btn-submit-solicitation {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: var(--accent);
+      color: #0A0A0A !important;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.95rem 2.2rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 0 20px rgba(212, 255, 69, 0.25);
+      align-self: flex-start;
+    }
+    .btn-submit-solicitation:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(212, 255, 69, 0.45);
+    }
+    .btn-submit-solicitation:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-submit-solicitation .arrow {
+      transition: transform 0.2s ease;
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+    .btn-submit-solicitation:hover:not(:disabled) .arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* Mensagem de Erro de Envio */
+    .form-alert-error {
+      display: none;
+      border: 1px solid rgba(183, 148, 246, 0.35);
+      background: rgba(183, 148, 246, 0.08);
+      color: var(--lilac);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .form-alert-error a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .form-alert-error.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Bloco de Confirmação */
+    .confirmation-panel {
+      display: none;
+      padding: 3rem 2rem;
+      border: 1px solid rgba(212, 255, 69, 0.3);
+      border-radius: 16px;
+      background: rgba(212, 255, 69, 0.03);
+      text-align: center;
+    }
+    .confirmation-panel.visible {
+      display: block;
+      animation: fadeInConfirm 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInConfirm {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .confirmation-icon-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(212, 255, 69, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.75rem auto;
+      box-shadow: 0 0 25px rgba(212, 255, 69, 0.3);
+    }
+    .confirmation-title {
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      color: #ffffff;
+      font-weight: 400;
+      margin-bottom: 0.85rem;
+    }
+    .confirmation-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 2rem auto;
+    }
+    .btn-reset-form {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: color 0.2s ease;
+    }
+    .btn-reset-form:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 480px) {
+      .btn-submit-solicitation {
+        width: 100%;
+      }
+    }
+
+    /* RODAPÉ */
+    .footer-root {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 1.25rem 3rem 1.25rem;
+    }
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .footer-row-1 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding-bottom: 3rem;
+    }
+    .footer-phrase-center {
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .footer-phrase-right {
+      text-align: right;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .footer-row-2 {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer-links-group {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .footer-links-group a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-links-group a:hover {
+      color: var(--accent);
+    }
+
+
+    /* Animação suave de entrada */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-on-scroll.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        text-align: left;
+      }
+      .idea-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .marginalia {
+        position: static;
+      }
+      .idea-pillars-grid {
+        grid-template-columns: 1fr;
+      }
+      .pillar-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 2rem 0;
+      }
+      .pillar-col:last-child {
+        border-bottom: none;
+      }
+      .cream-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cream-lead {
+        text-align: left;
+      }
+      .cream-grid {
+        grid-template-columns: 1fr;
+      }
+      .cream-item {
+        padding: 2.25rem 0;
+      }
+      .cream-item:nth-child(even) {
+        padding-left: 0;
+        border-left: none;
+      }      .footer-row-1 {
+        grid-template-columns: 1fr;
+        text-align: left;
+        gap: 1.5rem;
+      }
+      .footer-phrase-center,
+      .footer-phrase-right {
+        text-align: left;
+      }
+      .footer-row-2 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
+
+  <!-- 0. CABEÇALHO FIXO -->
+  <header class="header-fixed">
+    <div class="header-container">
+      <a href="#essencia" class="brand-group" aria-label="mindmorphia página inicial">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAAZUlEQVR42u3PMQ0AAAgEsOMfGwe/wA4akLSq9jU8AQIECAgQIECAgAABAgQIECAgQIAAAQIECAgQIECAAAECBAgQIEBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAp8tcqK3g91g57EAAAAASUVORK5CYII=" alt="MindMorphia Emblema Oficial" class="brand-symbol brand-symbol-header">
+        <span class="brand-word">mindmorphia</span>
+      </a>
+
+      <nav class="nav-group" aria-label="Navegação editorial">
+        <a href="#essencia" class="nav-a">Essência</a>
+        <a href="#oquefazemos" class="nav-a">O que fazemos</a>
+        <a href="#solicitacao" class="btn-outline-header">Vamos conversar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. HERO (#essencia) -->
+    <section id="essencia" class="hero-sec">
+      <div class="hero-grid">
+        <!-- Coluna Esquerda -->
+        <div class="reveal-on-scroll">
+          <div class="hero-micro">
+            <span class="dot-lime-bullet" aria-hidden="true"></span>
+            <span class="micro-caps">Estúdio de Imaginação Aplicada</span>
+          </div>
+
+          <h1 class="hero-title">
+            Ideias em<br><em>transformação.</em>
+          </h1>
+
+          <p class="hero-desc">
+            Um território criativo onde direção artística, tecnologia e inteligência artificial se encontram para dar forma ao que ainda não existe.
+          </p>
+
+          <a href="#oquefazemos" class="btn-lime-primary">
+            <span>Explore o universo</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <!-- Coluna Direita: A ESFERA ORBITAL -->
+        <div class="reveal-on-scroll">
+          <div class="orbital-wrapper" aria-label="Composição orbital dinâmica da MindMorphia">
+            <div class="orbital-float">
+              <!-- SVG Curvo ao Redor: FORMA EM ESTADO DE MUDANÇA -->
+              <svg class="curved-svg-text" viewBox="0 0 400 400" aria-hidden="true">
+                <defs>
+                  <path id="textCirclePath" d="M 200, 200 m -175, 0 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" fill="none"/>
+                </defs>
+                <text fill="rgba(255, 255, 255, 0.45)" font-family="Playfair Display, Georgia, serif" font-style="italic" font-size="10.5" letter-spacing="3.5">
+                  <textPath href="#textCirclePath" startOffset="0%">
+                    FORMA EM ESTADO DE MUDANÇA • FORMA EM ESTADO DE MUDANÇA •
+                  </textPath>
+                </text>
+              </svg>
+
+              <!-- Três anéis elípticos finos com gradientes em inclinações diferentes -->
+              <div class="orbit-ring orbit-ring-1">
+                <!-- Esferinha de luz 1 (verde-limão) -->
+                <div class="dot-orbit dot-orbit-1"></div>
+              </div>
+              <div class="orbit-ring orbit-ring-2">
+                <!-- Esferinha de luz 2 (lilás violeta) -->
+                <div class="dot-orbit dot-orbit-2"></div>
+              </div>
+              <div class="orbit-ring orbit-ring-3">
+                <!-- Esferinha de luz 3 (branca) -->
+                <div class="dot-orbit dot-orbit-3"></div>
+              </div>
+
+              <!-- Esfera Central com gradiente radial roxo/violeta com rim light -->
+              <div class="central-core"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Base do Hero -->
+      <div class="hero-footer-bar">
+        <span class="micro-caps" style="color: rgba(255,255,255,0.7);">Curiosidade como ponto de partida</span>
+        <span class="serif-italic" style="color: var(--lilac); font-size: 0.95rem;">possibilidade nº 001</span>
+      </div>
+
+      <!-- Barra de Palavras-Chave -->
+      <div class="hero-keywords-bar">
+        <span>IMAGINAÇÃO &nbsp;*&nbsp; INTELIGÊNCIA ARTIFICIAL &nbsp;*&nbsp; NOVAS NARRATIVAS &nbsp;*&nbsp; POSSIBILIDADES</span>
+      </div>
+    </section>
+
+    <!-- 2. SEÇÃO 01 / A IDEIA (#oquefazemos) -->
+    <section id="oquefazemos" class="section-dark">
+      <div class="idea-layout">
+        <!-- Label lateral esquerda com nota marginal -->
+        <aside class="marginalia">
+          <div class="micro-caps marginalia-label">01 / A IDEIA</div>
+          <p class="marginalia-quote serif-italic">
+            “Não é sobre prever o futuro. É sobre experimentar formas de chegar até ele.”
+          </p>
+        </aside>
+
+        <!-- Bloco Principal -->
+        <div class="reveal-on-scroll">
+          <h2 class="serif idea-headline">
+            O MindMorphia transforma <span class="serif-italic text-lilac">curiosidade em linguagem</span> — e possibilidades em experiências que provocam um novo olhar.
+          </h2>
+
+          <div class="micro-caps" style="color: rgba(255, 255, 255, 0.5); margin-bottom: 1.5rem;">
+            Uma mente em movimento
+          </div>
+
+          <!-- Grid de Três Pilares -->
+          <div class="idea-pillars-grid">
+            <div class="pillar-col">
+              <div class="pillar-num">01 / Imaginar</div>
+              <h3 class="serif pillar-title">Começar pelo “e se?”</h3>
+              <p class="pillar-text">Exploramos ideias ainda sem forma, antes do óbvio.</p>
+            </div>
+
+            <div class="pillar-col">
+              <div class="pillar-num">02 / Experimentar</div>
+              <h3 class="serif pillar-title">Dar forma ao possível</h3>
+              <p class="pillar-text">Combinamos direção artística, tecnologia e IA em testes reais.</p>
+            </div>
+
+            <div class="pillar-col">
+              <div class="pillar-num">03 / Transformar</div>
+              <h3 class="serif pillar-title">Mudar o ponto de vista</h3>
+              <p class="pillar-text">Criamos conceitos e narrativas que provocam um novo olhar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SEÇÃO 02 / CAMPOS DE EXPLORAÇÃO (INVERSÃO: CREME / OFF-WHITE) -->
+    <section class="section-cream-wrap">
+      <div class="section-cream-inner reveal-on-scroll">
+        <!-- Topo da Seção Creme -->
+        <div class="cream-header">
+          <div class="cream-label">02 / CAMPOS DE EXPLORAÇÃO</div>
+          <div class="cream-lead">
+            Uma prática criativa interdisciplinar, guiada pela pergunta certa — não por uma fórmula pronta.
+          </div>
+        </div>
+
+        <!-- Grid de Seis Itens Numerados em 2 Colunas -->
+        <div class="cream-grid">
+          <!-- 01 -->
+          <div class="cream-item">
+            <div class="cream-num">01</div>
+            <h3 class="serif cream-item-title">Direção artística</h3>
+            <p class="cream-item-desc">Conceito, estética e identidade visual para marcas e projetos.</p>
+          </div>
+
+          <!-- 02 -->
+          <div class="cream-item">
+            <div class="cream-num">02</div>
+            <h3 class="serif cream-item-title">Inteligência artificial</h3>
+            <p class="cream-item-desc">Exploração criativa de IA como material de trabalho, não como atalho.</p>
+          </div>
+
+          <!-- 03 -->
+          <div class="cream-item">
+            <div class="cream-num">03</div>
+            <h3 class="serif cream-item-title">Novas narrativas</h3>
+            <p class="cream-item-desc">Histórias e formatos que ainda não existem — e que podem existir.</p>
+          </div>
+
+          <!-- 04 -->
+          <div class="cream-item">
+            <div class="cream-num">04</div>
+            <h3 class="serif cream-item-title">Design experimental</h3>
+            <p class="cream-item-desc">Interfaces, objetos e experiências que testam o limite do usual.</p>
+          </div>
+
+          <!-- 05 -->
+          <div class="cream-item">
+            <div class="cream-num">05</div>
+            <h3 class="serif cream-item-title">Experiências digitais</h3>
+            <p class="cream-item-desc">Presenças e universos digitais com assinatura própria.</p>
+          </div>
+
+          <!-- 06 -->
+          <div class="cream-item">
+            <div class="cream-num">06</div>
+            <h3 class="serif cream-item-title">Projetos autorais</h3>
+            <p class="cream-item-desc">Pesquisas visuais e estudos internos que alimentam tudo o mais.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SEÇÃO 03 / PRÓXIMO MOVIMENTO (#vamosconversar) -->
+    <section id="vamosconversar" class="cta-sec">
+      <div class="micro-caps cta-label">03 / PRÓXIMO MOVIMENTO</div>
+
+      <div class="reveal-on-scroll">
+        <h2 class="serif cta-title">
+          Uma boa ideia pode começar com <em>uma conversa.</em>
+        </h2>
+
+        <p class="cta-sub">
+          Tem um projeto, uma pergunta ou uma possibilidade rondando por aí?
+        </p>
+
+        <a href="#solicitacao" class="btn-lime-primary">
+          <span>Vamos conversar</span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. SEÇÃO 04 / SUA SOLICITAÇÃO (#solicitacao) -->
+    <section id="solicitacao" class="solicitation-sec">
+      <div class="solicitation-card reveal-on-scroll">
+        <div class="micro-caps solicitation-label">04 / SUA SOLICITAÇÃO</div>
+
+        <!-- FORMULÁRIO -->
+        <form id="solicitation-form" novalidate>
+          <!-- PASSO 1: O que você quer solicitar? -->
+          <div class="form-step">
+            <div class="form-step-title">
+              <span>Passo 1</span>
+              <span>—</span>
+              <span>O que você quer solicitar?</span>
+            </div>
+
+            <div class="chips-group" role="radiogroup" aria-label="Tipo de solicitação">
+              <label class="chip-option">
+                <input type="radio" name="tipo_solicitacao" value="Um projeto">
+                <span class="chip-capsule">Um projeto</span>
+              </label>
+
+              <label class="chip-option">
+                <input type="radio" name="tipo_solicitacao" value="Uma parceria">
+                <span class="chip-capsule">Uma parceria</span>
+              </label>
+
+              <label class="chip-option">
+                <input type="radio" name="tipo_solicitacao" value="Uma pergunta">
+                <span class="chip-capsule">Uma pergunta</span>
+              </label>
+
+              <label class="chip-option">
+                <input type="radio" name="tipo_solicitacao" value="Uma possibilidade">
+                <span class="chip-capsule">Uma possibilidade</span>
+              </label>
+            </div>
+            <div id="tipo-error" class="chip-error-hint">Por favor, selecione uma das opções acima.</div>
+          </div>
+
+          <!-- PASSO 2: Dados do Contato e Detalhes -->
+          <div class="form-step">
+            <div class="form-step-title" style="margin-bottom: 1.5rem;">
+              <span>Passo 2</span>
+              <span>—</span>
+              <span>Seus dados e mensagem</span>
+            </div>
+
+            <!-- Seu Nome -->
+            <div class="field-row" id="group-nome">
+              <label for="campo-nome" class="field-label">Seu nome</label>
+              <input type="text" id="campo-nome" name="nome" class="field-input" placeholder="Como prefere ser chamado?" required autocomplete="name" maxlength="120">
+              <div class="field-error-msg" id="nome-error">Por favor, informe seu nome.</div>
+            </div>
+
+            <!-- Seu E-mail -->
+            <div class="field-row" id="group-email">
+              <label for="campo-email" class="field-label">Seu e-mail</label>
+              <input type="email" id="campo-email" name="email" class="field-input" placeholder="exemplo@dominio.com" required autocomplete="email" maxlength="120">
+              <div class="field-error-msg" id="email-error">Por favor, informe um e-mail válido.</div>
+            </div>
+
+            <!-- Seu WhatsApp -->
+            <div class="field-row" id="group-whatsapp">
+              <label for="campo-whatsapp" class="field-label">Seu WhatsApp</label>
+              <input type="tel" id="campo-whatsapp" name="whatsapp" class="field-input" placeholder="(XX) XXXXX-XXXX" required autocomplete="tel" maxlength="20">
+              <div class="field-error-msg" id="whatsapp-error">Por favor, informe seu WhatsApp com DDD.</div>
+            </div>
+
+            <!-- O que você quer -->
+            <div class="field-row" id="group-mensagem">
+              <label for="campo-mensagem" class="field-label">O que você quer</label>
+              <textarea id="campo-mensagem" name="mensagem" class="field-textarea" placeholder="Compartilhe o contexto, sua dúvida ou ideia..." maxlength="1000" required></textarea>
+              <div id="mensagem-counter" class="char-counter" aria-live="polite">0 / 1000</div>
+              <div class="field-error-msg" id="mensagem-error">Por favor, descreva sua solicitação.</div>
+            </div>
+          </div>
+
+          <!-- Alerta de Erro de Envio -->
+          <div id="form-error-alert" class="form-alert-error" role="alert">
+            Não foi possível enviar agora. Verifique sua conexão e tente novamente — ou fale conosco pelo Instagram <a href="https://www.instagram.com/mindmorphia_" target="_blank" rel="noopener noreferrer">@mindmorphia_</a>.
+            <div id="form-error-hint" style="margin-top: 0.45rem; font-size: 0.82rem; display: none;">Dica: textos muito longos podem falhar no envio — tente resumir sua mensagem.</div>
+          </div>
+
+          <!-- PASSO 3: Botão de Envio -->
+          <div class="form-actions">
+            <button type="submit" id="btn-submit" class="btn-submit-solicitation">
+              <span id="btn-submit-label">Enviar solicitação</span>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- BLOCO DE CONFIRMAÇÃO COM SINALIZAÇÃO VERDE -->
+        <div id="confirmation-block" class="confirmation-panel" role="region" aria-live="polite">
+          <div class="confirmation-icon-circle" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+
+          <h3 class="serif confirmation-title">Solicitação enviada com sucesso.</h3>
+
+          <p class="confirmation-desc">
+            Recebemos o seu pedido. Vamos analisar e entrar em contato pelo WhatsApp ou e-mail que você informou, em breve.
+          </p>
+
+          <button type="button" id="btn-reset-solicitation" class="btn-reset-form">
+            Enviar outra solicitação
+          </button>
+        </div>
+      </div>
+    </section>
+</main>
+
+  <!-- 5. RODAPÉ -->
+  <footer class="footer-root">
+    <div class="footer-container">
+      <!-- Fileira 1 -->
+      <div class="footer-row-1">
+        <a href="#essencia" class="brand-group" aria-label="mindmorphia rodapé">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAAZUlEQVR42u3PMQ0AAAgEsOMfGwe/wA4akLSq9jU8AQIECAgQIECAgAABAgQIECAgQIAAAQIECAgQIECAAAECBAgQIEBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAp8tcqK3g91g57EAAAAASUVORK5CYII=" alt="MindMorphia Emblema Oficial" class="brand-symbol brand-symbol-footer">
+          <span class="brand-word">mindmorphia</span>
+        </a>
+
+        <div class="footer-phrase-center">
+          Ideias em transformação.
+        </div>
+
+        <div class="footer-phrase-right serif">
+          Uma marca para quem ainda pergunta “e se?”.
+        </div>
+      </div>
+
+      <!-- Fileira 2 -->
+      <div class="footer-row-2">
+        <div class="footer-links-group">
+          <a href="https://www.instagram.com/mindmorphia_" target="_blank" rel="noopener noreferrer">
+            Instagram da MindMorphia ↗
+          </a>
+          <a href="https://www.gruposauvid.com.br/#inicio" target="_blank" rel="noopener noreferrer">
+            Grupo SV ↗
+          </a>
+        </div>
+
+        <div>
+          MindMorphia faz parte do Grupo SV
+        </div>
+
+        <div>
+          © 2026 MindMorphia
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /**
+     * CONFIGURAÇÃO DO FORMULÁRIO
+     * Conectado ao serviço FormSubmit para envio direto por e-mail.
+     */
+    const CONFIG = {
+      formEndpoint: "https://formsubmit.co/ajax/grupo.sv.oficial@gmail.com"
+    };
+
+    /**
+     * SÍMBOLO OFICIAL MINDMORPHIA — versão autônoma, sem dependência de URL temporária
+     * Dois 'M' espelhados em silhueta de máscara angular, metal escovado cinza/prata,
+     * fendas de olhos com brilho violeta intenso, glow neon roxo e reflexo na base.
+     */
+    function initOfficialMindMorphiaLogo() {
+      const applyEmblem = (dataUrl) => {
+        document.querySelectorAll('.brand-symbol').forEach(img => {
+          img.src = dataUrl;
+        });
+        const fav = document.getElementById('favicon-link');
+        if (fav) fav.href = dataUrl;
+      };
+
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Fundo preto sólido puro
+        ctx.fillStyle = '#050508';
+        ctx.fillRect(0, 0, 512, 512);
+
+        // Reflexo e aura violeta/neon na base
+        const baseGlow = ctx.createRadialGradient(256, 420, 20, 256, 420, 210);
+        baseGlow.addColorStop(0, 'rgba(168, 85, 247, 0.42)');
+        baseGlow.addColorStop(0.5, 'rgba(126, 34, 206, 0.16)');
+        baseGlow.addColorStop(1, 'rgba(5, 5, 8, 0)');
+        ctx.fillStyle = baseGlow;
+        ctx.fillRect(0, 260, 512, 252);
+
+        // Halo suave roxo/violeta atrás da máscara
+        const centerGlow = ctx.createRadialGradient(256, 220, 30, 256, 220, 230);
+        centerGlow.addColorStop(0, 'rgba(147, 51, 234, 0.22)');
+        centerGlow.addColorStop(0.75, 'rgba(126, 34, 206, 0.05)');
+        centerGlow.addColorStop(1, 'rgba(5, 5, 8, 0)');
+        ctx.fillStyle = centerGlow;
+        ctx.fillRect(0, 0, 512, 512);
+
+        // Máscara angular: dois 'M' espelhados em metal escovado cinza/prata
+        ctx.save();
+        ctx.shadowColor = '#a855f7';
+        ctx.shadowBlur = 24;
+
+        function drawMHalf(scaleX) {
+          ctx.save();
+          ctx.translate(256, 225);
+          ctx.scale(scaleX, 1);
+
+          // Gradiente metálico escovado cinza/prata
+          const metalGrad = ctx.createLinearGradient(-180, -170, 0, 160);
+          metalGrad.addColorStop(0, '#f8fafc');
+          metalGrad.addColorStop(0.18, '#94a3b8');
+          metalGrad.addColorStop(0.42, '#e2e8f0');
+          metalGrad.addColorStop(0.68, '#475569');
+          metalGrad.addColorStop(0.88, '#cbd5e1');
+          metalGrad.addColorStop(1, '#1e293b');
+
+          ctx.fillStyle = metalGrad;
+          ctx.strokeStyle = '#c084fc';
+          ctx.lineWidth = 2.5;
+
+          // Silhueta geométrica do M angular
+          ctx.beginPath();
+          ctx.moveTo(-165, -135);
+          ctx.lineTo(-85, -160);
+          ctx.lineTo(-20, -95);
+          ctx.lineTo(-4, -110);
+          ctx.lineTo(-4, 115);
+          ctx.lineTo(-35, 142);
+          ctx.lineTo(-120, 85);
+          ctx.lineTo(-155, 15);
+          ctx.lineTo(-135, -45);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Facetas de chanfro tridimensional
+          const facetGrad = ctx.createLinearGradient(-100, -60, 0, 90);
+          facetGrad.addColorStop(0, 'rgba(255, 255, 255, 0.42)');
+          facetGrad.addColorStop(0.45, 'rgba(148, 163, 184, 0.12)');
+          facetGrad.addColorStop(1, 'rgba(15, 23, 42, 0.65)');
+          ctx.fillStyle = facetGrad;
+
+          ctx.beginPath();
+          ctx.moveTo(-85, -160);
+          ctx.lineTo(-20, -95);
+          ctx.lineTo(-4, -110);
+          ctx.lineTo(-4, 35);
+          ctx.lineTo(-65, -15);
+          ctx.closePath();
+          ctx.fill();
+
+          // Fenda horizontal do olho
+          ctx.save();
+          ctx.shadowColor = '#e879f9';
+          ctx.shadowBlur = 18;
+          ctx.fillStyle = '#050508';
+          ctx.beginPath();
+          ctx.moveTo(-115, -18);
+          ctx.lineTo(-35, -23);
+          ctx.lineTo(-25, -7);
+          ctx.lineTo(-105, -2);
+          ctx.closePath();
+          ctx.fill();
+
+          // Brilho violeta intenso
+          const eyeBeam = ctx.createLinearGradient(-115, -13, -25, -13);
+          eyeBeam.addColorStop(0, '#7e22ce');
+          eyeBeam.addColorStop(0.25, '#c084fc');
+          eyeBeam.addColorStop(0.5, '#ffffff');
+          eyeBeam.addColorStop(0.75, '#c084fc');
+          eyeBeam.addColorStop(1, '#9333ea');
+          ctx.fillStyle = eyeBeam;
+          ctx.beginPath();
+          ctx.moveTo(-110, -15);
+          ctx.lineTo(-38, -19);
+          ctx.lineTo(-30, -9);
+          ctx.lineTo(-102, -5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          ctx.restore();
+        }
+
+        drawMHalf(1);
+        drawMHalf(-1);
+        ctx.restore();
+
+        // Flare horizontal sobre os olhos
+        ctx.save();
+        const flare = ctx.createRadialGradient(256, 212, 0, 256, 212, 140);
+        flare.addColorStop(0, 'rgba(240, 171, 252, 0.7)');
+        flare.addColorStop(0.25, 'rgba(192, 132, 252, 0.45)');
+        flare.addColorStop(0.65, 'rgba(147, 51, 234, 0.15)');
+        flare.addColorStop(1, 'rgba(5, 5, 8, 0)');
+        ctx.fillStyle = flare;
+        ctx.fillRect(116, 190, 280, 46);
+        ctx.restore();
+
+        // Reflexo violeta na base
+        const baseReflect = ctx.createLinearGradient(160, 405, 352, 405);
+        baseReflect.addColorStop(0, 'rgba(168, 85, 247, 0)');
+        baseReflect.addColorStop(0.5, 'rgba(192, 132, 252, 0.7)');
+        baseReflect.addColorStop(1, 'rgba(168, 85, 247, 0)');
+        ctx.fillStyle = baseReflect;
+        ctx.fillRect(160, 403, 192, 3);
+
+        const officialDataUrl = canvas.toDataURL('image/png');
+        applyEmblem(officialDataUrl);
+      } catch (err) {
+        // Fallback silencioso mantendo o data URI estático do HTML
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initOfficialMindMorphiaLogo();
+      // IntersectionObserver para entrada fluida editorial
+      const targets = document.querySelectorAll('.reveal-on-scroll');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      targets.forEach(target => observer.observe(target));
+
+      // Parallax sutil do mouse na Esfera Orbital no Desktop
+      const orbitalFloat = document.querySelector('.orbital-float');
+      if (orbitalFloat && window.matchMedia('(pointer: fine)').matches) {
+        window.addEventListener('mousemove', (e) => {
+          const xRatio = (e.clientX / window.innerWidth) - 0.5;
+          const yRatio = (e.clientY / window.innerHeight) - 0.5;
+          orbitalFloat.style.transform = `translate(${xRatio * 16}px, ${yRatio * 16}px)`;
+        });
+      }
+
+      // Máscara BR de WhatsApp: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+      const inputWhatsapp = document.getElementById('campo-whatsapp');
+      if (inputWhatsapp) {
+        inputWhatsapp.addEventListener('input', (e) => {
+          let value = e.target.value.replace(/\D/g, '');
+          if (value.length > 11) value = value.substring(0, 11);
+
+          if (value.length > 10) {
+            e.target.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+          } else if (value.length > 6) {
+            e.target.value = `(${value.substring(0, 2)}) ${value.substring(2, 6)}-${value.substring(6, 10)}`;
+          } else if (value.length > 2) {
+            e.target.value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+          } else if (value.length > 0) {
+            e.target.value = `(${value}`;
+          } else {
+            e.target.value = '';
+          }
+        });
+      }
+
+      // Limpar aviso de erro do tipo de solicitação ao selecionar qualquer chip
+      const tipoInputs = document.querySelectorAll('input[name="tipo_solicitacao"]');
+      const tipoError = document.getElementById('tipo-error');
+      tipoInputs.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (tipoError) tipoError.classList.remove('visible');
+        });
+      });
+
+      // Validação em tempo real dos campos de texto
+      const form = document.getElementById('solicitation-form');
+      const confirmationBlock = document.getElementById('confirmation-block');
+      const btnReset = document.getElementById('btn-reset-solicitation');
+      const btnSubmit = document.getElementById('btn-submit');
+      const btnSubmitLabel = document.getElementById('btn-submit-label');
+      const formErrorAlert = document.getElementById('form-error-alert');
+
+      const campoNome = document.getElementById('campo-nome');
+      const campoEmail = document.getElementById('campo-email');
+      const campoMensagem = document.getElementById('campo-mensagem');
+      const mensagemCounter = document.getElementById('mensagem-counter');
+      const formErrorHint = document.getElementById('form-error-hint');
+
+      // Atualização do contador do campo "O que você quer"
+      const updateMensagemCounter = () => {
+        if (!campoMensagem || !mensagemCounter) return;
+        const len = campoMensagem.value.length;
+        if (len >= 1000) {
+          mensagemCounter.textContent = '1000 / 1000 — máximo atingido';
+          mensagemCounter.className = 'char-counter maxed';
+        } else if (len >= 900) {
+          mensagemCounter.textContent = `${len} / 1000`;
+          mensagemCounter.className = 'char-counter warning';
+        } else {
+          mensagemCounter.textContent = `${len} / 1000`;
+          mensagemCounter.className = 'char-counter';
+        }
+      };
+
+      if (campoMensagem) {
+        campoMensagem.addEventListener('input', updateMensagemCounter);
+      }
+
+      const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      };
+
+      const setFieldError = (fieldEl, errorEl, isError) => {
+        const parent = fieldEl.closest('.field-row');
+        if (isError) {
+          if (parent) parent.classList.add('has-error');
+          if (errorEl) errorEl.classList.add('visible');
+        } else {
+          if (parent) parent.classList.remove('has-error');
+          if (errorEl) errorEl.classList.remove('visible');
+        }
+      };
+
+      // Limpar erro no foco
+      [campoNome, campoEmail, inputWhatsapp, campoMensagem].forEach(input => {
+        if (!input) return;
+        input.addEventListener('input', () => {
+          const err = input.parentElement.querySelector('.field-error-msg');
+          setFieldError(input, err, false);
+          if (formErrorAlert) formErrorAlert.classList.remove('visible');
+          if (formErrorHint) formErrorHint.style.display = 'none';
+        });
+      });
+
+      // Submissão do Formulário
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (formErrorAlert) formErrorAlert.classList.remove('visible');
+          if (formErrorHint) formErrorHint.style.display = 'none';
+
+          let hasError = false;
+
+          // Validação Passo 1: Tipo de Solicitação obrigatório
+          const selectedTipo = document.querySelector('input[name="tipo_solicitacao"]:checked');
+          if (!selectedTipo) {
+            if (tipoError) tipoError.classList.add('visible');
+            hasError = true;
+          } else {
+            if (tipoError) tipoError.classList.remove('visible');
+          }
+
+          // Validação Passo 2: Nome
+          const nomeVal = campoNome.value.trim();
+          if (!nomeVal) {
+            setFieldError(campoNome, document.getElementById('nome-error'), true);
+            hasError = true;
+          } else {
+            setFieldError(campoNome, document.getElementById('nome-error'), false);
+          }
+
+          // Validação Passo 2: Email
+          const emailVal = campoEmail.value.trim();
+          if (!emailVal || !validateEmail(emailVal)) {
+            setFieldError(campoEmail, document.getElementById('email-error'), true);
+            hasError = true;
+          } else {
+            setFieldError(campoEmail, document.getElementById('email-error'), false);
+          }
+
+          // Validação Passo 2: WhatsApp (mínimo 10 dígitos)
+          const rawWhatsapp = inputWhatsapp.value.replace(/\D/g, '');
+          if (rawWhatsapp.length < 10) {
+            setFieldError(inputWhatsapp, document.getElementById('whatsapp-error'), true);
+            hasError = true;
+          } else {
+            setFieldError(inputWhatsapp, document.getElementById('whatsapp-error'), false);
+          }
+
+          // Validação Passo 2: Mensagem
+          const mensagemVal = campoMensagem.value.trim();
+          const mensagemError = document.getElementById('mensagem-error');
+          if (!mensagemVal) {
+            if (mensagemError) mensagemError.textContent = 'Por favor, descreva sua solicitação.';
+            setFieldError(campoMensagem, mensagemError, true);
+            hasError = true;
+          } else if (campoMensagem.value.length > 1000) {
+            if (mensagemError) mensagemError.textContent = 'O texto não pode exceder 1000 caracteres.';
+            setFieldError(campoMensagem, mensagemError, true);
+            hasError = true;
+          } else {
+            setFieldError(campoMensagem, document.getElementById('mensagem-error'), false);
+          }
+
+          if (hasError) {
+            return;
+          }
+
+          // Payload com as chaves configuradas para o FormSubmit
+          const payload = {
+            _subject: "Nova solicitação — Site MindMorphia",
+            tipo: selectedTipo.value,
+            nome: nomeVal,
+            email: emailVal,
+            whatsapp: inputWhatsapp.value.trim(),
+            mensagem: mensagemVal,
+            _captcha: "false"
+          };
+
+          // Estado "Enviando..."
+          btnSubmit.disabled = true;
+          const originalText = btnSubmitLabel.textContent;
+          btnSubmitLabel.textContent = "Enviando...";
+
+          // Timeout de ~15s tratado como falha
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+          try {
+            const response = await fetch(CONFIG.formEndpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              signal: controller.signal,
+              body: JSON.stringify(payload)
+            });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+              throw new Error('Falha no envio do endpoint.');
+            }
+
+            // Confirmação verde: apenas quando o fetch retorna sucesso (response.ok)
+            form.style.display = 'none';
+            confirmationBlock.classList.add('visible');
+
+            // Rolagem suave para visualizar a confirmação
+            const cardRect = confirmationBlock.getBoundingClientRect();
+            if (cardRect.top < 80) {
+              confirmationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+          } catch (err) {
+            clearTimeout(timeoutId);
+            // Em caso de falha de rede, timeout ou erro no endpoint, exibe aviso lilás
+            if (formErrorHint) {
+              formErrorHint.style.display = (campoMensagem.value.length > 800) ? 'block' : 'none';
+            }
+            if (formErrorAlert) formErrorAlert.classList.add('visible');
+          } finally {
+            btnSubmit.disabled = false;
+            btnSubmitLabel.textContent = originalText;
+          }
+        });
+      }
+
+      // Restaurar formulário limpo ao clicar em "Enviar outra solicitação"
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          form.reset();
+          // Limpar estados de erro visuais
+          document.querySelectorAll('.field-row').forEach(row => row.classList.remove('has-error'));
+          document.querySelectorAll('.field-error-msg').forEach(msg => msg.classList.remove('visible'));
+          if (tipoError) tipoError.classList.remove('visible');
+          if (formErrorAlert) formErrorAlert.classList.remove('visible');
+          if (formErrorHint) formErrorHint.style.display = 'none';
+          updateMensagemCounter();
+
+          confirmationBlock.classList.remove('visible');
+          form.style.display = 'block';
+
+          // Rola suavemente para o início da seção de solicitação
+          document.getElementById('solicitacao').scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
