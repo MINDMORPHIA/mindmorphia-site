@@ -1,20 +1,37 @@
-# SAUVID Assessoria — homologação
+# SAUVID Assessoria — site / homologação v2
 
-Código da primeira versão de homologação da SAUVID Assessoria.
+Atualizado em **05/10/2026** a partir das referências visuais e textuais fornecidas para o projeto e das regras operacionais do Portal de Acompanhamento SAUVID.
 
-- Entrada institucional
-- Formulário de atendimento em etapas
-- Área de acompanhamento do cliente com dados fictícios
-- Painel administrativo demonstrativo
-- Status separados por órgão
-- Histórico de eventos
+## Direção aplicada
 
-## Segurança
+- Paleta institucional: azul fechado, azul médio, azul acinzentado e fundo claro.
+- Posicionamento: clareza, método, individualidade, acompanhamento e comunicação humana.
+- Headline: **“Regularize sua situação. Recupere possibilidades.”**
+- Estrutura educacional: diferença entre dívida, negativação e score.
+- Órgãos tratados separadamente: Serasa, SPC Brasil, Boa Vista e Protestos/Cartórios.
+- Jornada: **Entender → Estruturar → Acompanhar → Avançar**.
+- Formulário em duas etapas para não pedir CPF antes de explicar a finalidade.
+- Área do cliente e painel administrativo continuam como **homologação com dados fictícios**.
 
-Esta versão não contém base real de clientes, CPFs reais nem autenticação de produção.
+## Regras de segurança e conteúdo
 
-## Próxima etapa
+- Nenhum CPF ou cliente real está embutido no HTML.
+- CPF/CNPJ identifica o cadastro, mas não funciona como senha.
+- “Baixa confirmada” não deve ser usada sem evidência e revisão.
+- Uma atualização em um órgão não altera automaticamente os demais.
+- O site não promete quitação de dívida, score específico, concessão de crédito ou aprovação de financiamento.
+- Prazos são tratados como estimativas, nunca como garantia.
 
-A versão definitiva deve receber banco privado, autenticação real e infraestrutura de produção antes da migração de dados.
+## Arquivos visuais
 
-Centralizado no GitHub em 05/10/2026.
+Os ativos em `assets/` foram extraídos das referências fornecidas pelo responsável do projeto e otimizados para uso web.
+
+## Rotas de demonstração
+
+- Página: `index.html`
+- Área do cliente: `#acompanhar`
+- Painel administrativo demonstrativo: `#admin-demo`
+- Privacidade: `#privacidade`
+- Termos: `#termos`
+
+Antes da produção definitiva, conectar autenticação real, banco privado, armazenamento de evidências, trilha de auditoria, backup e canal oficial de envio do formulário.
