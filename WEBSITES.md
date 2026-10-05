@@ -5,7 +5,7 @@ Fonte única para localizar os projetos web sob gestão da organização GitHub 
 | Projeto | Status | Código / registro no GitHub | Página / domínio conhecido |
 |---|---|---|---|
 | MindMorphia | Código ativo | `MINDMORPHIA/mindmorphia-site` → `/index.html` | domínio próprio em implantação |
-| SAUVID Assessoria | Homologação | `MINDMORPHIA/mindmorphia-site` → `/projects/sauvid-assessoria-preview/` | prévia de homologação |
+| SAUVID Assessoria | Homologação v2 — atualizada 05/10/2026 | `MINDMORPHIA/mindmorphia-site` → `/projects/sauvid-assessoria-preview/` | prévia de homologação |
 | Grupo SV | Snapshot GitHub criado | `MINDMORPHIA/mindmorphia-site` → `/sites/grupo-sv/` | `grupo-sauvid.juniorsauder.chatgpt.site`; domínio institucional: `gruposauvid.com.br` |
 | Amanda Carrijo / Dra. Amanda Pelo Mundo | Snapshot GitHub criado | `MINDMORPHIA/mindmorphia-site` → `/sites/amanda-carrijo/` | `amanda-carrijo-viagens.juniorsauder.chatgpt.site`; domínio definido: `www.draamandapelomundo.com.br` |
 | Gabriella Sauder | Código ativo | `MINDMORPHIA/gabriella-sauder-site` | repositório próprio |
