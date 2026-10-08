@@ -20,7 +20,9 @@ export default async function handler(req,res){
  const key=req.headers["idempotency-key"];
  if(typeof key!=="string"||!/^[a-zA-Z0-9_-]{16,100}$/.test(key))return json(res,400,{error:"Chave de solicitação inválida"});
  const name=input.nome.trim(),email=input.email.trim().toLowerCase(),phone=input.whatsapp.replace(/\D/g,"");
- const client=await db().connect();
+ let client;
+ try{ client=await db().connect(); }
+ catch(err){ console.error("Database connection unavailable:",err?.message); return json(res,503,{error:"Serviço de pedidos temporariamente indisponível"}); }
  let orderId,preferenceId;
  try{
   await client.query("BEGIN");
@@ -35,7 +37,7 @@ export default async function handler(req,res){
    await client.query("INSERT INTO orders(id,customer_id,plan_id,amount_cents,currency,idempotency_key,external_reference) VALUES($1,$2,$3,$4,'BRL',$5,$6)",[orderId,customer.rows[0].id,input.planId,plan.amount,key,orderId]);
   }
   await client.query("COMMIT");
- }catch(error){await client.query("ROLLBACK");console.error("Create order:",error.message);return json(res,409,{error:"Não foi possível registrar o pedido"});}finally{client.release();}
+ }catch(error){try{await client.query("ROLLBACK");}catch{}console.error("Create order:",error?.message);return json(res,503,{error:"Não foi possível registrar o pedido"});}finally{client.release();}
  // A recoverable pending order is retained if the external API is down.
  // Do not create duplicate payments for an already-issued preference.
  if(preferenceId)return json(res,409,{error:"Pedido existente. Consulte o atendimento para recuperar seu pagamento",orderId});
