@@ -3,6 +3,7 @@ import {db} from "./_lib/database.js";
 import {planFor} from "./_lib/plans.js";
 import {json,bodyJSON} from "./_lib/http.js";
 import {createPreference} from "./_lib/mercadopago.js";
+import {sameOrderRequest} from "./_lib/idempotency.js";
 
 function validName(x){return typeof x==="string"&&x.trim().length>=2&&x.trim().length<=150;}
 function validEmail(x){return typeof x==="string"&&x.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x);}
@@ -16,7 +17,6 @@ export default async function handler(req,res){
  const plan=planFor(input?.planId);
  if(!plan||!validName(input?.nome)||!validEmail(input?.email)||!validPhone(input?.whatsapp)||input?.privacyAccepted!==true||input?.termsAccepted!==true)
   return json(res,400,{error:"Confira plano, dados de contato e aceite dos termos"});
- // Demand a unique caller-provided idempotency token to deduplicate browser retries.
  const key=req.headers["idempotency-key"];
  if(typeof key!=="string"||!/^[a-zA-Z0-9_-]{16,100}$/.test(key))return json(res,400,{error:"Chave de solicitação inválida"});
  const name=input.nome.trim(),email=input.email.trim().toLowerCase(),phone=input.whatsapp.replace(/\D/g,"");
@@ -28,7 +28,7 @@ export default async function handler(req,res){
   await client.query("BEGIN");
   const prior=await client.query("SELECT o.id,o.plan_id,o.provider_preference_id,c.email,c.whatsapp FROM orders o JOIN customers c ON c.id=o.customer_id WHERE o.idempotency_key=$1 FOR UPDATE OF o",[key]);
   if(prior.rows.length){
-   if(prior.rows[0].plan_id!==input.planId || prior.rows[0].email!==email || prior.rows[0].whatsapp!==phone)throw new Error("Idempotency key reused with different order details");
+   if(!sameOrderRequest(prior.rows[0],{planId:input.planId,email,phone}))throw new Error("Idempotency key reused with different order details");
    orderId=prior.rows[0].id;
    preferenceId=prior.rows[0].provider_preference_id;
   } else {
