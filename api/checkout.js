@@ -26,9 +26,9 @@ export default async function handler(req,res){
  let orderId,preferenceId;
  try{
   await client.query("BEGIN");
-  const prior=await client.query("SELECT id,plan_id,provider_preference_id FROM orders WHERE idempotency_key=$1 FOR UPDATE",[key]);
+  const prior=await client.query("SELECT o.id,o.plan_id,o.provider_preference_id,c.email,c.whatsapp FROM orders o JOIN customers c ON c.id=o.customer_id WHERE o.idempotency_key=$1 FOR UPDATE OF o",[key]);
   if(prior.rows.length){
-   if(prior.rows[0].plan_id!==input.planId)throw new Error("Idempotency key reused with different plan");
+   if(prior.rows[0].plan_id!==input.planId || prior.rows[0].email!==email || prior.rows[0].whatsapp!==phone)throw new Error("Idempotency key reused with different order details");
    orderId=prior.rows[0].id;
    preferenceId=prior.rows[0].provider_preference_id;
   } else {
