@@ -5,7 +5,9 @@ import {verifyMercadoPagoNotification} from "../api/_lib/webhook-auth.js";
 import {planFor} from "../api/_lib/plans.js";
 
 test("Prices are defined on the server",()=>{
- assert.equal(planFor("magnitude").amount,240000);
+ assert.equal(planFor("impacto").amount,99700);
+ assert.equal(planFor("autoridade").amount,199700);
+ assert.equal(planFor("magnitude").amount,349700);
  assert.equal(planFor("canva-pro-12").amount,9990);
  assert.equal(planFor("__unknown__"),null);
 });
