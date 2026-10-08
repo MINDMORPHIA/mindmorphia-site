@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {createHmac} from "node:crypto";
 import {verifyMercadoPagoNotification} from "../api/_lib/webhook-auth.js";
 import {planFor} from "../api/_lib/plans.js";
+import {sameOrderRequest} from "../api/_lib/idempotency.js";
 
 test("Prices are defined on the server",()=>{
  assert.equal(planFor("impacto").amount,99700);
@@ -23,4 +24,12 @@ test("Webhook rejects incomplete and forged signatures",()=>{
  assert.equal(verifyMercadoPagoNotification(req,"999"),false);
  assert.equal(verifyMercadoPagoNotification({headers:{"x-signature":"ts=1,v1="+v1,"x-request-id":requestId}},paymentId),false);
  delete process.env.MERCADOPAGO_WEBHOOK_SECRET;
+});
+
+test("Idempotency key can only repeat the exact same order identity",()=>{
+ const prior={plan_id:"autoridade",email:"CLIENTE@EXEMPLO.COM",whatsapp:"(62) 99999-0000"};
+ assert.equal(sameOrderRequest(prior,{planId:"autoridade",email:"cliente@exemplo.com",phone:"62999990000"}),true);
+ assert.equal(sameOrderRequest(prior,{planId:"impacto",email:"cliente@exemplo.com",phone:"62999990000"}),false);
+ assert.equal(sameOrderRequest(prior,{planId:"autoridade",email:"outro@exemplo.com",phone:"62999990000"}),false);
+ assert.equal(sameOrderRequest(prior,{planId:"autoridade",email:"cliente@exemplo.com",phone:"62988880000"}),false);
 });
