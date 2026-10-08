@@ -1,0 +1,30 @@
+name: Validar checkout (desenvolvimento)
+on:
+  pull_request:
+    paths:
+      - 'api/**'
+      - 'tests/**'
+      - 'package.json'
+      - '.github/workflows/checkout-checks.yml'
+  push:
+    branches:
+      - 'feature/contratacao-mercadopago'
+    paths:
+      - 'api/**'
+      - 'tests/**'
+      - 'package.json'
+      - '.github/workflows/checkout-checks.yml'
+permissions:
+  contents: read
+jobs:
+  checkout-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm run test:syntax
+      - run: npm test
