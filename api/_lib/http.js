@@ -1,0 +1,2 @@
+export function json(res,status,body){res.status(status).setHeader("Content-Type","application/json; charset=utf-8").setHeader("Cache-Control","no-store").end(JSON.stringify(body));}
+export async function bodyJSON(req){if(typeof req.body==="object"&&req.body!==null)return req.body;if(typeof req.body==="string")return JSON.parse(req.body);let s="";for await(const chunk of req){s+=chunk;if(s.length>15000)throw new Error("Payload muito grande");}return JSON.parse(s||"{}");}
