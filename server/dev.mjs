@@ -1,0 +1,10 @@
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {join,resolve,extname} from 'node:path';
+import {MemoryStore} from '../lib/storage.mjs';
+import {createApp} from '../lib/app.mjs';
+const root=resolve('.');await mkdir('.local-data',{recursive:true});const store=new MemoryStore();try{store.state=JSON.parse(await readFile('.local-data/state.json','utf8'));}catch{}
+const mutate=store.change.bind(store);store.change=async fn=>{const result=await mutate(fn);await writeFile('.local-data/state.json',JSON.stringify(store.state));return result;};
+const handle=createApp({store,env:{...process.env,SITE_URL:'http://127.0.0.1:4328'}});
+const types={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.png':'image/png','.json':'application/json'};
+createServer(async(req,res)=>{try{if(req.url.startsWith('/api/')){const chunks=[];for await(const chunk of req)chunks.push(chunk);const data=Buffer.concat(chunks);const r=await handle(new Request(`http://127.0.0.1:4328${req.url}`,{method:req.method,headers:req.headers,...(data.length?{body:data}:{})}));res.writeHead(r.status,Object.fromEntries(r.headers));res.end(Buffer.from(await r.arrayBuffer()));return;}const u=new URL(req.url,'http://localhost');const routes={'/':'index.html','/catalogo':'commerce/catalogo.html','/checkout':'commerce/checkout.html','/acesso':'commerce/acesso.html','/cliente':'commerce/portal.html','/gestao':'commerce/portal.html','/privacidade':'commerce/privacidade.html'};const relative=routes[u.pathname]||u.pathname.slice(1);if(relative.startsWith('.')||relative.includes('..')||!(/^(commerce\/|index.html|simbolo.png|mindmorphia.png)/.test(relative))){res.writeHead(404);res.end();return;}const path=join(root,relative);res.writeHead(200,{'Content-Type':types[extname(path)]||'application/octet-stream'});res.end(await readFile(path));}catch{res.writeHead(404);res.end('Não encontrado.');}}).listen(4328,'127.0.0.1',()=>console.log('MINDMORPHIA local: http://127.0.0.1:4328'));

@@ -4,6 +4,10 @@ Site oficial da **MindMorphia**, uma marca do Grupo SV, e ponto central de regis
 
 ## Produção MindMorphia
 
+Portal comercial iniciado em 09/10/2026: `/catalogo`, `/checkout`, `/acesso`, `/cliente` e `/gestao`. Código das telas em `commerce/`, API em `api/` e módulos em `lib/`. Leia [IMPLEMENTACAO_PORTAL.md](docs/IMPLEMENTACAO_PORTAL.md) para funcionalidades, testes, configuração e pendências de ativação. Publicação de código não representa pagamento real ou conta oficial ativada.
+
+Desenvolvimento local: `pnpm install`, `node server/dev.mjs`, endereço `http://127.0.0.1:4328`. Verificação: `node --test tests/*.test.mjs` e `node scripts/build.mjs`. Dados locais não são sincronizados com produção. Variáveis e dados privados são ignorados pelo Git.
+
 - `index.html` — página pública oficial da MindMorphia
 - Site estático, responsivo e preparado para publicação
 - Identidade visual, animações e metadados de SEO incluídos no próprio projeto
