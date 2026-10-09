@@ -30,7 +30,7 @@ Pagamento confirmado exige consulta ao provedor e validação de conta recebedor
 
 ## Validação
 
-16 testes automatizados passaram: cálculo, cupom, entrada, catálogo inválido, cookie seguro, CSRF, logout, isolamento de clientes e arquivos, notas internas, permissões e suspensão, aceite com versão de proposta, idempotência e preço preservado, assinatura e titularidade do pagamento, repetição de eventos, cancelamento com pagamento tardio, recuperação e revogação, formato e tamanho de anexo, comunicados, concorrência, ativação do proprietário, reconciliação de pagamento alheio, configuração inicial e convites sem e-mail. Pagamentos e e-mail nestes testes são simulações em memória, com contas fictícias.
+18 testes automatizados passaram: cálculo, cupom, entrada, catálogo inválido, cookie seguro, CSRF, logout, isolamento de clientes e arquivos, notas internas, permissões e suspensão, aceite com versão de proposta, idempotência e preço preservado, assinatura e titularidade do pagamento, repetição de eventos, cancelamento com pagamento tardio, recuperação e revogação, formato e tamanho de anexo, comunicados, concorrência, ativação do proprietário, reconciliação de pagamento alheio, configuração inicial e convites sem e-mail. Pagamentos e e-mail nestes testes são simulações em memória, com contas fictícias.
 
 Catálogo e sacola foram conferidos no navegador em largura de celular. O build na Vercel passou. A API publicada devolveu catálogo correto e storage=true. Estado de integrações na primeira publicação preparada: payment=false e email=false. Não foi realizada transação financeira real, envio de ativação real ou login oficial do proprietário. A validação visual autenticada e os fluxos reais continuam condicionados à ativação de e-mail e pagamentos.
 
@@ -55,3 +55,6 @@ MCP adicional: endpoint https://mcp.vercel.com adicionado ao config.toml global.
 Executar node --test tests/*.test.mjs e node scripts/build.mjs. Enviar o commit ao GitHub. Publicar com Vercel no projeto vinculado, conferir /api/status e /api/catalog e testar as páginas oficiais. Conferir os estados de e-mail e pagamento antes de liberar operação comercial. A publicação dos arquivos não substitui essas ativações.
 
 Rollback institucional: deployment anterior dpl_4xsq7F26Y8xSE5fst5jyGT1JA1fA, commit 086343cfb2331c143085ecb4cf4c137d0814818e. Promover a versão anterior reverte a interface; não apaga dados privados. Manter o armazenamento, backups e segredos. Antes de restaurar registros, preservar snapshot atual e validar compatibilidade da versão.
+
+
+Validação da persistência em produção: a leitura Blob retornava ETag fraco, incompatível com a escrita condicional. A carga passou a consultar o ETag canônico dos metadados e conferir sua correspondência com o conteúdo lido. Conflitos usam a classe de erro do SDK e repetem a leitura antes de tentar novamente. Dois testes de regressão reproduzem versão fraca e leitura desatualizada. A atualização real passou na URL oficial. Código da correção: 9c9a52ae8c2befee0484af1cd4a021b6e8ed9b92.
