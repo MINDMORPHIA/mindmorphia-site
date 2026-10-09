@@ -3,7 +3,7 @@ import {createApp} from '../lib/app.mjs';
 const handle=createApp({store:new BlobStore(),env:process.env});
 export default async function handler(req,res){
  const chunks=[];for await(const chunk of req)chunks.push(Buffer.from(chunk));
- const body=Buffer.concat(chunks);const headers=new Headers();
+ const body=chunks.length?Buffer.concat(chunks):req.body?Buffer.from(typeof req.body==='string'?req.body:JSON.stringify(req.body)):Buffer.alloc(0);const headers=new Headers();
  for(const [key,value] of Object.entries(req.headers))if(value)headers.set(key,Array.isArray(value)?value.join(','):value);
  const url=new URL(req.url,`https://${req.headers.host}`);
  const route=url.searchParams.get('route');
