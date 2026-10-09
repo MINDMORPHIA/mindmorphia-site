@@ -82,3 +82,18 @@ Aplicação Mercado Pago 8386986675603094 renomeada MINDMORPHIA Websites, com en
 Consulta autenticada /users/me fornece a conta recebedora quando MERCADOPAGO_COLLECTOR_ID não é definido, com validação de ID e bloqueio de test_user. O collector_id da preferência e do pagamento deve corresponder. Se o identificador fixo for definido, continua sendo usado como restrição explícita. 21 testes e build passaram após estas mudanças, com novos casos para preferência de outra conta, conta de teste e assunto da recuperação do proprietário.
 
 Incidente de leitura do painel: uma credencial de teste e o Client Secret da aplicação apareceram em resultados técnicos antes de a ocultação integral dos campos ser aplicada. Os valores não foram adicionados ao código, documentos ou Git. A renovação desses dois itens deve ser concluída pelo titular no painel; não reutilizar os valores expostos. O Access Token produtivo e a assinatura do webhook não foram impressos.
+
+
+## Estado vigente: catálogo, SAUVID e auditoria de 09/10/2026
+
+Esta seção prevalece sobre pendências históricas acima. MERCADOPAGO_WEBHOOK_SECRET foi salvo pelo titular como segredo em production. Recebedor 3373146138 foi conferido pela gestão e configurado como restrição explícita. As três integrações informaram disponibilidade em /api/status. A comprovação não inclui transação real.
+
+Catálogo: Impacto R$ 997, Autoridade R$ 1.997, Magnitude R$ 2.497; Canva Pro 12 meses R$ 99,90 e 24 meses R$ 129,90; Google AI Pro 18 meses R$ 249,90; Mídia avulsa R$ 49,90 e R$ 99,90. Mídia exige escopo previamente combinado e entrega em até cinco dias úteis ou prazo combinado entre cliente e Mind Marketing. Digitais e mídia exigem pagamento integral; acessos digitais não permitem quantidades duplicadas ou dois períodos da mesma marca.
+
+A página inicial expõe as oito ofertas. Rotas /websites, /assinaturas e /midia separam categorias. As nove imagens originais foram incluídas sem retoque; a arte antiga com Magnitude R$ 3.497 não foi publicada. Link de rodapé GRUPO SV · SAUVID aponta para https://www.gruposauvid.com.br. Menus em telas intermediárias foram ajustados após detectar corte horizontal. O símbolo oficial substitui a ilustração abstrata dos cartões de mídia. Conteúdo animado e faixa de palavras foram contidos no celular. Checkout usa a identificação geral MINDMORPHIA.
+
+Entrega digital exige pagamento integral confirmado, link HTTPS, produto do pedido e permissões de pedidos/projetos. Confirmação de compra e envio de acesso usam fila idempotente com tentativas e limite de revisão. Cliente vê link, instruções e histórico; fornecedor legítimo e envio operacional continuam responsabilidade da gestão. Não existe ativação automática por API de Canva ou Google. A API Resend aceita mensagens; a confirmação entregue foi obtida pelo painel do provedor no teste de recuperação.
+
+26 testes automatizados passaram na etapa comercial anterior; o build e git diff --check passaram para ajustes visuais. No navegador local, a entrega de link pela gestão foi seguida pelo acesso de um cliente fictício ao mesmo link e instruções, sem e-mail ou pagamento real. Auditoria integral ainda pendente: compra real, todos os módulos autenticados e estados de erro. Não tratar READY como aceite integral.
+
+Publicações: fdd1e6d incluiu vitrine e categorias; 47464a9 identificou SAUVID e corrigiu menu, READY dpl_2Kpvja6dtAp4ouB4u8ea4SiaAMwC; 52d2221 contém ajuste de celular e checkout. Consultar AUDITORIA_JORNADA_2026-10-09.md para evidências e limitações atuais.
