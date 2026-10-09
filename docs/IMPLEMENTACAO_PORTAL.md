@@ -48,7 +48,7 @@ Correção de publicação: o catch-all inicial da Vercel não atendia caminhos 
 
 A CLI exibiu a credencial técnica de proteção no modo debug ao interpretar o parâmetro curl -d. A credencial criada pela CLI foi imediatamente revogada pela API oficial. Não repetir esse comando com flags ambíguas nem registrar credenciais em evidências. Nenhuma credencial consta deste relatório ou do Git.
 
-MCP adicional: endpoint https://mcp.vercel.com adicionado ao config.toml global. A autorização OAuth aberta expirou sem retorno; concluir login quando o responsável estiver presente. O plugin Vercel já instalado e seu conector continuam operacionais. CLI 63.1.0 autenticada como juniorsauder-7118.
+MCP adicional: endpoint https://mcp.vercel.com adicionado ao config.toml global. A primeira autorização OAuth expirou. A nova autorização foi concluída com sucesso após aprovação explícita do responsável para leitura e escrita nos projetos e equipes acessíveis. O endpoint compartilhado está conectado no Codex. O plugin Vercel já instalado e seu conector continuam operacionais. CLI 63.1.0 autenticada como juniorsauder-7118.
 
 ## Retomada e publicação
 
