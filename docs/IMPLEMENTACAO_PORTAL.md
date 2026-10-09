@@ -60,3 +60,13 @@ Rollback institucional: deployment anterior dpl_4xsq7F26Y8xSE5fst5jyGT1JA1fA, co
 Validação da persistência em produção: a leitura Blob retornava ETag fraco, incompatível com a escrita condicional. A carga passou a consultar o ETag canônico dos metadados e conferir sua correspondência com o conteúdo lido. Conflitos usam a classe de erro do SDK e repetem a leitura antes de tentar novamente. Dois testes de regressão reproduzem versão fraca e leitura desatualizada. A atualização real passou na URL oficial. Código da correção: 9c9a52ae8c2befee0484af1cd4a021b6e8ed9b92.
 
 Conta oficial de proprietário ativada pelo responsável e confirmada diretamente no armazenamento privado em 09/10/2026. A primeira configuração está bloqueada para novas tentativas. Esta comprovação certifica a criação da conta; não substitui o teste visual de todos os módulos autenticados nem a operação de e-mail e pagamento.
+
+## Decisões de integração confirmadas em 09/10/2026
+
+O responsável autorizou a mesma conta Mercado Pago do grupo para receber os pagamentos da MINDMORPHIA. Informou que há uma divisão chamada loja Mind Marketing. A existência e o tipo dessa divisão ainda precisam ser verificados no painel autenticado. Preferir aplicação própria MINDMORPHIA para organizar a integração; não afirmar saldo separado, vinculação à loja ou segregação financeira antes de comprovar os recursos da conta.
+
+As preferências do checkout identificam a marca no título, statement_descriptor, additional_info e metadata, com pedido e tentativa; external_reference permanece igual ao ID do pedido para conciliação. O descritor efetivamente exibido depende do meio e do provedor. Nenhuma alteração foi feita na configuração global da conta. Um teste adicional confere os dados enviados ao adaptador: 19 testes passaram, com pagamento ainda simulado.
+
+O responsável delegou a escolha técnica do e-mail. Domínio remetente escolhido: mail.mindmorphia.com.br, condicionado à autenticação DNS e verificação Resend. Remetente proposto: MINDMORPHIA <acesso@mail.mindmorphia.com.br>. Priorizar plano gratuito. As páginas Mercado Pago, Resend e Registro.br solicitaram login no Chrome; a etapa externa aguarda autenticação pessoal do titular. Nenhuma chave foi obtida ou configurada nesta etapa.
+
+Referência oficial de preferência: https://www.mercadopago.com.br/developers/en/reference/online-payments/checkout-pro-preferences/create-preference/post.
