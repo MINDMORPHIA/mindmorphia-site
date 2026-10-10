@@ -72,7 +72,7 @@ test('assinatura sem observações é contratável e trabalhos continuam exigind
  const f=await fixture(),c=await f.login();
  const digital={...orderBody,items:[{id:'canva-pro-12',quantity:1}],mode:'full',brief:''};
  const r=await f.call('/orders',digital,c);assert.equal(r.r.status,201);assert.equal(r.data.order.brief,'Sem observações adicionais.');
- assert.equal((await f.call('/orders',{...orderBody,brief:''},c)).r.status,400);
+ assert.equal((await f.call('/orders',{...orderBody,key:'synthetic-website-brief-key',brief:''},c)).r.status,400);
  assert.equal((await f.call('/quote',{items:[null]},c)).r.status,400);
 });
 
@@ -90,4 +90,15 @@ test('resumo preserva preço contratado e exige titular ou permissão de pedidos
  assert.equal((await f.call(`/orders/${id}/summary`,null,b)).r.status,404);assert.equal((await f.call(`/orders/${id}/summary`)).r.status,401);
  await f.call('/admin/catalog',{id:'impacto',name:'Impacto',price:120000,active:true},o);
  const r=await f.call(`/orders/${id}/summary`,null,a);assert.equal(r.r.status,200);assert.match(r.r.headers.get('content-disposition'),/attachment/);assert.match(r.data,/997,00/);assert.ok(!r.data.includes('1.200,00'));assert.equal(r.r.headers.get('cache-control'),'no-store');
+});
+
+test('oferta alterada exige revisão e tentativa já registrada preserva contrato original',async()=>{
+ const f=await fixture(),a=await f.login(),o=await f.login('owner@example.invalid');
+ const q=(await f.call('/quote',orderBody,a)).data;
+ await f.call('/admin/catalog',{id:'impacto',name:'Impacto',price:120000,scope:'Escopo alterado',active:true},o);
+ assert.equal((await f.call('/orders',{...orderBody,quoteFingerprint:q.fingerprint},a)).r.status,400);assert.equal(f.store.state.orders.length,0);
+ const updated=(await f.call('/quote',orderBody,a)).data;const body={...orderBody,quoteFingerprint:updated.fingerprint};
+ const first=(await f.call('/orders',body,a)).data.order;
+ await f.call('/admin/catalog',{id:'impacto',name:'Impacto',price:130000,scope:'Novo escopo',active:false},o);
+ const retry=(await f.call('/orders',body,a)).data.order;assert.equal(retry.id,first.id);assert.equal(retry.total,120000);assert.equal(f.store.state.orders.length,1);
 });
