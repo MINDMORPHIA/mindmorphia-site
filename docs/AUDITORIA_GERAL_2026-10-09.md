@@ -24,7 +24,7 @@ As correções encontradas nesta rodada foram implementadas e publicadas em http
 5. **Médio, resolvido:** cabeçalho desaparecia na rolagem; produto escondido por navegação inadequada; falha com armazenamento do navegador bloqueado. Corrigidos, com categorias explícitas e funcionamento defensivo.
 6. **Médio, resolvido:** equipe com permissão de projetos não conseguia editar projeto existente sem permissão de clientes. Ajustada edição, preservando limites de criação e arquivos.
 7. **Médio, resolvido:** páginas comerciais tinham indexação prejudicada. Metadados específicos, canonical, sitemap e robots publicados. Acesso, cliente, gestão e checkout continuam fora da indexação. Isso não garante posição nos buscadores.
-8. **Comercial, atualizado:** identificação pública GRUPO SV · MINDMORPHIA, CNPJ 44.776.233/0001-56 e Avenida Alpes · Goiânia/GO · CEP 74325-200. Dados fornecidos pelo titular; validação do dígito do CNPJ não é consulta cadastral. Número/complemento não fornecidos. Rodapé SAUVID clicável para https://www.gruposauvid.com.br.
+8. **Comercial, atualizado:** identificação pública GRUPO SV · MINDMORPHIA, CNPJ 44.776.233/0001-56 e Avenida Alpes · Sala 174 · Goiânia/GO · CEP 74325-200. Dados fornecidos pelo titular; validação do dígito do CNPJ não é consulta cadastral. Complemento confirmado pelo titular: Sala 174. Endereço encerrado conforme orientação do titular. Rodapé SAUVID clicável para https://www.gruposauvid.com.br.
 
 A identificação do fornecedor, as condições claras e os canais de atendimento foram considerados com base no [Decreto 7.962/2013](https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d7962.htm). Os dados empresariais publicados vieram do titular. Esta revisão não declara conformidade jurídica integral.
 
@@ -43,7 +43,7 @@ A identificação do fornecedor, as condições claras e os canais de atendiment
 
 **Segurança externa:** renovar as credenciais de teste e Client Secret do Mercado Pago indicadas no relatório anterior, que apareceram em saída de ferramenta. Elas não foram incluídas no código, Git ou documentos. Segredos produtivos não foram impressos nesta rodada. A situação atual da rotação não foi revalidada.
 
-**Dados comerciais:** completar número/complemento do endereço, se existentes; confirmar garantia adicional e condições do fornecedor sem inventar promessas. Formalizar emissão fiscal, retenção de dados e operação de reembolso. A venda pela página não prova autorização/licenciamento de terceiros.
+**Dados comerciais:** confirmar garantia adicional e condições do fornecedor sem inventar promessas. Formalizar emissão fiscal, retenção de dados e operação de reembolso. A venda pela página não prova autorização/licenciamento de terceiros.
 
 **Operação antes de ampliar volume:** automatizar reprocessamento de notificações, comprovar entrega de e-mail por evento autenticado, definir backup e testar restauração; migrar armazenamento agregado para banco adequado ao crescimento. Armazenamento atual tem limite agregado e contatos limitados a 2.000. Não houve ensaio de carga, Core Web Vitals, restauração ou operação de todos os provedores móveis.
 
