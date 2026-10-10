@@ -6,6 +6,9 @@
   <title>MindMorphia — Ideias em transformação</title>
 
   <meta name="description" content="MindMorphia é um estúdio de imaginação aplicada que combina direção artística, tecnologia e inteligência artificial para transformar ideias em experiências, narrativas e possibilidades.">
+  <link rel="canonical" href="https://mindmorphia-site.vercel.app/">
+  <meta property="og:url" content="https://mindmorphia-site.vercel.app/">
+  <meta property="og:image" content="https://mindmorphia-site.vercel.app/mindmorphia.png">
   <meta name="theme-color" content="#0A0A0A">
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -947,8 +950,8 @@
 
     /* Animação suave de entrada */
     .reveal-on-scroll {
-      opacity: 0;
-      transform: translateY(22px);
+      opacity: 1;
+      transform: none;
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal-on-scroll.active {
@@ -1029,6 +1032,7 @@
   </style>
 <link rel="stylesheet" href="/commerce/storefront.css"></head>
 <body>
+  <a class="home-skip" href="#conteudo">Ir ao conteúdo</a>
   <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
 
   <!-- 0. CABEÇALHO FIXO -->
@@ -1049,7 +1053,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="conteudo">
     <!-- 1. HERO (#essencia) -->
     <section id="essencia" class="hero-sec">
       <div class="hero-grid">
@@ -1253,7 +1257,7 @@
         <div class="micro-caps solicitation-label">04 / SUA SOLICITAÇÃO</div>
 
         <!-- FORMULÁRIO -->
-        <form id="solicitation-form" novalidate>
+        <form id="solicitation-form" novalidate><div hidden aria-hidden="true"><label for="contact-website">Website</label><input id="contact-website" name="website" tabindex="-1" autocomplete="off"></div>
           <!-- PASSO 1: O que você quer solicitar? -->
           <div class="form-step">
             <div class="form-step-title">
@@ -1297,28 +1301,28 @@
             <!-- Seu Nome -->
             <div class="field-row" id="group-nome">
               <label for="campo-nome" class="field-label">Seu nome</label>
-              <input type="text" id="campo-nome" name="nome" class="field-input" placeholder="Como prefere ser chamado?" required autocomplete="name" maxlength="120">
+              <input type="text" aria-describedby="nome-error" id="campo-nome" name="nome" class="field-input" placeholder="Como prefere ser chamado?" required autocomplete="name" maxlength="100">
               <div class="field-error-msg" id="nome-error">Por favor, informe seu nome.</div>
             </div>
 
             <!-- Seu E-mail -->
             <div class="field-row" id="group-email">
               <label for="campo-email" class="field-label">Seu e-mail</label>
-              <input type="email" id="campo-email" name="email" class="field-input" placeholder="exemplo@dominio.com" required autocomplete="email" maxlength="120">
+              <input type="email" aria-describedby="email-error" id="campo-email" name="email" class="field-input" placeholder="exemplo@dominio.com" required autocomplete="email" maxlength="120">
               <div class="field-error-msg" id="email-error">Por favor, informe um e-mail válido.</div>
             </div>
 
             <!-- Seu WhatsApp -->
             <div class="field-row" id="group-whatsapp">
-              <label for="campo-whatsapp" class="field-label">Seu WhatsApp</label>
-              <input type="tel" id="campo-whatsapp" name="whatsapp" class="field-input" placeholder="(XX) XXXXX-XXXX" required autocomplete="tel" maxlength="20">
+              <label for="campo-whatsapp" class="field-label">Seu WhatsApp (opcional)</label>
+              <input type="tel" aria-describedby="whatsapp-error" id="campo-whatsapp" name="whatsapp" class="field-input" placeholder="(XX) XXXXX-XXXX" autocomplete="tel" maxlength="20">
               <div class="field-error-msg" id="whatsapp-error">Por favor, informe seu WhatsApp com DDD.</div>
             </div>
 
             <!-- O que você quer -->
             <div class="field-row" id="group-mensagem">
               <label for="campo-mensagem" class="field-label">O que você quer</label>
-              <textarea id="campo-mensagem" name="mensagem" class="field-textarea" placeholder="Compartilhe o contexto, sua dúvida ou ideia..." maxlength="1000" required></textarea>
+              <textarea aria-describedby="mensagem-error" id="campo-mensagem" name="mensagem" class="field-textarea" placeholder="Compartilhe o contexto, sua dúvida ou ideia..." maxlength="1000" required></textarea>
               <div id="mensagem-counter" class="char-counter" aria-live="polite">0 / 1000</div>
               <div class="field-error-msg" id="mensagem-error">Por favor, descreva sua solicitação.</div>
             </div>
@@ -1330,6 +1334,7 @@
             <div id="form-error-hint" style="margin-top: 0.45rem; font-size: 0.82rem; display: none;">Dica: textos muito longos podem falhar no envio — tente resumir sua mensagem.</div>
           </div>
 
+          <p class="form-privacy">Usamos seus dados para responder e acompanhar este contato. <a href="/privacidade">Privacidade e condições</a>.</p>
           <!-- PASSO 3: Botão de Envio -->
           <div class="form-actions">
             <button type="submit" id="btn-submit" class="btn-submit-solicitation">
@@ -1353,6 +1358,7 @@
             Recebemos o seu pedido. Vamos analisar e entrar em contato pelo WhatsApp ou e-mail que você informou, em breve.
           </p>
 
+          <p id="contact-reference" class="confirmation-desc"></p>
           <button type="button" id="btn-reset-solicitation" class="btn-reset-form">
             Enviar outra solicitação
           </button>
@@ -1363,7 +1369,7 @@
       <p class="micro-caps text-lilac">MINDMORPHIA Websites</p>
       <h2 id="websites-title" style="font-size:clamp(30px,4vw,52px);margin:20px 0;max-width:780px;">Uma presença digital com a identidade da sua marca.</h2>
       <p style="max-width:740px;color:var(--text-muted);margin-bottom:24px;">Planos de lançamento com direção personalizada, site responsivo, hospedagem e manutenção por 12 meses e acesso à Área do Cliente. Acompanhe seu projeto, envie materiais e converse com a equipe em um só lugar.</p>
-      <p style="max-width:740px;color:var(--text-muted);margin-bottom:24px;">Também no catálogo: <a class="nav-a" href="/catalogo#acessos-digitais">Canva Pro e Google AI Pro</a>, com ativação na sua própria conta, e <a class="nav-a" href="/catalogo#midia-avulsa">serviços de mídia avulsos de R$ 49,90 e R$ 99,90</a>, conforme o trabalho combinado com o Mind Marketing.</p>
+      <p style="max-width:740px;color:var(--text-muted);margin-bottom:24px;">Também no catálogo: <a class="nav-a" href="/assinaturas">Canva Pro e Google AI Pro</a>, com ativação na sua própria conta, e <a class="nav-a" href="/midia">serviços de mídia avulsos de R$ 49,90 e R$ 99,90</a>, conforme o trabalho combinado com o Mind Marketing.</p>
       <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;"><a class="btn-outline-header" href="/catalogo">Conhecer os planos</a><a class="nav-a" href="/cliente">Entrar na Área do Cliente ↗</a></div>
     </section>
 </main>
@@ -1417,7 +1423,7 @@
      * Conectado ao serviço FormSubmit para envio direto por e-mail.
      */
     const CONFIG = {
-      formEndpoint: "https://formsubmit.co/ajax/grupo.sv.oficial@gmail.com"
+      formEndpoint: "/api/contact"
     };
 
     /**
@@ -1582,22 +1588,17 @@
       //initOfficialMindMorphiaLogo();
       // IntersectionObserver para entrada fluida editorial
       const targets = document.querySelectorAll('.reveal-on-scroll');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          }
-        });
-      }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
-      });
-
-      targets.forEach(target => observer.observe(target));
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.body.classList.add('has-reveal');
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {if(entry.isIntersecting){entry.target.classList.add('active');observer.unobserve(entry.target);}});
+        }, {threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+        targets.forEach(target => observer.observe(target));
+      }
 
       // Parallax sutil do mouse na Esfera Orbital no Desktop
       const orbitalFloat = document.querySelector('.orbital-float');
-      if (orbitalFloat && window.matchMedia('(pointer: fine)').matches) {
+      if (orbitalFloat && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         window.addEventListener('mousemove', (e) => {
           const xRatio = (e.clientX / window.innerWidth) - 0.5;
           const yRatio = (e.clientY / window.innerHeight) - 0.5;
@@ -1637,6 +1638,7 @@
 
       // Validação em tempo real dos campos de texto
       const form = document.getElementById('solicitation-form');
+      let contactKey = crypto.randomUUID();
       const confirmationBlock = document.getElementById('confirmation-block');
       const btnReset = document.getElementById('btn-reset-solicitation');
       const btnSubmit = document.getElementById('btn-submit');
@@ -1675,6 +1677,7 @@
 
       const setFieldError = (fieldEl, errorEl, isError) => {
         const parent = fieldEl.closest('.field-row');
+        fieldEl.setAttribute('aria-invalid', String(isError));
         if (isError) {
           if (parent) parent.classList.add('has-error');
           if (errorEl) errorEl.classList.add('visible');
@@ -1733,7 +1736,7 @@
 
           // Validação Passo 2: WhatsApp (mínimo 10 dígitos)
           const rawWhatsapp = inputWhatsapp.value.replace(/\D/g, '');
-          if (rawWhatsapp.length < 10) {
+          if (rawWhatsapp.length && rawWhatsapp.length < 10) {
             setFieldError(inputWhatsapp, document.getElementById('whatsapp-error'), true);
             hasError = true;
           } else {
@@ -1756,19 +1759,11 @@
           }
 
           if (hasError) {
+            (form.querySelector('[aria-invalid="true"]') || form.querySelector('input[type="radio"]'))?.focus();
             return;
           }
 
-          // Payload com as chaves configuradas para o FormSubmit
-          const payload = {
-            _subject: "Nova solicitação — Site MindMorphia",
-            tipo: selectedTipo.value,
-            nome: nomeVal,
-            email: emailVal,
-            whatsapp: inputWhatsapp.value.trim(),
-            mensagem: mensagemVal,
-            _captcha: "false"
-          };
+          const payload = {name:nomeVal,email:emailVal,phone:inputWhatsapp.value.trim(),message:mensagemVal,type:selectedTipo.value,key:contactKey,website:document.getElementById('contact-website').value};
 
           // Estado "Enviando..."
           btnSubmit.disabled = true;
@@ -1796,7 +1791,9 @@
               throw new Error('Falha no envio do endpoint.');
             }
 
-            // Confirmação verde: apenas quando o fetch retorna sucesso (response.ok)
+            const result = await response.json();
+            document.getElementById('contact-reference').textContent = result.reference ? `Protocolo: ${result.reference}` : '';
+            // Confirmação somente após o registro persistido.
             form.style.display = 'none';
             confirmationBlock.classList.add('visible');
 
@@ -1824,6 +1821,7 @@
       if (btnReset) {
         btnReset.addEventListener('click', () => {
           form.reset();
+          contactKey = crypto.randomUUID();
           // Limpar estados de erro visuais
           document.querySelectorAll('.field-row').forEach(row => row.classList.remove('has-error'));
           document.querySelectorAll('.field-error-msg').forEach(msg => msg.classList.remove('visible'));

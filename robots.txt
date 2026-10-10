@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /cliente
+Disallow: /gestao
+Disallow: /acesso
+Disallow: /checkout
+Sitemap: https://mindmorphia-site.vercel.app/sitemap.xml

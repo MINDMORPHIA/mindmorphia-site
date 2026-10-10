@@ -35,3 +35,59 @@ test('acessos e mídia têm preço real de catálogo e não aceitam entrada parc
 async function approveOrder(f,id,amount){f.payments.set('123',{id:123,collector_id:123,currency_id:'BRL',live_mode:true,external_reference:id,status:'approved',transaction_amount:amount/100,date_last_updated:'2026-10-09T01:00:00Z'});const signature=createHmac('sha256',f.env.MERCADOPAGO_WEBHOOK_SECRET).update('id:123;request-id:rid;ts:1;').digest('hex');return f.call('/webhooks/mercadopago?data.id=123',{},'',{'x-request-id':'rid','x-signature':`ts=1,v1=${signature}`});}
 test('compra digital envia confirmação única e link privado somente após quitação',async()=>{const f=await fixture(),a=await f.login(),b=await f.login('b@example.invalid'),o=await f.login('owner@example.invalid');const result=await f.call('/orders',{...orderBody,items:[{id:'canva-pro-12',quantity:1}],mode:'full',activationEmail:'conta@example.invalid'},a);const id=result.data.order.id;await f.call(`/orders/${id}/payment`,{},a);assert.equal((await approveOrder(f,id,9990)).r.status,200);const project=f.store.state.projects[0];assert.equal(project.status,'Ativação pendente');assert.equal(f.notifications.length,1);assert.match(f.notifications[0].subject,/Pagamento confirmado/);await approveOrder(f,id,9990);assert.equal(f.notifications.length,1);const body={productId:'canva-pro-12',url:'https://www.canva.com/brand/join?token=synthetic-link',instructions:'Abra o link na sua própria conta.'};assert.equal((await f.call(`/projects/${project.id}/deliver-access`,body,a)).r.status,403);assert.equal((await f.call(`/projects/${project.id}/deliver-access`,{...body,url:'javascript:alert(1)'},o)).r.status,400);assert.equal((await f.call(`/projects/${project.id}/deliver-access`,body,o)).r.status,200);assert.equal(f.notifications.length,2);assert.match(f.notifications[1].text,/conta@example.invalid/);assert.equal((await f.call('/dashboard',null,b)).data.projects.length,0);const own=(await f.call('/dashboard',null,a)).data.projects[0];assert.equal(own.accesses[0].url,body.url);assert.equal(own.status,'Link de acesso enviado');assert.equal((await f.call(`/projects/${project.id}/deliver-access`,body,o)).r.status,400);assert.equal(f.notifications.length,2);await f.call(`/orders/${id}/cancel`,{},a);assert.equal((await f.call(`/projects/${project.id}/deliver-access`,{...body,productId:'google-ai-pro-18'},o)).r.status,400);});
 test('migração do catálogo conserva edições e não duplica novos serviços',async()=>{const f=await fixture();f.store.state.catalog=f.store.state.catalog.filter(p=>p.category==='Websites');f.store.state.catalog[0].price=100000;const r=await f.call('/catalog');assert.equal(r.data.products.length,8);assert.equal(r.data.products[0].price,100000);await f.call('/catalog');assert.equal(f.store.state.catalog.length,8);const o=await f.login('owner@example.invalid');await f.call('/admin/catalog',{id:'canva-pro-12',name:'Canva Pro atualizado',price:11000,active:true},o);assert.equal(f.store.state.catalog.find(p=>p.id==='canva-pro-12').kind,'digital_access');assert.ok(f.store.state.catalog.find(p=>p.id==='canva-pro-12').image);});
+
+
+test('contato público é persistido uma vez, notificado e isolado por permissão',async()=>{
+ const f=await fixture();f.env.OWNER_EMAIL='owner@example.invalid';
+ const body={name:'Contato fictício',email:'lead@example.invalid',phone:'',type:'Uma pergunta',message:'Teste sintético do contato.',key:'synthetic-contact-key-0001'};
+ const first=await f.call('/contact',body);assert.equal(first.r.status,201);assert.match(first.data.reference,/^[a-f0-9]{8}$/);
+ assert.equal((await f.call('/contact',body)).data.reference,first.data.reference);assert.equal(f.store.state.contacts.length,1);assert.equal(f.notifications.length,1);assert.equal(f.store.state.users.length,4);
+ const c=await f.login(),staff=await f.login('staff@example.invalid'),owner=await f.login('owner@example.invalid');
+ assert.deepEqual((await f.call('/dashboard',null,c)).data.contacts,[]);
+ const contacts=(await f.call('/dashboard',null,staff)).data.contacts;assert.equal(contacts.length,1);assert.ok(!contacts[0].key);
+ const id=contacts[0].id;assert.equal((await f.call(`/admin/contacts/${id}`,{status:'Concluído',notes:'Privado'},c)).r.status,403);
+ assert.equal((await f.call(`/admin/contacts/${id}`,{status:'Em atendimento',notes:'Acompanhamento de teste'},staff)).r.status,200);
+ assert.equal((await f.call('/dashboard',null,owner)).data.contacts[0].status,'Em atendimento');
+});
+test('contato rejeita origem, tamanho e spam sem criar contas ou cobrar',async()=>{
+ const f=await fixture(),body={name:'QA',email:'qa@example.invalid',phone:'',type:'Uma pergunta',message:'Teste',key:'synthetic-contact-key-0001'};
+ assert.equal((await f.call('/contact',body,'',{origin:'https://attacker.invalid'})).r.status,403);
+ assert.equal((await f.call('/contact',{...body,message:'x'.repeat(1001)})).r.status,400);
+ assert.equal((await f.call('/contact',{...body,email:'invalid'})).r.status,400);
+ assert.equal((await f.call('/contact',{...body,website:'bot'})).r.status,202);assert.equal(f.store.state.contacts?.length||0,0);
+ for(let i=0;i<5;i++)assert.equal((await f.call('/contact',{...body,key:'synthetic-contact-key-'+i})).r.status,201);
+ assert.equal((await f.call('/contact',{...body,key:'synthetic-contact-key-limit'})).r.status,429);
+ assert.equal(f.store.state.orders.length,0);
+});
+test('erros internos não divulgam detalhes do armazenamento',async()=>{
+ const store=new MemoryStore();store.read=async()=>{throw new Error('synthetic-private-storage-detail');};
+ const app=createApp({store});const r=await app(new Request(origin+'/api/catalog'));assert.equal(r.status,500);assert.ok(!(await r.text()).includes('synthetic-private-storage-detail'));
+});
+test('identificadores administrativos não aceitam injeção em atributos da interface',async()=>{
+ const f=await fixture(),o=await f.login('owner@example.invalid');
+ assert.equal((await f.call('/admin/catalog',{id:'x" autofocus onfocus="bad',name:'Teste',price:100,active:true},o)).r.status,400);
+ assert.equal((await f.call('/admin/projects',{id:'x" autofocus onfocus="bad',userId:'a',name:'Teste'},o)).r.status,400);
+});
+test('assinatura sem observações é contratável e trabalhos continuam exigindo descrição',async()=>{
+ const f=await fixture(),c=await f.login();
+ const digital={...orderBody,items:[{id:'canva-pro-12',quantity:1}],mode:'full',brief:''};
+ const r=await f.call('/orders',digital,c);assert.equal(r.r.status,201);assert.equal(r.data.order.brief,'Sem observações adicionais.');
+ assert.equal((await f.call('/orders',{...orderBody,brief:''},c)).r.status,400);
+ assert.equal((await f.call('/quote',{items:[null]},c)).r.status,400);
+});
+
+test('equipe de projetos pode atualizar projeto sem acesso ao cadastro geral e titular não muda',async()=>{
+ const f=await fixture();f.store.state.users.find(u=>u.id==='staff').permissions=['projects'];
+ const o=await f.login('owner@example.invalid'),staff=await f.login('staff@example.invalid'),id=crypto.randomUUID();
+ assert.equal((await f.call('/admin/projects',{id,userId:'a',name:'Projeto QA',scope:'Teste'},o)).r.status,200);
+ assert.equal((await f.call('/dashboard',null,staff)).data.clients.length,0);
+ assert.equal((await f.call('/admin/projects',{id,userId:'a',name:'Projeto atualizado',scope:'Teste'},staff)).r.status,200);
+ assert.equal((await f.call('/admin/projects',{id,userId:'b',name:'Troca indevida',scope:'Teste'},staff)).r.status,400);
+});
+
+test('resumo preserva preço contratado e exige titular ou permissão de pedidos',async()=>{
+ const f=await fixture(),a=await f.login(),b=await f.login('b@example.invalid'),o=await f.login('owner@example.invalid');const id=(await f.call('/orders',orderBody,a)).data.order.id;
+ assert.equal((await f.call(`/orders/${id}/summary`,null,b)).r.status,404);assert.equal((await f.call(`/orders/${id}/summary`)).r.status,401);
+ await f.call('/admin/catalog',{id:'impacto',name:'Impacto',price:120000,active:true},o);
+ const r=await f.call(`/orders/${id}/summary`,null,a);assert.equal(r.r.status,200);assert.match(r.r.headers.get('content-disposition'),/attachment/);assert.match(r.data,/997,00/);assert.ok(!r.data.includes('1.200,00'));assert.equal(r.r.headers.get('cache-control'),'no-store');
+});
