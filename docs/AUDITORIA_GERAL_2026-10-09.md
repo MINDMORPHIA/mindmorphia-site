@@ -70,3 +70,12 @@ Capturas desta execução em ENTREGAS/AUDITORIA_GERAL_2026-10-09:
 | 15-assinaturas-publicadas.png | Artes originais e preços em produção. |
 
 Capturas 04, 07 e 08 não são evidência final: 04 enquadra pedido pré-carregado fictício, e 07/08 sofreram recorte inadequado da emulação IAB. Captura 09 descartada por mostrar a superfície incorreta. Todas as capturas usadas foram inspecionadas visualmente. A cobertura e os limites acima fazem parte da entrega.
+## Atualização de credenciais e webhook em 09/10/2026
+
+Após validação pessoal por QR, o titular confirmou a renovação do Client Secret da aplicação MINDMORPHIA Websites. O painel passou a mostrar New Client Secret e a chave anterior separadamente. A expiração exibida da anterior foi 08/10/2026 às 22h45, embora a preparação tenha selecionado Hoje (09/10/2026) às 22h45. Portanto, nova chave confirmada; revogação imediata da anterior não comprovada. Nenhum valor de chave foi guardado neste registro.
+
+Webhook produtivo reconferido: https://mindmorphia-site.vercel.app/api/webhooks/mercadopago; evento Pagamentos (legacy) selecionado e demais eventos não selecionados. Configuração não alterada nem assinatura redefinida. Não foi enviada simulação de pagamento.
+
+A credencial de teste permanece pendente: o painel de credenciais de teste não oferece ação de renovação; o menu da conta de teste oferece edição de identificação e saldo, sem renovação ou exclusão observada. Não se declara revogação dessa credencial. O checkout publicado usa o Access Token produtivo e a assinatura do webhook; não usa Client Secret ou a credencial de teste. A compra real permanece por fazer pelo titular.
+
+Captura 18-webhook-produtivo-conferido.png mostra URL e modo produtivo, sem assinatura. A mensagem anterior que condicionava integralmente a compra real à troca de ambas as chaves foi excessiva: a pendência de teste fica separada da configuração do checkout produtivo. A nova credencial foi confirmada visualmente; o resultado de uma transação real continua sem comprovação.
