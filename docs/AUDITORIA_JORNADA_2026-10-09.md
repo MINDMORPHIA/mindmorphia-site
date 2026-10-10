@@ -31,3 +31,7 @@ As capturas 01, 03, 04, 05, 07, 08, 09 e 10 foram preparatórias, incompletas ou
 ## Publicação
 
 Código da vitrine: fdd1e6d. Correção SAUVID/menu: 47464a9, READY dpl_2Kpvja6dtAp4ouB4u8ea4SiaAMwC. Correção móvel/checkout: 52d2221, implantação mindmorphia-site-q830zcmn4-juniorsauder-7118.vercel.app confirmada Ready pela CLI. Comportamento conferido também em https://mindmorphia-site.vercel.app. Relatório e mestres preservam os limites de comprovação acima.
+
+## Atualização posterior nesta data
+
+A rodada posterior corrigiu falha crítica de registro no navegador, contatos e outros pontos de segurança/acesso; agora 37 testes passaram. Este documento é evidência histórica da rodada anterior. Consulte [Auditoria geral vigente](AUDITORIA_GERAL_2026-10-09.md).
