@@ -1,0 +1,8 @@
+.env*
+.local-data/
+scripts/
+tests/
+db/
+docs/
+README.md
+RELEASE_VERIFICATION.json

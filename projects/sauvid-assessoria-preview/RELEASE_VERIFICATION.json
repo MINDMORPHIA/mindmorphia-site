@@ -1,0 +1,18 @@
+{
+  "version": "3.0.0",
+  "date": "2026-10-12",
+  "publicUrl": "https://sauvid-assessoria.vercel.app",
+  "managementUrl": "https://sauvid-assessoria.vercel.app/gestao.html",
+  "desiredDomain": "www.sauvid.ass.com.br",
+  "domainDns": "pending",
+  "tests": {
+    "postgresRules": "13 passed",
+    "e2e": "passed with synthetic data only",
+    "restore": "passed on synthetic QA database",
+    "qaDatabases": "removed"
+  },
+  "productionCustomerDataImported": false,
+  "recovery": "assisted by administrator using one-time links",
+  "scheduledProductionBackup": "not configured",
+  "liveDeployment": "pending verification"
+}
