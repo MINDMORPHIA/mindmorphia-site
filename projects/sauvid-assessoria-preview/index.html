@@ -450,7 +450,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
         <h3>Identificação cadastral</h3>
         <p class="form-sub">O CPF é utilizado para identificar corretamente o cadastro e evitar vincular uma análise à pessoa errada. Ele, sozinho, não autoriza acesso a informações do seu atendimento.</p>
         <div class="field"><label for="cpf">CPF</label><input id="cpf" inputmode="numeric" placeholder="000.000.000-00"></div>
-        <button type="submit" class="btn btn-blue">Preparar solicitação →</button>
+        <label class="privacy-note" style="display:flex;gap:10px;align-items:flex-start;margin:15px 0"><input id="consentLead" type="checkbox" required style="width:auto;margin-top:5px"><span>Li a <button type="button" class="tiny" data-privacy>Política de Privacidade</button> e estou ciente do uso destes dados para análise e contato sobre meu atendimento.</span></label><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="websiteLead" tabindex="-1" autocomplete="off"></label></div><button type="submit" class="btn btn-blue">Enviar solicitação →</button>
         <button type="button" class="tiny" id="backLead" style="margin-top:9px">← Voltar</button>
       </div>
       <div class="form-success" id="leadSuccess"><b>Dados preparados.</b><br>Esta versão é uma prévia de homologação. Nenhuma solicitação real foi enviada nem armazenada aqui. Na produção, o envio será conectado ao canal oficial definido pela SAUVID.</div>
@@ -496,68 +496,22 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
       <p style="text-align:right;margin:9px 0 0">© 2026 SAUVID Assessoria<br>Todos os direitos reservados.</p>
     </div>
   </div>
-</footer>
+<div style="text-align:center;padding:12px"><a href="/gestao.html" style="font-size:11px;color:inherit">Gestão SAUVID</a></div></footer>
 
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Área SAUVID">
   <div class="modal">
     <div class="modal-head">
-      <div><b>SAUVID · Área do Cliente</b><br><span class="homolog">AMBIENTE DE HOMOLOGAÇÃO</span></div>
+      <div><b>SAUVID · Área do Cliente</b><br><span class="homolog">INFORMAÇÕES SAUVID</span></div>
       <button class="close" data-close aria-label="Fechar">×</button>
     </div>
-    <div class="login" id="clientLogin">
-      <h3>Acesse seu atendimento</h3>
-      <p>O acesso de homologação agora é validado no servidor e cria uma sessão temporária protegida. Para testar esta prévia, use qualquer documento com pelo menos 11 dígitos e o código demonstrativo <b>482913</b>.</p>
-      <div class="login-row"><input id="docLogin" inputmode="numeric" placeholder="CPF ou CNPJ"><input id="codeLogin" inputmode="numeric" maxlength="6" placeholder="Código de 6 dígitos"></div>
-      <button class="btn btn-blue" id="enterClient">Ver acompanhamento →</button>
-      <p style="font-size:10px">Os dados digitados nesta demonstração não são gravados nem enviados.</p>
-    </div>
-
-    <div class="client-dash" id="clientDash">
-      <div class="dash-top"><div><small style="color:#80919e">ATENDIMENTO DEMONSTRATIVO</small><h3 id="clientName" style="margin:4px 0 0">Cliente de homologação</h3></div><button class="tiny" id="logoutClient">Sair</button></div>
-      <div class="summary-grid">
-        <div class="metric"><small>ETAPA ATUAL</small><b id="clientStage">Em acompanhamento</b></div>
-        <div class="metric"><small>ÚLTIMA CONFERÊNCIA</small><b id="clientLastCheck">05/10/2026</b></div>
-        <div class="metric"><small>PRÓXIMA AÇÃO</small><b id="clientNextAction">Nova verificação</b></div>
-      </div>
-      <div class="org-grid" id="clientOrgs" aria-live="polite"></div>
-      <div class="timeline" id="clientTimeline" aria-live="polite"><b style="font-size:12px">Histórico publicado</b></div>
-    </div>
-
-    <div class="admin-view" id="adminView">
-      <div class="admin-layout">
-        <aside class="sidebar"><b style="font-size:12px">SAUVID Admin</b><div style="height:14px"></div><div class="side active">Visão geral</div><div class="side">Clientes</div><div class="side">Atualizações</div><div class="side">Rascunhos</div><div class="side">Histórico</div><div class="side">Arquivos</div></aside>
-        <div class="admin-main">
-          <div class="dash-top"><div><small style="color:#80919e">PAINEL DEMONSTRATIVO</small><h3 style="margin:4px 0">Operação SAUVID</h3></div><button class="tiny" id="newUpdate">+ Nova atualização</button></div>
-          <div class="admin-cards"><div><small>CLIENTES</small><b>30</b></div><div><small>VÍNCULOS</small><b>32</b></div><div><small>A CONFIRMAR</small><b>12</b></div><div><small>RASCUNHOS</small><b>3</b></div></div>
-          <table class="table"><thead><tr><th>Cliente</th><th>Etapa</th><th>Órgão</th><th>Atualização</th><th>Ação</th></tr></thead><tbody>
-            <tr><td>Cliente A.</td><td>Em acompanhamento</td><td>SPC</td><td>05/10/2026</td><td><button class="tiny" data-edit>Editar</button></td></tr>
-            <tr><td>Cliente B.</td><td>Protocolado</td><td>Serasa</td><td>03/10/2026</td><td><button class="tiny" data-edit>Editar</button></td></tr>
-            <tr><td>Empresa C.</td><td>Recebido</td><td>Boa Vista</td><td>01/10/2026</td><td><button class="tiny" data-edit>Editar</button></td></tr>
-          </tbody></table>
-          <div class="editor" id="editor">
-            <b style="font-size:12px">Atualizar situação</b>
-            <div class="fields" style="margin-top:12px">
-              <div class="field"><label>CLIENTE</label><input value="Cliente A." readonly></div>
-              <div class="field"><label>ÓRGÃO</label><input value="SPC" readonly></div>
-              <div class="field"><label>NOVO STATUS</label><input value="Baixa informada pela fonte"></div>
-              <div class="field"><label>DATA DO FATO</label><input type="date" value="2026-10-05"></div>
-              <div class="field full"><label>MENSAGEM AO CLIENTE</label><textarea>Nova informação registrada e encaminhada para revisão antes da publicação.</textarea></div>
-              <div class="field full"><label>OBSERVAÇÃO INTERNA</label><textarea>Campo interno de homologação. Não aparece para o cliente.</textarea></div>
-            </div>
-            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="tiny" id="saveDraft">Salvar rascunho</button><button class="btn btn-blue" style="width:auto;padding:9px 12px" id="publishDemo">Publicar atualização</button></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="legal" id="privacyView">
-      <h3>Política de Privacidade — resumo de homologação</h3>
+      <h3>Política de Privacidade</h3><p>Atualizada em 12/10/2026. O formulário coleta nome, e-mail, WhatsApp, CPF e descrição do pedido para organizar a solicitação, analisar a possibilidade de atendimento e manter contato relacionado ao caso. Evite informar dados de terceiros ou enviar detalhes que não sejam necessários na descrição inicial.</p><p>As solicitações ficam em uma área de gestão com acesso autorizado. O CPF e a descrição são criptografados no servidor. O documento não funciona como senha. Clientes acessam somente os atendimentos vinculados à sua conta; notas internas ficam restritas à equipe.</p><p>A infraestrutura utiliza Vercel para hospedagem e documentos privados, Neon para banco de dados e Better Auth para autenticação. Esses serviços podem processar dados para executar suas funções. O armazenamento operacional foi configurado na região de São Paulo; recursos de entrega e suporte dos fornecedores podem operar em outras localidades.</p><p>Conservamos os registros necessários ao acompanhamento, à segurança e às obrigações aplicáveis. Solicitações de acesso, correção, exclusão ou informações sobre retenção devem ser encaminhadas à equipe responsável pelo seu atendimento. A equipe verifica a identidade antes de divulgar ou alterar dados. Não utilizamos o formulário para consentimento de publicidade.</p>
       <p>A SAUVID deve tratar dados pessoais somente para finalidades legítimas relacionadas ao atendimento, usando o mínimo necessário, controles de acesso e medidas de segurança compatíveis com a operação. CPF/CNPJ não deve funcionar como senha nem liberar informações pessoais por si só.</p>
-      <p>A versão definitiva deve informar as finalidades do tratamento, canais para exercício de direitos, prazos de retenção, fornecedores relevantes e procedimento de resposta a incidentes conforme a operação efetivamente implantada.</p>
+      <p>O site não utiliza cookies de publicidade. Cookies de sessão são usados no acesso à área restrita. Fontes externas podem gerar solicitações aos servidores do Google. As permissões são aplicadas no servidor e operações de gestão possuem registro de auditoria.</p>
     </div>
 
     <div class="legal" id="termsView">
-      <h3>Termos de Uso — resumo de homologação</h3>
+      <h3>Termos de Uso</h3><p>Enviar uma solicitação inicia a análise e não representa contratação, aprovação de crédito ou promessa de resultado. A modalidade, os documentos necessários, os valores e as condições de eventual atendimento são definidos individualmente antes da contratação.</p><p>Mantenha informações corretas e utilize apenas o seu acesso. Convites e senhas são pessoais. A SAUVID pode suspender acessos por uso indevido e solicitar verificação adicional para proteger o titular.</p>
       <p>As informações apresentadas no site possuem caráter institucional e de atendimento. A análise de cada caso é individual e depende dos documentos, registros, órgãos envolvidos e demais circunstâncias aplicáveis.</p>
       <p>O site não promete quitação de dívida, pontuação específica de score, concessão de crédito ou aprovação de financiamento. Prazos apresentados como estimativa podem variar.</p>
     </div>
@@ -572,11 +526,11 @@ const admin=document.getElementById('adminView');
 const privacy=document.getElementById('privacyView');
 const terms=document.getElementById('termsView');
 
-function hideViews(){[login,dash,admin,privacy,terms].forEach(v=>v.style.display='none')}
+function hideViews(){[privacy,terms].forEach(v=>v.style.display='none')}
 function showOverlay(){overlay.classList.add('show');document.body.classList.add('lock')}
 function closeOverlay(){overlay.classList.remove('show');document.body.classList.remove('lock');if(['#acompanhar','#admin-demo','#privacidade','#termos'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search)}
-function openClient(){hideViews();login.style.display='block';showOverlay()}
-function openAdmin(){hideViews();admin.style.display='block';showOverlay()}
+function openClient(){location.href='/gestao.html'}
+function openAdmin(){location.href='/gestao.html'}
 function openPrivacy(){hideViews();privacy.style.display='block';showOverlay()}
 function openTerms(){hideViews();terms.style.display='block';showOverlay()}
 
@@ -590,40 +544,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
 function escapeHtml(value){
   return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
 }
-function renderClient(data){
-  document.getElementById('clientName').textContent=data.client?.displayName||'Cliente';
-  document.getElementById('clientStage').textContent=data.summary?.stage||'—';
-  document.getElementById('clientLastCheck').textContent=data.summary?.lastCheck||'—';
-  document.getElementById('clientNextAction').textContent=data.summary?.nextAction||'—';
-  const orgs=document.getElementById('clientOrgs');
-  orgs.innerHTML=(data.organizations||[]).map(item=>`<div class="org-card"><small>${escapeHtml(item.name)}</small><b>${escapeHtml(item.status)}</b><span class="badge">${escapeHtml(String(item.badge||'').toUpperCase())}</span></div>`).join('');
-  const timeline=document.getElementById('clientTimeline');
-  timeline.innerHTML='<b style="font-size:12px">Histórico publicado</b>'+ (data.events||[]).map(item=>`<div class="event"><time>${escapeHtml(item.date)}</time><div><b>${escapeHtml(item.title)}</b><p>${escapeHtml(item.message)}</p></div></div>`).join('');
-}
-
-document.getElementById('enterClient').addEventListener('click',async()=>{
-  const d=document.getElementById('docLogin').value.replace(/\D/g,'');
-  const c=document.getElementById('codeLogin').value.replace(/\D/g,'');
-  if(d.length<11||c.length!==6){alert('Informe um CPF/CNPJ com pelo menos 11 dígitos e o código demonstrativo de 6 dígitos.');return}
-  const btn=document.getElementById('enterClient');
-  btn.disabled=true;btn.textContent='Validando...';
-  try{
-    const res=await fetch('/api/demo-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({document:d,code:c})});
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok){throw new Error(data.error||'Não foi possível validar o acesso.')}
-    const session=await fetch('/api/demo-session',{headers:{'Accept':'application/json'}});
-    const sessionData=await session.json().catch(()=>({}));
-    if(!session.ok)throw new Error(sessionData.error||'Sessão não pôde ser confirmada.');
-    renderClient(sessionData.data||{});
-    login.style.display='none';dash.style.display='block';
-  }catch(err){alert(err.message||'Falha ao validar o acesso.')}
-  finally{btn.disabled=false;btn.textContent='Ver acompanhamento →'}
-});
-document.getElementById('logoutClient').addEventListener('click',async()=>{
-  try{await fetch('/api/logout',{method:'POST'})}catch(e){}
-  dash.style.display='none';login.style.display='block'
-});
-
+let leadRequestKey=crypto.randomUUID();
 const s1=document.getElementById('stepOne'),s2=document.getElementById('stepTwo'),success=document.getElementById('leadSuccess');
 document.getElementById('nextLead').addEventListener('click',()=>{
   let ok=true;
@@ -637,7 +558,7 @@ document.getElementById('leadForm').addEventListener('submit',async e=>{
   const cpf=document.getElementById('cpf');
   if(cpf.value.replace(/\D/g,'').length!==11){cpf.style.borderColor='#c96969';return}
   const submit=s2.querySelector('button[type="submit"]');
-  submit.disabled=true;submit.textContent='Validando...';
+  submit.disabled=true;submit.textContent='Enviando...';
   try{
     const payload={
       name:document.getElementById('nome').value.trim(),
@@ -645,21 +566,18 @@ document.getElementById('leadForm').addEventListener('submit',async e=>{
       email:document.getElementById('email').value.trim(),
       situation:document.getElementById('situacao').value.trim(),
       cpf:cpf.value.replace(/\D/g,''),
-      website:''
+      website:document.getElementById('websiteLead').value,
+      consent:document.getElementById('consentLead').checked,
+      requestKey:leadRequestKey
     };
     const res=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const data=await res.json().catch(()=>({}));
     if(!res.ok)throw new Error(data.error||'Não foi possível processar a solicitação.');
     s2.style.display='none';success.style.display='block';
-    success.innerHTML='<b>Solicitação validada.</b><br>'+ (data.message||'Os dados foram validados no servidor. O envio definitivo será habilitado quando o canal oficial da SAUVID for conectado.');
+    success.replaceChildren();const title=document.createElement('b');title.textContent='Solicitação registrada.';const message=document.createElement('p');message.textContent=data.message;const protocol=document.createElement('p');protocol.textContent=data.protocol?'Protocolo: '+data.protocol:'';success.append(title,message,protocol);document.getElementById('leadForm').reset();leadRequestKey=crypto.randomUUID();
   }catch(err){alert(err.message||'Falha ao processar a solicitação.')}
-  finally{submit.disabled=false;submit.textContent='Preparar solicitação →'}
+  finally{submit.disabled=false;submit.textContent='Enviar solicitação →'}
 });
-
-document.getElementById('newUpdate').addEventListener('click',()=>document.getElementById('editor').style.display='block');
-document.querySelectorAll('[data-edit]').forEach(el=>el.addEventListener('click',()=>document.getElementById('editor').style.display='block'));
-document.getElementById('saveDraft').addEventListener('click',()=>alert('Rascunho salvo somente nesta demonstração visual.'));
-document.getElementById('publishDemo').addEventListener('click',()=>alert('Publicação simulada. Em produção, a atualização será gravada no banco com histórico e auditoria.'));
 
 const mobileToggle=document.getElementById('mobileToggle'),mobileMenu=document.getElementById('mobileMenu');
 mobileToggle.setAttribute('aria-expanded','false');

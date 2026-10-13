@@ -1,4 +1,4 @@
-# Arquitetura alvo — SAUVID Assessoria
+# Arquitetura implementada — SAUVID Assessoria
 
 Atualização: 12/10/2026.
 
@@ -91,9 +91,9 @@ Operações mínimas auditáveis:
 - concessão/revogação de acesso;
 - alteração de permissão administrativa.
 
-## Próxima decisão de infraestrutura
+## Infraestrutura conectada em 12/10/2026
 
-Antes de gravar dados reais é necessário escolher/provisionar:
+A operação 3.0 utiliza Neon PostgreSQL, Better Auth e Vercel Blob privado. Segredos foram configurados no ambiente. O formulário grava na gestão SAUVID. Referência histórica da seleção:
 
 - banco PostgreSQL;
 - provedor de autenticação;
@@ -101,4 +101,4 @@ Antes de gravar dados reais é necessário escolher/provisionar:
 - segredo de HMAC/criptografia em cofre de ambiente;
 - canal oficial do formulário.
 
-Até essas dependências existirem, a API de homologação continua exclusivamente com fixtures e sem persistência.
+As fixtures de homologação foram retiradas das rotas públicas. Consulte OPERACAO.md para os limites de domínio, recuperação assistida e backup.

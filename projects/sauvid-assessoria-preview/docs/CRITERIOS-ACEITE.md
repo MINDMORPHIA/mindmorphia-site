@@ -1,6 +1,6 @@
-# Critérios de aceite — portal SAUVID de produção
+# Critérios históricos e validação SAUVID 3.0
 
-A publicação definitiva só deve ocorrer quando todos os itens abaixo estiverem testados.
+A validação vigente, com limites explícitos, consta em OPERACAO.md e RELEASE_VERIFICATION.json. Esta lista preserva os critérios originalmente definidos.
 
 ## Cliente
 

@@ -9,6 +9,12 @@ function json(res,status,body,extraHeaders={}){
 }
 
 async function readJson(req,maxBytes=16*1024){
+  if(req.body!==undefined){
+    const value=typeof req.body==='string'?JSON.parse(req.body):req.body;
+    if(Buffer.byteLength(JSON.stringify(value))>maxBytes)throw Object.assign(new Error('Payload muito grande.'),{statusCode:413});
+    if(!value||Array.isArray(value)||typeof value!=='object')throw Object.assign(new Error('JSON inválido.'),{statusCode:400});
+    return value;
+  }
   const chunks=[];let total=0;
   for await(const chunk of req){
     total+=chunk.length;

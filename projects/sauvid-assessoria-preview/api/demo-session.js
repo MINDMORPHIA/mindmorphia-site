@@ -1,11 +1,1 @@
-'use strict';
-const {json,allowMethods}=require('./_lib/http');
-const {sessionFromRequest}=require('./_lib/auth');
-const fixture=require('./_lib/fixture');
-
-module.exports=(req,res)=>{
-  if(!allowMethods(req,res,['GET'])) return;
-  const session=sessionFromRequest(req);
-  if(!session) return json(res,401,{ok:false,error:'Sessão ausente ou expirada.'});
-  json(res,200,{ok:true,mode:'homologation',data:fixture});
-};
+const {json}=require('./_lib/http');module.exports=(req,res)=>json(res,410,{ok:false,error:'A demonstração foi encerrada. Utilize a Área do Cliente com seu acesso individual.'});

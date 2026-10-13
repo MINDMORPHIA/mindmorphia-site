@@ -5,7 +5,7 @@ Fonte única para localizar os projetos web sob gestão da organização GitHub 
 | Projeto | Status | Código / registro no GitHub | Página / domínio conhecido |
 |---|---|---|---|
 | MINDMORPHIA | Institucional e portal comercial implementado; e-mail e pagamento aguardam ativação | `MINDMORPHIA/mindmorphia-site` → `/index.html`, `/commerce`, `/api`, `/lib` | `https://mindmorphia-site.vercel.app`; ver `docs/IMPLEMENTACAO_PORTAL.md` |
-| SAUVID Assessoria | Homologação v2.1 — preview Vercel publicado em 12/10/2026 | `MINDMORPHIA/mindmorphia-site` → `/projects/sauvid-assessoria-preview/` | `https://sauvid-assessoria.vercel.app` |
+| SAUVID Assessoria | Operação 3.0 — gestão persistente, contas individuais e documentos privados; endereço Vercel mantido | `MINDMORPHIA/mindmorphia-site` → `/projects/sauvid-assessoria-preview/` | `https://sauvid-assessoria.vercel.app` |
 | Grupo SV | Snapshot GitHub criado | `MINDMORPHIA/mindmorphia-site` → `/sites/grupo-sv/` | `grupo-sauvid.juniorsauder.chatgpt.site`; domínio institucional: `gruposauvid.com.br` |
 | Amanda Carrijo / Dra. Amanda Pelo Mundo | Snapshot GitHub criado | `MINDMORPHIA/mindmorphia-site` → `/sites/amanda-carrijo/` | `amanda-carrijo-viagens.juniorsauder.chatgpt.site`; domínio definido: `www.draamandapelomundo.com.br` |
 | Gabriella Sauder | Código ativo | `MINDMORPHIA/gabriella-sauder-site` | repositório próprio |

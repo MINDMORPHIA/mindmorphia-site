@@ -1,0 +1,40 @@
+{
+  "version": "3.0.0",
+  "date": "2026-10-12",
+  "publicUrl": "https://sauvid-assessoria.vercel.app",
+  "managementUrl": "https://sauvid-assessoria.vercel.app/gestao.html",
+  "desiredDomain": "www.sauvid.ass.com.br",
+  "domainDns": "deferred by user; keep Vercel URL",
+  "tests": {
+    "postgresRules": "13 passed",
+    "e2e": "passed with synthetic data only",
+    "restore": "passed on synthetic QA database",
+    "qaDatabases": "removed"
+  },
+  "productionCustomerDataImported": false,
+  "recovery": "assisted by administrator using one-time links",
+  "scheduledProductionBackup": "not configured",
+  "liveDeployment": {
+    "id": "dpl_DS7skSkqxPbi2v2mMcytqsyJX3vS",
+    "status": "READY",
+    "commit": "fe71a74a355c7db693bc61fc226a3bebccaf4c95",
+    "region": "gru1"
+  },
+  "liveChecks": {
+    "health": "200 version 3.0.0",
+    "management": "200",
+    "unauthenticatedPortal": "401",
+    "unauthenticatedDocument": "401",
+    "demoSession": "410",
+    "privateConfig": "404",
+    "schema": "404",
+    "images": "200 and valid WEBP",
+    "mobileOverflow": false
+  },
+  "sourceIntegration": {
+    "branch": "codex/sauvid-operacao",
+    "pullRequest": "https://github.com/MINDMORPHIA/mindmorphia-site/pull/3",
+    "mainMerge": "requires user approval"
+  },
+  "adminActivation": "confirmed active"
+}

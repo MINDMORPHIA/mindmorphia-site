@@ -1,50 +1,24 @@
-# SAUVID Assessoria — homologação v2.2
+# SAUVID Assessoria — versão operacional 3.0
 
-Atualizado em **12/10/2026**. Esta é a referência vigente do site SAUVID Assessoria no repositório central MINDMORPHIA.
+Atualizada em 12/10/2026. Código canônico nesta pasta, repositório MINDMORPHIA/mindmorphia-site.
 
-## Preview publicado
+- Site: https://sauvid-assessoria.vercel.app
+- Gestão e Área do Cliente: https://sauvid-assessoria.vercel.app/gestao.html
+- Domínio solicitado: www.sauvid.ass.com.br (adiado; manter endereço Vercel).
+- Vercel: sauvid-assessoria / prj_U3RuoOTlguk1IrC7Y8EaN6gV3XOU.
 
-- URL: `https://sauvid-assessoria.vercel.app`
-- Projeto Vercel: `sauvid-assessoria`
-- Projeto ID: `prj_U3RuoOTlguk1IrC7Y8EaN6gV3XOU`
-- Deployment verificado como `READY`: `dpl_FjVtGBS4HQxrG9qMSvzji1uwsHgX`
-- Commit de referência do código: `0b075126fed773f8d2cac3340f6277482fd8184e`
-- Branch de preview: `sauvid-preview`
+## Implementado
 
-O preview permanece com `noindex` e `robots.txt` bloqueando indexação até a definição do domínio e da publicação definitiva.
+Solicitações persistentes na gestão com protocolo, filtro, situação, anotação interna e conversão em atendimento. Login real por convite, senhas individuais e sessões revogáveis. Isolamento por cliente aplicado no servidor e PostgreSQL RLS. Etapa, próxima ação, quatro órgãos independentes e histórico preservado. Documentos privados com autorização e evidência revisada específica por órgão. Acessos de cliente, operador, administrador e auditor. Recuperação assistida e suspensão. Auditoria sem alteração pelo runtime, limites de requisição e proteção de origem.
 
-## Estado atual
+Banco Neon exclusivo e Blob privado em São Paulo. CPF e relatos protegidos por criptografia e índices HMAC. Nenhum dado real de cliente importado. Demonstrações anteriores desativadas. Três ativos corrompidos recuperados das referências fornecidas, mantendo a identidade aprovada.
 
-- Site institucional: implementado e pronto para revisão em ambiente publicado.
-- Narrativa: reabilitação de crédito, regularização cadastral, acompanhamento e diferenciação entre dívida, negativação e score.
-- Órgãos: Serasa, SPC Brasil, Boa Vista e Protestos/Cartórios tratados separadamente.
-- Jornada: **Entender → Estruturar → Acompanhar → Avançar**.
-- Formulário: interface em duas etapas com validação server-side; ainda sem destinatário real conectado.
-- Área do Cliente: protótipo de homologação com dados fictícios, login validado no servidor e sessão HttpOnly assinada.
-- Administração SAUVID: protótipo de homologação com ações simuladas.
-- Segurança de preview: `noindex`, `robots.txt` bloqueando indexação e headers básicos no Vercel.
-- Crédito MINDMORPHIA: símbolo oficial + assinatura clicável no rodapé.
-- Acessibilidade: foco visível, link “Pular para o conteúdo”, menu mobile com estado ARIA e respeito a redução de movimento.
+## Validação
 
-## Segurança e conteúdo
+13 testes de regras PostgreSQL passaram. Teste E2E em bancos temporários com dados sintéticos confirmou ativação, login, envio, caixa de entrada, conversão, isolamento entre contas, status independente, notas internas, documento privado, recuperação, suspensão, logout, CSRF e snapshot/restauração. Bancos de QA removidos após o teste.
 
-- Nenhum CPF ou cliente real está embutido no HTML.
-- CPF/CNPJ identifica o cadastro, mas não funciona como senha.
-- “Baixa confirmada” não deve ser usada sem evidência e revisão.
-- Uma atualização em um órgão não altera automaticamente os demais.
-- O site não promete quitação de dívida, score específico, concessão de crédito ou aprovação de financiamento.
-- Prazos são tratados como estimativas.
+Ver docs/OPERACAO.md e RELEASE_VERIFICATION.json para instruções, evidências, implantação e limites.
 
-## Rotas de homologação
+## Fechamento externo
 
-- Página: `/`
-- Área do Cliente: `/#acompanhar`
-- Painel administrativo demonstrativo: `/#admin-demo`
-- Privacidade: `/#privacidade`
-- Termos: `/#termos`
-
-## Próxima camada
-
-Para produção definitiva ainda devem ser conectados: autenticação real, banco privado, isolamento por cliente, persistência, armazenamento de evidências/arquivos, trilha de auditoria, recuperação de acesso, canal oficial do formulário, políticas definitivas, domínio e SEO de produção.
-
-O preview não deve ser tratado como portal autenticado real até esses itens serem implementados e testados.
+Conta administrativa ativada pelo responsável. Endereço Vercel mantido por decisão de 12/10/2026; domínio próprio adiado. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail não está habilitada: a gestão gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.
