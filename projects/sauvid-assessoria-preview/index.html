@@ -506,7 +506,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
     </div>
     <div class="login" id="clientLogin">
       <h3>Acesse seu atendimento</h3>
-      <p>Na versão definitiva, CPF/CNPJ identifica o cadastro e uma validação adicional confirma a titularidade. Para testar esta prévia, use qualquer documento com pelo menos 11 dígitos e qualquer código de 6 dígitos.</p>
+      <p>O acesso de homologação agora é validado no servidor e cria uma sessão temporária protegida. Para testar esta prévia, use qualquer documento com pelo menos 11 dígitos e o código demonstrativo <b>482913</b>.</p>
       <div class="login-row"><input id="docLogin" inputmode="numeric" placeholder="CPF ou CNPJ"><input id="codeLogin" inputmode="numeric" maxlength="6" placeholder="Código de 6 dígitos"></div>
       <button class="btn btn-blue" id="enterClient">Ver acompanhamento →</button>
       <p style="font-size:10px">Os dados digitados nesta demonstração não são gravados nem enviados.</p>
@@ -597,13 +597,26 @@ document.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeOverlay()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
 
-document.getElementById('enterClient').addEventListener('click',()=>{
+document.getElementById('enterClient').addEventListener('click',async()=>{
   const d=document.getElementById('docLogin').value.replace(/\D/g,'');
   const c=document.getElementById('codeLogin').value.replace(/\D/g,'');
-  if(d.length<11||c.length!==6){alert('Para testar a homologação, informe um CPF/CNPJ com pelo menos 11 dígitos e um código de 6 dígitos.');return}
-  login.style.display='none';dash.style.display='block'
+  if(d.length<11||c.length!==6){alert('Informe um CPF/CNPJ com pelo menos 11 dígitos e o código demonstrativo de 6 dígitos.');return}
+  const btn=document.getElementById('enterClient');
+  btn.disabled=true;btn.textContent='Validando...';
+  try{
+    const res=await fetch('/api/demo-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({document:d,code:c})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){throw new Error(data.error||'Não foi possível validar o acesso.')}
+    const session=await fetch('/api/demo-session',{headers:{'Accept':'application/json'}});
+    if(!session.ok)throw new Error('Sessão não pôde ser confirmada.');
+    login.style.display='none';dash.style.display='block';
+  }catch(err){alert(err.message||'Falha ao validar o acesso.')}
+  finally{btn.disabled=false;btn.textContent='Ver acompanhamento →'}
 });
-document.getElementById('logoutClient').addEventListener('click',()=>{dash.style.display='none';login.style.display='block'});
+document.getElementById('logoutClient').addEventListener('click',async()=>{
+  try{await fetch('/api/logout',{method:'POST'})}catch(e){}
+  dash.style.display='none';login.style.display='block'
+});
 
 const s1=document.getElementById('stepOne'),s2=document.getElementById('stepTwo'),success=document.getElementById('leadSuccess');
 document.getElementById('nextLead').addEventListener('click',()=>{
@@ -613,11 +626,28 @@ document.getElementById('nextLead').addEventListener('click',()=>{
   s1.style.display='none';s2.style.display='block';
 });
 document.getElementById('backLead').addEventListener('click',()=>{s2.style.display='none';s1.style.display='block'});
-document.getElementById('leadForm').addEventListener('submit',e=>{
+document.getElementById('leadForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const cpf=document.getElementById('cpf');
   if(cpf.value.replace(/\D/g,'').length!==11){cpf.style.borderColor='#c96969';return}
-  s2.style.display='none';success.style.display='block';
+  const submit=s2.querySelector('button[type="submit"]');
+  submit.disabled=true;submit.textContent='Validando...';
+  try{
+    const payload={
+      name:document.getElementById('nome').value.trim(),
+      whatsapp:document.getElementById('whatsapp').value.trim(),
+      email:document.getElementById('email').value.trim(),
+      situation:document.getElementById('situacao').value.trim(),
+      cpf:cpf.value.replace(/\D/g,''),
+      website:''
+    };
+    const res=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok)throw new Error(data.error||'Não foi possível processar a solicitação.');
+    s2.style.display='none';success.style.display='block';
+    success.innerHTML='<b>Solicitação validada.</b><br>'+ (data.message||'Os dados foram validados no servidor. O envio definitivo será habilitado quando o canal oficial da SAUVID for conectado.');
+  }catch(err){alert(err.message||'Falha ao processar a solicitação.')}
+  finally{submit.disabled=false;submit.textContent='Preparar solicitação →'}
 });
 
 document.getElementById('newUpdate').addEventListener('click',()=>document.getElementById('editor').style.display='block');
