@@ -3,7 +3,6 @@ function problem(statusCode,message){return Object.assign(new Error(message),{st
 function originCheck(req){
   const expected=process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app';
   const allowed=new Set([expected,'https://sauvid-assessoria.vercel.app','https://www.sauvid.ass.com.br']);
-  if(process.env.NODE_ENV!=='production')allowed.add('http://localhost:4173');
   const origin=req.headers.origin;
   if(!origin||!allowed.has(origin)||req.headers['sec-fetch-site']==='cross-site')throw problem(403,'Origem da solicitação inválida.');
 }

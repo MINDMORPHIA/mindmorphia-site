@@ -5,7 +5,7 @@ async function getAuth(){
  if(!process.env.BETTER_AUTH_SECRET||process.env.BETTER_AUTH_SECRET.length<32)throw problem(503,'O acesso está em ativação.');
  if(!instance)instance=import('better-auth').then(({betterAuth})=>betterAuth({
   appName:'SAUVID Assessoria',baseURL:process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app',basePath:'/api/auth',secret:process.env.BETTER_AUTH_SECRET,database:getPool(),
-  trustedOrigins:[process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app','https://www.sauvid.ass.com.br',...(process.env.NODE_ENV==='production'?[]:['http://localhost:4173'])],
+  trustedOrigins:[process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app','https://www.sauvid.ass.com.br'],
   emailAndPassword:{enabled:true,minPasswordLength:12,autoSignIn:false,sendResetPassword:async({user,token})=>{
    const url=(process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app')+'/gestao.html#recuperar='+token;
    if(!process.env.RESEND_API_KEY||!process.env.SAUVID_EMAIL_FROM)throw problem(503,'Recuperação por e-mail em ativação. Solicite apoio à equipe.');
@@ -14,7 +14,7 @@ async function getAuth(){
   },revokeSessionsOnPasswordReset:true},
   session:{expiresIn:60*60*8,updateAge:60*30,cookieCache:{enabled:false}},
   rateLimit:{enabled:true,storage:'database',window:60,max:10},
-  advanced:{useSecureCookies:process.env.NODE_ENV==='production',cookiePrefix:'sauvid',defaultCookieAttributes:{httpOnly:true,sameSite:'lax'}},
+  advanced:{useSecureCookies:!String(process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app').startsWith('http://localhost'),cookiePrefix:'sauvid',defaultCookieAttributes:{httpOnly:true,sameSite:'lax'}},
   logger:{disabled:true}
  }));
  return instance;

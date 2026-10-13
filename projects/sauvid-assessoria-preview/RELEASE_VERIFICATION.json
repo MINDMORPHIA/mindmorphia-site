@@ -14,5 +14,26 @@
   "productionCustomerDataImported": false,
   "recovery": "assisted by administrator using one-time links",
   "scheduledProductionBackup": "not configured",
-  "liveDeployment": "pending verification"
+  "liveDeployment": {
+    "id": "dpl_DMWps3gXBVN1QNsXrk2h9rPDuJMr",
+    "status": "READY",
+    "commit": "e726d019ed0b1bb84f99c1cffca09061b64ff3e4",
+    "region": "gru1"
+  },
+  "liveChecks": {
+    "health": "200 version 3.0.0",
+    "management": "200",
+    "unauthenticatedPortal": "401",
+    "unauthenticatedDocument": "401",
+    "demoSession": "410",
+    "privateConfig": "404",
+    "schema": "404",
+    "images": "200 and valid WEBP",
+    "mobileOverflow": false
+  },
+  "sourceIntegration": {
+    "branch": "codex/sauvid-operacao",
+    "pullRequest": "https://github.com/MINDMORPHIA/mindmorphia-site/pull/3",
+    "mainMerge": "requires user approval"
+  }
 }
