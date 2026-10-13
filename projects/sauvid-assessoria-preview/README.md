@@ -1,4 +1,4 @@
-# SAUVID Assessoria — homologação v2.1
+# SAUVID Assessoria — homologação v2.2
 
 Atualizado em **12/10/2026**. Esta é a referência vigente do site SAUVID Assessoria no repositório central MINDMORPHIA.
 
@@ -19,8 +19,8 @@ O preview permanece com `noindex` e `robots.txt` bloqueando indexação até a d
 - Narrativa: reabilitação de crédito, regularização cadastral, acompanhamento e diferenciação entre dívida, negativação e score.
 - Órgãos: Serasa, SPC Brasil, Boa Vista e Protestos/Cartórios tratados separadamente.
 - Jornada: **Entender → Estruturar → Acompanhar → Avançar**.
-- Formulário: interface em duas etapas, ainda sem destinatário real conectado.
-- Área do Cliente: protótipo de homologação com dados fictícios.
+- Formulário: interface em duas etapas com validação server-side; ainda sem destinatário real conectado.
+- Área do Cliente: protótipo de homologação com dados fictícios, login validado no servidor e sessão HttpOnly assinada.
 - Administração SAUVID: protótipo de homologação com ações simuladas.
 - Segurança de preview: `noindex`, `robots.txt` bloqueando indexação e headers básicos no Vercel.
 - Crédito MINDMORPHIA: símbolo oficial + assinatura clicável no rodapé.
