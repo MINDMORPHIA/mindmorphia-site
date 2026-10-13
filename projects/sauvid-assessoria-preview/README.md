@@ -2,6 +2,17 @@
 
 Atualizado em **12/10/2026**. Esta é a referência vigente do site SAUVID Assessoria no repositório central MINDMORPHIA.
 
+## Preview publicado
+
+- URL: `https://sauvid-assessoria.vercel.app`
+- Projeto Vercel: `sauvid-assessoria`
+- Projeto ID: `prj_U3RuoOTlguk1IrC7Y8EaN6gV3XOU`
+- Deployment verificado como `READY`: `dpl_FjVtGBS4HQxrG9qMSvzji1uwsHgX`
+- Commit de referência do código: `0b075126fed773f8d2cac3340f6277482fd8184e`
+- Branch de preview: `sauvid-preview`
+
+O preview permanece com `noindex` e `robots.txt` bloqueando indexação até a definição do domínio e da publicação definitiva.
+
 ## Estado atual
 
 - Site institucional: implementado e pronto para revisão em ambiente publicado.
