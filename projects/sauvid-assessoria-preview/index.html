@@ -513,24 +513,14 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
     </div>
 
     <div class="client-dash" id="clientDash">
-      <div class="dash-top"><div><small style="color:#80919e">ATENDIMENTO DEMONSTRATIVO</small><h3 style="margin:4px 0 0">Cliente de homologação</h3></div><button class="tiny" id="logoutClient">Sair</button></div>
+      <div class="dash-top"><div><small style="color:#80919e">ATENDIMENTO DEMONSTRATIVO</small><h3 id="clientName" style="margin:4px 0 0">Cliente de homologação</h3></div><button class="tiny" id="logoutClient">Sair</button></div>
       <div class="summary-grid">
-        <div class="metric"><small>ETAPA ATUAL</small><b>Em acompanhamento</b></div>
-        <div class="metric"><small>ÚLTIMA CONFERÊNCIA</small><b>05/10/2026</b></div>
-        <div class="metric"><small>PRÓXIMA AÇÃO</small><b>Nova verificação</b></div>
+        <div class="metric"><small>ETAPA ATUAL</small><b id="clientStage">Em acompanhamento</b></div>
+        <div class="metric"><small>ÚLTIMA CONFERÊNCIA</small><b id="clientLastCheck">05/10/2026</b></div>
+        <div class="metric"><small>PRÓXIMA AÇÃO</small><b id="clientNextAction">Nova verificação</b></div>
       </div>
-      <div class="org-grid">
-        <div class="org-card"><small>SPC</small><b>Baixa informada</b><span class="badge">EM REVISÃO</span></div>
-        <div class="org-card"><small>SERASA</small><b>A confirmar</b><span class="badge">SEM CONCLUSÃO</span></div>
-        <div class="org-card"><small>BOA VISTA</small><b>Em acompanhamento</b><span class="badge">ATUALIZADO</span></div>
-        <div class="org-card"><small>PROTESTOS</small><b>Fora do escopo</b><span class="badge">NÃO APLICÁVEL</span></div>
-      </div>
-      <div class="timeline">
-        <b style="font-size:12px">Histórico publicado</b>
-        <div class="event"><time>05/10/2026</time><div><b>Nova conferência registrada</b><p>A informação do SPC foi atualizada como “baixa informada” e permanece em revisão antes de qualquer conclusão definitiva.</p></div></div>
-        <div class="event"><time>01/10/2026</time><div><b>Atendimento em acompanhamento</b><p>Os demais órgãos mantêm suas situações próprias. O histórico anterior foi preservado.</p></div></div>
-        <div class="event"><time>29/09/2026</time><div><b>Atendimento cadastrado</b><p>Registro inicial criado para acompanhamento por órgão.</p></div></div>
-      </div>
+      <div class="org-grid" id="clientOrgs" aria-live="polite"></div>
+      <div class="timeline" id="clientTimeline" aria-live="polite"><b style="font-size:12px">Histórico publicado</b></div>
     </div>
 
     <div class="admin-view" id="adminView">
@@ -597,6 +587,20 @@ document.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeOverlay()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
 
+function escapeHtml(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+}
+function renderClient(data){
+  document.getElementById('clientName').textContent=data.client?.displayName||'Cliente';
+  document.getElementById('clientStage').textContent=data.summary?.stage||'—';
+  document.getElementById('clientLastCheck').textContent=data.summary?.lastCheck||'—';
+  document.getElementById('clientNextAction').textContent=data.summary?.nextAction||'—';
+  const orgs=document.getElementById('clientOrgs');
+  orgs.innerHTML=(data.organizations||[]).map(item=>`<div class="org-card"><small>${escapeHtml(item.name)}</small><b>${escapeHtml(item.status)}</b><span class="badge">${escapeHtml(String(item.badge||'').toUpperCase())}</span></div>`).join('');
+  const timeline=document.getElementById('clientTimeline');
+  timeline.innerHTML='<b style="font-size:12px">Histórico publicado</b>'+ (data.events||[]).map(item=>`<div class="event"><time>${escapeHtml(item.date)}</time><div><b>${escapeHtml(item.title)}</b><p>${escapeHtml(item.message)}</p></div></div>`).join('');
+}
+
 document.getElementById('enterClient').addEventListener('click',async()=>{
   const d=document.getElementById('docLogin').value.replace(/\D/g,'');
   const c=document.getElementById('codeLogin').value.replace(/\D/g,'');
@@ -608,7 +612,9 @@ document.getElementById('enterClient').addEventListener('click',async()=>{
     const data=await res.json().catch(()=>({}));
     if(!res.ok){throw new Error(data.error||'Não foi possível validar o acesso.')}
     const session=await fetch('/api/demo-session',{headers:{'Accept':'application/json'}});
-    if(!session.ok)throw new Error('Sessão não pôde ser confirmada.');
+    const sessionData=await session.json().catch(()=>({}));
+    if(!session.ok)throw new Error(sessionData.error||'Sessão não pôde ser confirmada.');
+    renderClient(sessionData.data||{});
     login.style.display='none';dash.style.display='block';
   }catch(err){alert(err.message||'Falha ao validar o acesso.')}
   finally{btn.disabled=false;btn.textContent='Ver acompanhamento →'}
