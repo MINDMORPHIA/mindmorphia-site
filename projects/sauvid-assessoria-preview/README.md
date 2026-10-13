@@ -4,7 +4,7 @@ Atualizada em 12/10/2026. Código canônico nesta pasta, repositório MINDMORPHI
 
 - Site: https://sauvid-assessoria.vercel.app
 - Gestão e Área do Cliente: https://sauvid-assessoria.vercel.app/gestao.html
-- Domínio solicitado: www.sauvid.ass.com.br (DNS pendente).
+- Domínio solicitado: www.sauvid.ass.com.br (adiado; manter endereço Vercel).
 - Vercel: sauvid-assessoria / prj_U3RuoOTlguk1IrC7Y8EaN6gV3XOU.
 
 ## Implementado
@@ -21,4 +21,4 @@ Ver docs/OPERACAO.md e RELEASE_VERIFICATION.json para instruções, evidências,
 
 ## Fechamento externo
 
-Ativação administrativa com senha escolhida pelo responsável. DNS e HTTPS no domínio escolhido. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail não está habilitada: a gestão gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.
+Conta administrativa ativada pelo responsável. Endereço Vercel mantido por decisão de 12/10/2026; domínio próprio adiado. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail não está habilitada: a gestão gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.

@@ -44,7 +44,7 @@ Rollback de código: promover a implantação anterior na Vercel. A versão ante
 
 ## Domínio
 
-Domínio solicitado: `www.sauvid.ass.com.br`. Vinculado ao projeto, com DNS pendente. O endereço depende da zona base `ass.com.br`; não confundir com `sauvidass.com.br`.
+Decisão vigente em 12/10/2026: manter `https://sauvid-assessoria.vercel.app`. Domínio próprio adiado. O endereço `www.sauvid.ass.com.br` chegou a ser vinculado ao projeto, mas não possui DNS configurado. O endereço depende da zona base `ass.com.br`; não confundir com `sauvidass.com.br`.
 
 Registro recomendado pela Vercel: CNAME `www.sauvid` na zona `ass.com.br`, valor `e9a3cd36b7b4c053.vercel-dns-017.com.`. Validar titularidade/configuração da zona antes de alterar DNS. Nenhum domínio foi comprado.
 
