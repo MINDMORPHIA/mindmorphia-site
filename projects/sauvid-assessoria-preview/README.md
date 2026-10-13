@@ -1,37 +1,39 @@
-# SAUVID Assessoria — site / homologação v2
+# SAUVID Assessoria — homologação v2.1
 
-Atualizado em **05/10/2026** a partir das referências visuais e textuais fornecidas para o projeto e das regras operacionais do Portal de Acompanhamento SAUVID.
+Atualizado em **12/10/2026**. Esta é a referência vigente do site SAUVID Assessoria no repositório central MINDMORPHIA.
 
-## Direção aplicada
+## Estado atual
 
-- Paleta institucional: azul fechado, azul médio, azul acinzentado e fundo claro.
-- Posicionamento: clareza, método, individualidade, acompanhamento e comunicação humana.
-- Headline: **“Regularize sua situação. Recupere possibilidades.”**
-- Estrutura educacional: diferença entre dívida, negativação e score.
-- Órgãos tratados separadamente: Serasa, SPC Brasil, Boa Vista e Protestos/Cartórios.
+- Site institucional: implementado e pronto para revisão em ambiente publicado.
+- Narrativa: reabilitação de crédito, regularização cadastral, acompanhamento e diferenciação entre dívida, negativação e score.
+- Órgãos: Serasa, SPC Brasil, Boa Vista e Protestos/Cartórios tratados separadamente.
 - Jornada: **Entender → Estruturar → Acompanhar → Avançar**.
-- Formulário em duas etapas para não pedir CPF antes de explicar a finalidade.
-- Área do cliente e painel administrativo continuam como **homologação com dados fictícios**.
+- Formulário: interface em duas etapas, ainda sem destinatário real conectado.
+- Área do Cliente: protótipo de homologação com dados fictícios.
+- Administração SAUVID: protótipo de homologação com ações simuladas.
+- Segurança de preview: `noindex`, `robots.txt` bloqueando indexação e headers básicos no Vercel.
+- Crédito MINDMORPHIA: símbolo oficial + assinatura clicável no rodapé.
+- Acessibilidade: foco visível, link “Pular para o conteúdo”, menu mobile com estado ARIA e respeito a redução de movimento.
 
-## Regras de segurança e conteúdo
+## Segurança e conteúdo
 
 - Nenhum CPF ou cliente real está embutido no HTML.
 - CPF/CNPJ identifica o cadastro, mas não funciona como senha.
 - “Baixa confirmada” não deve ser usada sem evidência e revisão.
 - Uma atualização em um órgão não altera automaticamente os demais.
 - O site não promete quitação de dívida, score específico, concessão de crédito ou aprovação de financiamento.
-- Prazos são tratados como estimativas, nunca como garantia.
+- Prazos são tratados como estimativas.
 
-## Arquivos visuais
+## Rotas de homologação
 
-Os ativos em `assets/` foram extraídos das referências fornecidas pelo responsável do projeto e otimizados para uso web.
+- Página: `/`
+- Área do Cliente: `/#acompanhar`
+- Painel administrativo demonstrativo: `/#admin-demo`
+- Privacidade: `/#privacidade`
+- Termos: `/#termos`
 
-## Rotas de demonstração
+## Próxima camada
 
-- Página: `index.html`
-- Área do cliente: `#acompanhar`
-- Painel administrativo demonstrativo: `#admin-demo`
-- Privacidade: `#privacidade`
-- Termos: `#termos`
+Para produção definitiva ainda devem ser conectados: autenticação real, banco privado, isolamento por cliente, persistência, armazenamento de evidências/arquivos, trilha de auditoria, recuperação de acesso, canal oficial do formulário, políticas definitivas, domínio e SEO de produção.
 
-Antes da produção definitiva, conectar autenticação real, banco privado, armazenamento de evidências, trilha de auditoria, backup e canal oficial de envio do formulário.
+O preview não deve ser tratado como portal autenticado real até esses itens serem implementados e testados.

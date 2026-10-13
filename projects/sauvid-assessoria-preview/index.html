@@ -10,6 +10,8 @@
 <meta property="og:type" content="website">
 <meta name="robots" content="noindex,nofollow">
 <title>SAUVID Assessoria — Reabilitação de Crédito</title>
+<link rel="icon" type="image/webp" href="assets/sauvid-logo.webp">
+<link rel="apple-touch-icon" href="assets/sauvid-logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,6 +35,9 @@
   --radius:24px;
 }
 *{box-sizing:border-box}
+:focus-visible{outline:3px solid #5fb4de;outline-offset:3px}
+.skip-link{position:fixed;left:12px;top:10px;z-index:9999;transform:translateY(-160%);background:#fff;color:#0D2B45;padding:10px 13px;border-radius:10px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.skip-link:focus{transform:translateY(0)}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
@@ -201,7 +206,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
 .footer-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:30px;align-items:start;font-size:11px;line-height:1.7}
 .footer-brand{display:flex;gap:11px;align-items:center;color:white;font-weight:800}.footer-brand img{width:38px;height:38px;border-radius:11px}
 .footer-links{display:grid;gap:5px}.footer-links a:hover{color:#fff}
-.dev{display:flex;align-items:center;justify-content:flex-end;gap:8px;color:#c8d8e2;font-weight:700}
+.dev{display:flex;align-items:center;justify-content:flex-end;gap:8px;color:#c8d8e2;font-weight:700}.dev img{width:23px;height:23px;object-fit:contain;opacity:.92}
 
 /* Portal modal */
 .overlay{position:fixed;inset:0;z-index:100;background:rgba(3,12,20,.79);backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;padding:18px}
@@ -226,6 +231,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
 .legal{display:none;padding:28px 32px}.legal h3{font-size:25px;margin:0 0 12px}.legal p,.legal li{font-size:12px;color:var(--muted);line-height:1.75}
 
 /* Responsive */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 @media(max-width:980px){
   .menu a:not(.nav-cta),.menu button:not(.nav-cta){display:none}.mobile-toggle{display:block}
   .hero-grid,.story-grid,.values-grid,.edu-head,.role-grid,.portal-grid,.contact-grid,.faq-grid{grid-template-columns:1fr}
@@ -245,6 +251,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
 </style>
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="#inicio" aria-label="SAUVID Assessoria">
@@ -268,7 +275,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
   </div>
 </header>
 
-<main>
+<main id="conteudo">
 <section class="hero" id="inicio">
   <div class="wrap hero-grid">
     <div>
@@ -485,7 +492,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
       <a href="https://www.instagram.com/sauvid.ass/" target="_blank" rel="noopener">@sauvid.ass ↗</a>
     </div>
     <div>
-      <div class="dev">Desenvolvido por <b>MINDMORPHIA</b> ↗</div>
+      <a class="dev" href="https://mindmorphia-site.vercel.app/" target="_blank" rel="noopener" aria-label="Desenvolvido por MINDMORPHIA"><img src="assets/mindmorphia-symbol.png" alt=""><span>Desenvolvido por <b>MINDMORPHIA</b> ↗</span></a>
       <p style="text-align:right;margin:9px 0 0">© 2026 SAUVID Assessoria<br>Todos os direitos reservados.</p>
     </div>
   </div>
@@ -619,8 +626,9 @@ document.getElementById('saveDraft').addEventListener('click',()=>alert('Rascunh
 document.getElementById('publishDemo').addEventListener('click',()=>alert('Publicação simulada. Em produção, a atualização será gravada no banco com histórico e auditoria.'));
 
 const mobileToggle=document.getElementById('mobileToggle'),mobileMenu=document.getElementById('mobileMenu');
-mobileToggle.addEventListener('click',()=>mobileMenu.classList.toggle('show'));
-mobileMenu.querySelectorAll('a,button').forEach(el=>el.addEventListener('click',()=>mobileMenu.classList.remove('show')));
+mobileToggle.setAttribute('aria-expanded','false');
+mobileToggle.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('show');mobileToggle.setAttribute('aria-expanded',String(open))});
+mobileMenu.querySelectorAll('a,button').forEach(el=>el.addEventListener('click',()=>{mobileMenu.classList.remove('show');mobileToggle.setAttribute('aria-expanded','false')}));
 
 function route(){if(location.hash==='#acompanhar')openClient();else if(location.hash==='#admin-demo')openAdmin();else if(location.hash==='#privacidade')openPrivacy();else if(location.hash==='#termos')openTerms()}
 window.addEventListener('hashchange',route);route();
