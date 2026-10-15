@@ -4,6 +4,7 @@ const {getPool,transaction}=require('./_lib/database.cjs');
 const {actorFromRequest,staff,getAuth}=require('./_lib/identity.cjs');
 const {problem,originCheck,text,uuid,choice,rateLimit}=require('./_lib/security.cjs');
 const op=require('./_lib/operation.cjs');
+const registrations=require('./_lib/registrations.cjs');
 module.exports=async(req,res)=>{
  if(!allowMethods(req,res,['GET','POST']))return;
  try{
@@ -32,7 +33,10 @@ module.exports=async(req,res)=>{
    if(req.method==='POST')await rateLimit(db,req,'portal:'+actor.id,60);
    if(action==='cases'){if(actor.role!=='client')staff(actor);return {cases:await op.listCases(db,body.search||'')};}
    if(action==='case'){const detail=await op.caseDetail(db,body.id||q.get('id'));await db.query("INSERT INTO audit_log(actor_user_id,action,entity_type,entity_id) VALUES($1,'read','cases',$2)",[actor.id,detail.id]);return {case:detail};}
-   staff(actor,['lead-update','lead-convert','case-update','organization-update','invite','file-review','user-access','recover-user'].includes(action));
+   staff(actor,['lead-update','lead-convert','case-update','organization-update','invite','file-review','user-access','recover-user','registration-save'].includes(action));
+   if(action==='pending')return registrations.listPending(db,body);
+   if(action==='registration')return {registration:await registrations.pendingDetail(db,body.id)};
+   if(action==='registration-save')return registrations.completePending(db,actor,body);
    if(action==='leads')return {leads:await op.listLeads(db,body)};
    if(action==='lead')return {lead:await op.leadDetail(db,body.id)};
    if(action==='lead-update')return op.updateLead(db,actor,body);

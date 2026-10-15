@@ -7,6 +7,7 @@ const {getAuth}=require('../api/_lib/identity.cjs');
   await db.query('BEGIN');
   await db.query(fs.readFileSync('db/schema.sql','utf8').replace('create extension if not exists pgcrypto;',''));
   await db.query(fs.readFileSync('db/002_operation.sql','utf8'));
+  await db.query(fs.readFileSync('db/003_registrations.sql','utf8'));
   await db.query('COMMIT');
  }catch(e){await db.query('ROLLBACK');throw e;}finally{db.release();}
  const {getMigrations}=await import('better-auth/db/migration');

@@ -30,7 +30,7 @@ O adaptador de recuperação por e-mail existe, mas fica desabilitado sem remete
 - RLS: papel `sauvid_runtime` com contexto do ator aplicado dentro de transação. Autorização do usuário baseada no vínculo, nunca em informação do navegador.
 - Auditoria: alterações atômicas, autor/data e recursos afetados; registro sem UPDATE/DELETE pelo runtime.
 - Rate limits persistentes: login, ativação, formulário e operações de gestão.
-- Nenhum cadastro real foi importado de outras bases.
+- Importações autorizadas conservam origem e pendências na base privada; nenhum dado real acompanha o código.
 
 Segredos ficam nas variáveis da Vercel e na configuração local ignorada. Não executar configuração inicial novamente: trocar chaves sem migração torna dados antigos ilegíveis. Rota pública de cadastro livre não está exposta. Endpoints demonstrativos antigos retornam 410.
 
