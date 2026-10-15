@@ -11,7 +11,7 @@ Atualizada em 12/10/2026. Código canônico nesta pasta, repositório MINDMORPHI
 
 Solicitações persistentes na gestão com protocolo, filtro, situação, anotação interna e conversão em atendimento. Login real por convite, senhas individuais e sessões revogáveis. Isolamento por cliente aplicado no servidor e PostgreSQL RLS. Etapa, próxima ação, quatro órgãos independentes e histórico preservado. Documentos privados com autorização e evidência revisada específica por órgão. Acessos de cliente, operador, administrador e auditor. Recuperação assistida e suspensão. Auditoria sem alteração pelo runtime, limites de requisição e proteção de origem.
 
-Banco Neon exclusivo e Blob privado em São Paulo. CPF e relatos protegidos por criptografia e índices HMAC. Nenhum dado real de cliente importado. Demonstrações anteriores desativadas. Três ativos corrompidos recuperados das referências fornecidas, mantendo a identidade aprovada.
+Banco Neon exclusivo e Blob privado em São Paulo. CPF e relatos protegidos por criptografia e índices HMAC. Dados de clientes e importações ficam exclusivamente na base privada, fora do GitHub. Demonstrações anteriores desativadas. Três ativos corrompidos recuperados das referências fornecidas, mantendo a identidade aprovada.
 
 ## Validação
 
