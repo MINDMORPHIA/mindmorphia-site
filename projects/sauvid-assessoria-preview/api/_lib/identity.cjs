@@ -9,7 +9,7 @@ async function getAuth(){
   emailAndPassword:{enabled:true,minPasswordLength:12,autoSignIn:false,sendResetPassword:async({user,token})=>{
    const url=(process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app')+'/gestao.html#recuperar='+token;
    if(!process.env.RESEND_API_KEY||!process.env.SAUVID_EMAIL_FROM)throw problem(503,'Recuperação por e-mail em ativação. Solicite apoio à equipe.');
-   const r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${process.env.RESEND_API_KEY}`,'Content-Type':'application/json'},body:JSON.stringify({from:process.env.SAUVID_EMAIL_FROM,to:[user.email],subject:'Recuperar acesso SAUVID',text:`Use este link para definir uma nova senha: ${url}\nSe você não solicitou, ignore esta mensagem.`})});
+   const r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${process.env.RESEND_API_KEY}`,'Content-Type':'application/json'},body:JSON.stringify({from:process.env.SAUVID_EMAIL_FROM,to:[user.email],reply_to:process.env.SAUVID_EMAIL_REPLY_TO||'sauvid.ass@gmail.com',subject:'Recuperar acesso SAUVID',text:`Use este link para definir uma nova senha: ${url}\nSe você não solicitou, ignore esta mensagem.`})});
    if(!r.ok)throw problem(503,'O envio de recuperação está indisponível.');
   },revokeSessionsOnPasswordReset:true},
   session:{expiresIn:60*60*8,updateAge:60*30,cookieCache:{enabled:false}},

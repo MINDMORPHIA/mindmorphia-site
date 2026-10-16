@@ -1,6 +1,6 @@
-# SAUVID Assessoria — versão operacional 3.0
+# SAUVID Assessoria — versão operacional 3.2
 
-Atualizada em 12/10/2026. Código canônico nesta pasta, repositório MINDMORPHIA/mindmorphia-site.
+Atualizada em 16/10/2026. Código canônico nesta pasta, repositório MINDMORPHIA/mindmorphia-site.
 
 - Site: https://sauvid-assessoria.vercel.app
 - Gestão e Área do Cliente: https://sauvid-assessoria.vercel.app/gestao.html
@@ -22,3 +22,7 @@ Ver docs/OPERACAO.md e RELEASE_VERIFICATION.json para instruções, evidências,
 ## Fechamento externo
 
 Conta administrativa ativada pelo responsável. Endereço Vercel mantido por decisão de 12/10/2026; domínio próprio adiado. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail não está habilitada: a gestão gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.
+
+## Comunicações
+
+Mensagens, comunicados e avisos individuais pela gestão, com rascunhos, revisão, autorização do administrador, envio Resend e confirmação de entrega por webhook assinado. Ver `docs/COMUNICACOES.md`. A ativação não dispara rascunhos ou filas anteriores automaticamente.
