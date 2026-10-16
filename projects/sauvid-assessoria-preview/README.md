@@ -1,4 +1,4 @@
-# SAUVID Assessoria — versão operacional 3.2
+# SAUVID Assessoria — versão operacional 3.3
 
 Atualizada em 16/10/2026. Código canônico nesta pasta, repositório MINDMORPHIA/mindmorphia-site.
 
@@ -15,14 +15,20 @@ Banco Neon exclusivo e Blob privado em São Paulo. CPF e relatos protegidos por 
 
 ## Validação
 
-13 testes de regras PostgreSQL passaram. Teste E2E em bancos temporários com dados sintéticos confirmou ativação, login, envio, caixa de entrada, conversão, isolamento entre contas, status independente, notas internas, documento privado, recuperação, suspensão, logout, CSRF e snapshot/restauração. Bancos de QA removidos após o teste.
+32 testes de regras e segurança passaram. Teste E2E em bancos temporários com dados sintéticos confirmou ativação, login, envio, caixa de entrada, conversão, isolamento entre contas, status independente, notas internas, documento privado, recuperação, suspensão, logout, CSRF e snapshot/restauração. Bancos de QA removidos após o teste.
 
 Ver docs/OPERACAO.md e RELEASE_VERIFICATION.json para instruções, evidências, implantação e limites.
 
 ## Fechamento externo
 
-Conta administrativa ativada pelo responsável. Endereço Vercel mantido por decisão de 12/10/2026; domínio próprio adiado. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail não está habilitada: a gestão gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.
+Conta administrativa ativada pelo responsável. Endereço Vercel mantido por decisão de 12/10/2026; domínio próprio adiado. SEO do domínio fica bloqueado por noindex até essa validação. Recuperação por e-mail configurada via Resend; a gestão também gera links individuais após confirmação de identidade. Backup agendado/retencão operacional depende da configuração no provedor; o teste de restauração executado usa dados sintéticos.
 
 ## Comunicações
 
 Mensagens, comunicados e avisos individuais pela gestão, com rascunhos, revisão, autorização do administrador, envio Resend e confirmação de entrega por webhook assinado. Ver `docs/COMUNICACOES.md`. A ativação não dispara rascunhos ou filas anteriores automaticamente.
+
+## Acesso por digital
+
+Chaves de acesso do administrador em Digital e segurança, compatíveis com Windows Hello e Android. Cadastro confirmado pessoalmente em cada aparelho. Ver `docs/ACESSO_DIGITAL.md`.
+
+Envio Resend verificado em produção em 16/10/2026: teste sem dados de clientes entregue ao e-mail administrativo e evento assinado recebido com HTTP 200.

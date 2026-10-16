@@ -1,6 +1,6 @@
 {
   "name": "sauvid-assessoria",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.cjs",
@@ -8,6 +8,7 @@
     "migrate": "node --env-file=.env.local scripts/migrate.cjs"
   },
   "dependencies": {
+    "@better-auth/passkey": "1.7.7",
     "@vercel/blob": "2.8.1",
     "@vercel/functions": "3.9.11",
     "better-auth": "1.7.7",
