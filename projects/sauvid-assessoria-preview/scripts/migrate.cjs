@@ -13,5 +13,6 @@ const {getAuth}=require('../api/_lib/identity.cjs');
  }catch(e){await db.query('ROLLBACK');throw e;}finally{db.release();}
  const {getMigrations}=await import('better-auth/db/migration');
  const migrations=await getMigrations((await getAuth()).options);await migrations.runMigrations();
+ await getPool().query('CREATE UNIQUE INDEX IF NOT EXISTS passkey_credential_unique ON passkey ("credentialID")');
  console.log('SAUVID: migrações de operação e identidade aplicadas.');await getPool().end();
 })().catch((e)=>{console.error('Diagnóstico:',e.code||e.name,String(e.message).replace(/postgres(?:ql)?:\/\/[^\s]+/g,'[conexão privada]'));console.error('Migração não concluída. Revise a conexão e o esquema sem divulgar credenciais.');process.exit(1);});
