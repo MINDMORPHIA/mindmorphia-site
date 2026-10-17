@@ -444,7 +444,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
     </div>
     <form class="form" id="leadForm">
       <div id="stepOne">
-        <h3>Quero analisar meu caso</h3>
+        <h3 tabindex="-1">Quero analisar meu caso</h3>
         <p class="form-sub">Preencha os dados abaixo. Na próxima etapa explicamos por que o CPF é necessário para identificar corretamente a análise cadastral.</p>
         <div class="fields">
           <div class="field full"><label for="nome">NOME</label><input id="nome" autocomplete="name" placeholder="Seu nome completo" required></div>
@@ -456,7 +456,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
         <p class="privacy-note">Seus dados são solicitados para o atendimento e devem ser tratados conforme a finalidade informada e a política de privacidade aplicável.</p>
       </div>
       <div class="form-step2" id="stepTwo">
-        <h3>Identificação cadastral</h3>
+        <h3 tabindex="-1">Identificação cadastral</h3>
         <p class="form-sub">O CPF é utilizado para identificar corretamente o cadastro e evitar vincular uma análise à pessoa errada. Ele, sozinho, não autoriza acesso a informações do seu atendimento.</p>
         <div class="field"><label for="cpf">CPF</label><input id="cpf" inputmode="numeric" placeholder="000.000.000-00"></div>
         <label class="privacy-note" style="display:flex;gap:10px;align-items:flex-start;margin:15px 0"><input id="consentLead" type="checkbox" required style="width:auto;margin-top:5px"><span>Li a <button type="button" class="tiny" data-privacy>Política de Privacidade</button> e estou ciente do uso destes dados para análise e contato sobre meu atendimento.</span></label><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="websiteLead" tabindex="-1" autocomplete="off"></label></div><button type="submit" class="btn btn-blue">Enviar solicitação →</button>
@@ -536,8 +536,9 @@ const privacy=document.getElementById('privacyView');
 const terms=document.getElementById('termsView');
 
 function hideViews(){[privacy,terms].forEach(v=>v.style.display='none')}
-function showOverlay(){overlay.classList.add('show');document.body.classList.add('lock')}
-function closeOverlay(){overlay.classList.remove('show');document.body.classList.remove('lock');if(['#acompanhar','#admin-demo','#privacidade','#termos'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search)}
+let overlayTrigger;
+function showOverlay(){overlayTrigger=document.activeElement;overlay.classList.add('show');document.body.classList.add('lock');overlay.querySelector('[data-close]').focus()}
+function closeOverlay(){const wasOpen=overlay.classList.contains('show');overlay.classList.remove('show');document.body.classList.remove('lock');if(wasOpen&&overlayTrigger?.isConnected)overlayTrigger.focus({preventScroll:true});if(['#acompanhar','#admin-demo','#privacidade','#termos'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search)}
 function openClient(){location.href='/gestao.html'}
 function openAdmin(){location.href='/gestao.html'}
 function openPrivacy(){hideViews();privacy.style.display='block';showOverlay()}
@@ -548,20 +549,31 @@ document.querySelectorAll('[data-privacy]').forEach(el=>el.addEventListener('cli
 document.querySelectorAll('[data-terms]').forEach(el=>el.addEventListener('click',openTerms));
 document.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',closeOverlay));
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeOverlay()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
+document.addEventListener('keydown',e=>{
+  if(!overlay.classList.contains('show'))return;
+  if(e.key==='Escape'){e.preventDefault();closeOverlay();return}
+  if(e.key==='Tab'){
+    const controls=[...overlay.querySelectorAll('a[href],button,input,select,textarea,[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length);
+    const first=controls[0],last=controls[controls.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  }
+});
 
 function escapeHtml(value){
   return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
 }
 let leadRequestKey=crypto.randomUUID();
 const s1=document.getElementById('stepOne'),s2=document.getElementById('stepTwo'),success=document.getElementById('leadSuccess');
+function focusLeadStep(step){step.querySelector('h3').focus({preventScroll:true});document.getElementById('leadForm').scrollIntoView({block:'start',behavior:'instant'})}
 document.getElementById('nextLead').addEventListener('click',()=>{
-  let ok=true;
-  ['nome','whatsapp','email','situacao'].forEach(id=>{const el=document.getElementById(id);if(!el.value.trim()){el.style.borderColor='#c96969';ok=false}else el.style.borderColor=''});
-  if(!ok)return;
-  s1.style.display='none';s2.style.display='block';
+  let invalid;
+  ['nome','whatsapp','email','situacao'].forEach(id=>{const el=document.getElementById(id);if(!el.value.trim()||!el.checkValidity()){el.style.borderColor='#c96969';el.setAttribute('aria-invalid','true');invalid??=el}else{el.style.borderColor='';el.removeAttribute('aria-invalid')}});
+  if(invalid){invalid.focus();invalid.reportValidity();return}
+  s1.style.display='none';s2.style.display='block';focusLeadStep(s2);
 });
-document.getElementById('backLead').addEventListener('click',()=>{s2.style.display='none';s1.style.display='block'});
+document.getElementById('backLead').addEventListener('click',()=>{s2.style.display='none';s1.style.display='block';focusLeadStep(s1)});
+
 document.getElementById('leadForm').addEventListener('submit',async e=>{
   e.preventDefault();
   const cpf=document.getElementById('cpf');

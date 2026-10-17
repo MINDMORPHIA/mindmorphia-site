@@ -33,3 +33,8 @@ body.portal-page #notice{z-index:80}
 @media(min-width:1151px){.mobile-menu.show{display:none}}
 @media(max-width:640px){.nav{gap:8px}.header-actions{gap:8px}.theme-toggle{padding:8px;font-size:11px}.menu .nav-cta{display:none}.menu{gap:0}.brand{gap:7px}.brand strong{font-size:11px}.brand small{font-size:8px}.brand img{width:32px;height:32px}.portal-page header{padding:12px 16px;gap:10px}.portal-page .brand{font-size:16px}.portal-page .header-actions{gap:8px;font-size:11px}.portal-page .brand img{width:30px;height:30px}}
 @media(prefers-reduced-motion:reduce){html,*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Consentimento legível e link integrado ao texto. */
+.form .privacy-note{font-size:12px;line-height:1.65;color:#536979}
+.form .privacy-note .tiny{padding:0 2px;background:transparent;color:var(--blue);font:inherit;text-decoration:underline;text-underline-offset:3px}
+[data-theme=dark] .form .privacy-note{color:var(--muted)}
