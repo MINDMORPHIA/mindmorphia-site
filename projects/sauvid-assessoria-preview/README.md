@@ -32,3 +32,10 @@ Mensagens, comunicados e avisos individuais pela gestão, com rascunhos, revisã
 Chaves de acesso do administrador em Digital e segurança, compatíveis com Windows Hello e Android. Cadastro confirmado pessoalmente em cada aparelho. Ver `docs/ACESSO_DIGITAL.md`.
 
 Envio Resend verificado em produção em 16/10/2026: teste sem dados de clientes entregue ao e-mail administrativo e evento assinado recebido com HTTP 200.
+
+
+## Aparência, navegação e entrega — 17/10/2026
+
+Versão 3.3.1: `appearance.js` aplica a preferência do sistema antes da pintura e persiste a escolha local entre site e gestão. `appearance.css` cobre as superfícies públicas e os componentes existentes do portal. Cabeçalhos sticky em ambas as páginas, offsets medidos e menu compacto com Escape e retorno por teclado. Grupo SV no rodapé aponta para https://www.gruposauvid.com.br/.
+
+Consulte `docs/ACEITE_TEMAS_CABECALHO_2026-10-17.md` antes de declarar entrega definitiva. Não declarar domínio próprio concluído enquanto o DNS não resolver.
