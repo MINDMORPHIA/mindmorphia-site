@@ -102,7 +102,7 @@ linear-gradient(135deg,#071b2b 0%,#0d2b45 65%,#123a59 100%);color:#fff;padding:0
 .story{background:white}
 .story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:62px;align-items:center}
 .photo-frame{position:relative;border-radius:26px;overflow:hidden;min-height:520px;background:#d7e3e9;box-shadow:var(--shadow)}
-.photo-frame img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}
+.photo-frame img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:25% center}
 .photo-frame:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,27,43,.32),transparent 48%)}
 .big-thought{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(34px,4vw,55px);line-height:1.08;letter-spacing:-.03em;margin:14px 0 22px}
 .story-copy{color:var(--muted);line-height:1.8;font-size:16px}
@@ -247,7 +247,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
   .wrap{width:min(100% - 28px,1180px)}section{padding:72px 0}.nav{height:68px}
   .brand img{width:37px;height:37px}.brand strong{font-size:13px}.hero h1{font-size:48px}.hero-copy{font-size:15px}
   .actions{display:grid}.btn{width:100%}.hero-art{min-height:350px}.logo-orbit{width:300px}.hero-status{position:relative;left:auto;bottom:auto;margin-top:-20px;width:100%}
-  .photo-frame{min-height:410px}.origin-grid,.steps,.edu-cards,.value-list{grid-template-columns:1fr}.value:last-child{grid-column:auto}.step:after{display:none}
+  .photo-frame{min-height:410px}.photo-frame img{object-position:40% center}.origin-grid,.steps,.edu-cards,.value-list{grid-template-columns:1fr}.value:last-child{grid-column:auto}.step:after{display:none}
   .mock-orgs,.mock-summary{grid-template-columns:1fr 1fr}.fields,.login-row{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.footer-grid>div{margin-bottom:8px}
   .org-grid{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.admin-layout{grid-template-columns:1fr}.sidebar{display:none}.admin-cards{grid-template-columns:1fr 1fr}
   .client-dash,.admin-view{padding:13px}.login{padding:25px 17px}.table th:nth-child(3),.table td:nth-child(3){display:none}
@@ -303,7 +303,7 @@ footer{background:#061725;color:#8da5b5;padding:34px 0;border-top:1px solid rgba
 
 <section class="story">
   <div class="wrap story-grid">
-    <figure class="photo-frame"><img src="assets/retrato.webp" alt="Profissional em ambiente corporativo olhando para a frente" loading="lazy"></figure>
+    <figure class="photo-frame"><img src="assets/junior-sauder-original.png" width="1010" height="720" alt="Junior Sauder em ambiente corporativo olhando para a frente" loading="lazy"></figure>
     <div>
       <div class="kicker">Por que isso importa</div>
       <h2 class="big-thought">Uma restrição pode ser pequena no cadastro e enorme na vida real.</h2>
