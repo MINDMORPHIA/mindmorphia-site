@@ -26,9 +26,9 @@ Atualizado em 12/10/2026.
 
 ## VONCETS — atualização verificada em 22/10/2026
 
-- Fonte canônica: `MINDMORPHIA/voncets-site`, branch `main`, commit `5ca66092303663d27f3fe91323d5b8df1ff2aa48`.
+- Fonte canônica: `MINDMORPHIA/voncets-site`, branch `main`, commit `2ea5b068cc65b577696c1cf8b65fa402165577e5`.
 - Produção: https://voncets-site.vercel.app/ — endereço técnico, HTTPS e acesso público verificados. Domínio próprio VONCETS ainda não confirmado.
-- Deployment Vercel: `dpl_2rbhv41UJekGmfVw94eyaLtXo9F6`, READY, commit acima; URL imutável https://voncets-site-qjg5gcdfw-juniorsauder-7118.vercel.app/ . Não foi homologado um preview independente; previews não recebem o armazenamento produtivo.
+- Deployment Vercel: `dpl_5pwQHtRqNUctwRov2f8c8Avp1pHs`, READY, commit acima; URL imutável https://voncets-site-qndi6nz2j-juniorsauder-7118.vercel.app/ . Não foi homologado um preview independente; previews não recebem o armazenamento produtivo.
 - Projeto: `prj_kB8adDMw7tnrdUG9Sk3WLdyrowwd`, equipe `juniorsauder-7118`. Stack HTML/CSS/ES modules, API Node 24, Blob privado OIDC somente produção, SimpleWebAuthn, Mercado Pago e Resend preparados no código.
 - Operação: GRUPO SV / titular; manutenção técnica MINDMORPHIA. Administração própria em /gestao, com catálogo, fotos, variantes, preços, estoque, rascunho, arquivamento, lixeira e histórico. Frete e cupons em formulários.
 - Catálogo inicial: 25 configurações e 24 fotos Samsung. Condições de 25/08/2026 preservadas como referência interna; vitrine consultiva sem presumir preço ou estoque atual.
