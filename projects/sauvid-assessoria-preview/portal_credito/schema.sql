@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS sv_clients(id text primary key, subject text not null unique, name text not null, lookup text not null unique, last4 text not null, kind text not null, active integer not null default 1);
+CREATE TABLE IF NOT EXISTS sv_cases(id text primary key, client text not null references sv_clients(id), protocol text not null unique, stage text not null);
+CREATE TABLE IF NOT EXISTS sv_events(id text primary key, caseid text not null references sv_cases(id), org text not null, version integer not null, status text not null, scope text not null, fact text not null, checked text not null, message text not null, source text not null, note text not null, corrects text references sv_events(id), reason text not null, author text not null, created text not null, published text, reviewer text, prior text, evidence bytea, digest text not null, released integer not null default 0);
+CREATE UNIQUE INDEX IF NOT EXISTS sv_published_version ON sv_events(caseid,org,version) WHERE published IS NOT NULL;
+CREATE TABLE IF NOT EXISTS sv_audit(id text primary key, actor text not null, verb text not null, resource text not null, at text not null);

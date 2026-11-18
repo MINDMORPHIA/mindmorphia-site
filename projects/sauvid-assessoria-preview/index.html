@@ -575,7 +575,7 @@ const terms=document.getElementById('termsView');
 function hideViews(){[login,dash,admin,privacy,terms].forEach(v=>v.style.display='none')}
 function showOverlay(){overlay.classList.add('show');document.body.classList.add('lock')}
 function closeOverlay(){overlay.classList.remove('show');document.body.classList.remove('lock');if(['#acompanhar','#admin-demo','#privacidade','#termos'].includes(location.hash))history.replaceState(null,'',location.pathname+location.search)}
-function openClient(){hideViews();login.style.display='block';showOverlay()}
+function openClient(){location.assign('/acompanhar')}
 function openAdmin(){hideViews();admin.style.display='block';showOverlay()}
 function openPrivacy(){hideViews();privacy.style.display='block';showOverlay()}
 function openTerms(){hideViews();terms.style.display='block';showOverlay()}
