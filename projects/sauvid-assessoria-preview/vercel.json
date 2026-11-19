@@ -1,5 +1,7 @@
 {
-  "regions": ["gru1"],
+  "regions": [
+    "gru1"
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -49,5 +51,17 @@
     "api/*.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/gestao/credito",
+      "destination": "/gestao.html#credito",
+      "permanent": false
+    },
+    {
+      "source": "/acompanhar",
+      "destination": "/gestao.html",
+      "permanent": false
+    }
+  ]
 }

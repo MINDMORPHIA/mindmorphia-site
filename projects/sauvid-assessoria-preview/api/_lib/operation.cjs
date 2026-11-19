@@ -35,19 +35,24 @@ async function convertLead(db,actor,id){
  await db.query("INSERT INTO case_events(case_id,visibility,event_type,title,message,occurred_at,created_by) VALUES($1,'client','opened','Atendimento recebido','A SAUVID iniciou a organização do atendimento.',now(),$2)",[c.rows[0].id,actor.id]);
  await db.query("UPDATE leads SET status='converted',case_id=$2,assigned_to=$3,updated_at=now() WHERE id=$1",[id,c.rows[0].id,actor.id]);return {caseId:c.rows[0].id,clientId:client.rows[0].id};
 }
-async function listCases(db,search=''){
+async function listCases(db,search='',status=''){
  const term=String(search).trim().slice(0,120),digits=term.replace(/\D/g,'');
- return (await db.query("SELECT c.id,c.client_id,c.public_stage_label,c.next_action_public,c.last_checked_at,cl.full_name,cl.cpf_last4,cl.email FROM cases c JOIN clients cl ON cl.id=c.client_id WHERE $1='' OR cl.full_name ILIKE '%'||$1||'%' OR cl.cpf_lookup_hash=$2 ORDER BY c.opened_at DESC LIMIT 100",[term,digits.length===11?lookup(digits):''])).rows;
+ return (await db.query("SELECT c.id,c.client_id,c.public_stage_label,c.next_action_public,c.last_checked_at,cl.full_name,cl.cpf_last4,cl.email FROM cases c JOIN clients cl ON cl.id=c.client_id WHERE ($1='' OR cl.full_name ILIKE '%'||$1||'%' OR cl.cpf_lookup_hash=$2 OR c.protocol ILIKE '%'||$1||'%') AND ($3='' OR EXISTS(SELECT 1 FROM case_organizations o WHERE o.case_id=c.id AND o.status_code=$3)) ORDER BY c.opened_at DESC LIMIT 100",[term,[11,14].includes(digits.length)?lookup(digits):'',String(status).slice(0,30)])).rows;
 }
 async function caseDetail(db,id){
  const {rows}=await db.query('SELECT c.*,cl.full_name,cl.cpf_last4,cl.email FROM cases c JOIN clients cl ON cl.id=c.client_id WHERE c.id=$1',[uuid(id)]);if(!rows[0])throw problem(404,'Atendimento não encontrado.');
- const organizations=(await db.query('SELECT organization,status_code,public_status_label,public_note,last_checked_at,evidence_state FROM case_organizations WHERE case_id=$1 ORDER BY organization',[id])).rows;
+ const organizations=(await db.query('SELECT organization,status_code,public_status_label,public_note,last_checked_at,evidence_state,revision,extent,fact_date::text,checked_date::text,publication_id FROM case_organizations WHERE case_id=$1 ORDER BY organization',[id])).rows;
  const events=(await db.query('SELECT id,organization,visibility,title,message,occurred_at,created_at FROM case_events WHERE case_id=$1 ORDER BY occurred_at DESC,created_at DESC',[id])).rows;
- const files=(await db.query('SELECT id,original_name,mime_type,byte_size,visibility,created_at,evidence_reviewed_at FROM case_files WHERE case_id=$1 ORDER BY created_at DESC',[id])).rows;
- const c=rows[0];return {id:c.id,clientId:c.client_id,name:c.full_name,email:c.email,documentMask:'Final '+c.cpf_last4,stage:c.stage,stageLabel:c.public_stage_label,nextAction:c.next_action_public,lastChecked:c.last_checked_at,organizations,events,files};
+ const files=(await db.query('SELECT id,organization,original_name,mime_type,byte_size,visibility,created_at,evidence_reviewed_at FROM case_files WHERE case_id=$1 ORDER BY created_at DESC',[id])).rows;
+ const c=rows[0];return {id:c.id,clientId:c.client_id,name:c.full_name,email:c.email,documentMask:'Final '+c.cpf_last4,protocol:c.protocol,batch:c.batch,scope:c.scope,stage:c.stage,stageLabel:c.public_stage_label,nextAction:c.next_action_public,lastChecked:c.last_checked_at,organizations,events,files};
 }
 async function updateCase(db,actor,body){
  const id=uuid(body.id),stage=choice(body.stage,Object.keys(STAGES)),next=text(body.nextAction,0,1000,'próxima ação');
+ await db.query('SELECT id FROM cases WHERE id=$1 FOR UPDATE',[id]);
+ if(stage==='completed'){
+  const {rows}=await db.query("SELECT count(*) FILTER(WHERE status_code='confirmed' AND publication_id IS NOT NULL) AS resolved,count(*) FILTER(WHERE status_code<>'not_applicable' AND (status_code<>'confirmed' OR publication_id IS NULL)) AS pending FROM case_organizations WHERE case_id=$1",[id]);
+  if(!Number(rows[0].resolved)||Number(rows[0].pending))throw problem(409,'O escopo aplicável ainda precisa de comprovação.');
+ }
  const r=await db.query('UPDATE cases SET stage=$2,public_stage_label=$3,next_action_public=$4,updated_at=now() WHERE id=$1 RETURNING id',[id,stage,STAGES[stage],next]);if(!r.rowCount)throw problem(404,'Atendimento não encontrado.');
  await db.query("INSERT INTO case_events(case_id,visibility,event_type,title,message,occurred_at,created_by) VALUES($1,'client','stage',$2,$3,now(),$4)",[id,'Etapa: '+STAGES[stage],next||'Etapa atualizada pela equipe SAUVID.',actor.id]);return {id};
 }

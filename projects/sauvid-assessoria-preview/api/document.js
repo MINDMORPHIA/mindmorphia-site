@@ -11,7 +11,7 @@ module.exports=async(req,res)=>{
   if(req.method==='GET'){
    const id=uuid(new URL(req.url,'https://localhost').searchParams.get('id'));
    const file=await transaction(actor,async db=>{const r=await db.query('SELECT * FROM case_files WHERE id=$1',[id]);if(!r.rows[0])throw problem(404,'Arquivo não encontrado.');await db.query("INSERT INTO audit_log(actor_user_id,action,entity_type,entity_id) VALUES($1,'download','case_files',$2)",[actor.id,id]);return r.rows[0];});
-   const {get}=await import('@vercel/blob');const result=await get(file.storage_key,{access:'private',useCache:false});
+   const {get}=await require('./_lib/private-files.cjs').storage();const result=await get(file.storage_key,{access:'private',useCache:false});
    if(!result||result.statusCode!==200)throw problem(404,'Arquivo indisponível.');
    res.setHeader('Content-Type',file.mime_type);res.setHeader('Content-Disposition',`attachment; filename="${file.original_name.replace(/[^a-zA-Z0-9._ -]/g,'_')}"`);res.setHeader('Cache-Control','private, no-store');res.setHeader('X-Content-Type-Options','nosniff');
    const {Readable}=require('node:stream');Readable.fromWeb(result.stream).pipe(res);return;
@@ -23,7 +23,7 @@ module.exports=async(req,res)=>{
   if(!TYPES[type](bytes))throw problem(400,'O conteúdo não corresponde ao tipo do arquivo.');
   const result=await transaction(actor,async db=>{
    await rateLimit(db,req,'upload:'+actor.id,10);if(!(await db.query('SELECT id FROM cases WHERE id=$1',[caseId])).rows.length)throw problem(404,'Atendimento não encontrado.');
-   const id=crypto.randomUUID(),path=`sauvid/${caseId}/${id}`;const {put,del}=await import('@vercel/blob');const blob=await put(path,bytes,{access:'private',addRandomSuffix:false,contentType:type});
+   const id=crypto.randomUUID(),path=`sauvid/${caseId}/${id}`;const {put,del}=await require('./_lib/private-files.cjs').storage();const blob=await put(path,bytes,{access:'private',addRandomSuffix:false,contentType:type});
    try{await db.query('INSERT INTO case_files(id,case_id,visibility,storage_key,original_name,mime_type,byte_size,sha256,uploaded_by,organization) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',[id,caseId,visibility,blob.pathname,name,type,bytes.length,crypto.createHash('sha256').update(bytes).digest('hex'),actor.id,organization]);}catch(e){await del(blob.url).catch(()=>{});throw e;}
    return {id};
   });json(res,201,{ok:true,...result});

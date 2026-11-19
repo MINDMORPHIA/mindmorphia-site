@@ -31,8 +31,10 @@ module.exports=async(req,res)=>{
   if(action==='session')return json(res,200,{ok:true,user:{name:actor.name,email:actor.email,role:actor.role},recoveryAvailable:!!(process.env.RESEND_API_KEY&&process.env.SAUVID_EMAIL_FROM)});
   const result=await transaction(actor,async db=>{
    if(req.method==='POST')await rateLimit(db,req,'portal:'+actor.id,60);
-   if(action==='cases'){if(actor.role!=='client')staff(actor);return {cases:await op.listCases(db,body.search||'')};}
+   if(action==='cases'){if(actor.role!=='client')staff(actor);return {cases:await op.listCases(db,body.search||'',body.status||'')};}
    if(action==='case'){const detail=await op.caseDetail(db,body.id||q.get('id'));await db.query("INSERT INTO audit_log(actor_user_id,action,entity_type,entity_id) VALUES($1,'read','cases',$2)",[actor.id,detail.id]);return {case:detail};}
+   if(action.startsWith('credit-'))return require('./_lib/credit.cjs').credit(db,actor,body);
+   if(action==='organization-update'&&body.visibility!=='internal')throw problem(409,'Reabra o atendimento para revisar e publicar a atualização.');
    staff(actor,['lead-update','lead-convert','case-update','organization-update','invite','file-review','user-access','recover-user','registration-save'].includes(action));
    if(action==='pending')return registrations.listPending(db,body);
    if(action==='registration')return {registration:await registrations.pendingDetail(db,body.id)};
@@ -51,7 +53,7 @@ module.exports=async(req,res)=>{
     if(actor.role!=='admin')throw problem(403,'Somente o administrador pode conceder acesso.');
     const role=choice(body.role,['client','operator','admin','auditor']),clientId=role==='client'?uuid(body.clientId):null,email=text(body.email,5,160,'e-mail').toLowerCase(),name=text(body.name,3,120,'nome');
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw problem(400,'E-mail inválido.');
-    if(clientId&&!(await db.query('SELECT id FROM clients WHERE id=$1',[clientId])).rows.length)throw problem(404,'Cliente não encontrado.');
+    if(clientId&&!(await db.query('SELECT id FROM clients WHERE id=$1 AND active AND lower(email)=$2',[clientId,email])).rows.length)throw problem(400,'Confira o contato autorizado do cliente antes de emitir o convite.');
     const token=crypto.randomBytes(32).toString('base64url');
     await db.query("INSERT INTO access_invites(token_hash,email,full_name,role,client_id,created_by,expires_at) VALUES($1,$2,$3,$4,$5,$6,now()+interval '48 hours')",[crypto.createHash('sha256').update(token).digest('hex'),email,name,role,clientId,actor.id]);
     return {activationUrl:(process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app')+'/gestao.html#ativar='+token};

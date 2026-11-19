@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 let pool;
 function getPool() {
   if (!process.env.DATABASE_URL) throw Object.assign(new Error('O atendimento online está em ativação. Tente novamente mais tarde.'), {statusCode:503});
-  const connection=new URL(process.env.DATABASE_URL);connection.searchParams.set('sslmode','verify-full');
+  const connection=new URL(process.env.DATABASE_URL);connection.searchParams.set('sslmode',process.env.NODE_ENV==='development'&&connection.hostname==='127.0.0.1'?'disable':'verify-full');
   return pool ||= new Pool({connectionString:connection.toString(),max:5,connectionTimeoutMillis:10000,idleTimeoutMillis:20000});
 }
 async function transaction(actor, fn) {
