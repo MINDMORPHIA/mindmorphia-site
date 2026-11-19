@@ -13,6 +13,8 @@ module.exports=async(req,res)=>{
   if(req.method!=='GET')originCheck(req);
   if(path==='sign-in/email'&&req.method==='POST'){
    const body=await readJson(req,4096),{fromNodeHeaders}=await import('better-auth/node');
+   const token=await require('./_lib/first-access.cjs').exchangeTemporary(getPool(),req,body);
+   if(token)return json(res,200,{firstAccess:true,token});
    const response=await (await getAuth()).handler(new Request((process.env.SAUVID_APP_ORIGIN||'https://sauvid-assessoria.vercel.app')+'/api/auth/sign-in/email',{method:'POST',headers:fromNodeHeaders(req.headers),body:JSON.stringify({email:body.email,password:body.password,rememberMe:body.rememberMe===true})}));
    if(response.ok){
     const signed=await response.clone().json(),actor=(await getPool().query('SELECT id,role,active FROM app_users WHERE auth_subject=$1',[signed.user.id])).rows[0];

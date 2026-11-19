@@ -2,7 +2,7 @@ const {json,readJson,allowMethods}=require('./_lib/http');
 const {getAuth,actorFromRequest}=require('./_lib/identity.cjs');
 const {getPool,transaction}=require('./_lib/database.cjs');
 const {originCheck,problem,rateLimit,text}=require('./_lib/security.cjs');
-const {requireFresh}=require('./_lib/passkeys.cjs');
+const {requireFresh,requireEligibleAccount}=require('./_lib/passkeys.cjs');
 const routes={list:['list-user-passkeys','GET'], 'register-options':['generate-register-options','GET'],register:['verify-registration','POST'],'authenticate-options':['generate-authenticate-options','GET'],authenticate:['verify-authentication','POST'],revoke:['delete-passkey','POST']};
 module.exports=async(req,res)=>{
  if(!allowMethods(req,res,['POST']))return;
@@ -10,7 +10,7 @@ module.exports=async(req,res)=>{
   originCheck(req);const b=await readJson(req,32768),route=Object.hasOwn(routes,b.action)&&routes[b.action];if(!route)throw problem(400,'Operação inválida.');
   const auth=await getAuth(),{fromNodeHeaders}=await import('better-auth/node');let actor;
   if(!['authenticate-options','authenticate'].includes(b.action)){
-   actor=await actorFromRequest(req);if(actor.role!=='admin')throw problem(403,'Acesso restrito ao administrador.');
+   actor=await actorFromRequest(req);await requireEligibleAccount(actor.authSubject);
    if(b.action!=='list')requireFresh(await auth.api.getSession({headers:fromNodeHeaders(req.headers)}));
   }
   await transaction(actor,db=>rateLimit(db,req,'passkey:'+b.action,20));

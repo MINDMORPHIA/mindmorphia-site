@@ -5,7 +5,7 @@ const {getPool}=require('../api/_lib/database.cjs');
 const {getAuth}=require('../api/_lib/identity.cjs');
 async function main(){
  const dbUrl=new URL(process.env.DATABASE_URL),origin=process.env.SAUVID_APP_ORIGIN;
- if(dbUrl.hostname!=='127.0.0.1'||dbUrl.pathname!=='/sauvid_credit_preview'||process.env.NODE_ENV!=='development'||process.env.VERCEL||!/^http:\/\/localhost:\d+$/.test(origin))throw Error('Use a base local dedicada à prévia.');
+ if(dbUrl.hostname!=='127.0.0.1'||!['/sauvid_credit_preview','/sauvid_access_preview'].includes(dbUrl.pathname)||process.env.NODE_ENV!=='development'||process.env.VERCEL||!/^http:\/\/localhost:\d+$/.test(origin))throw Error('Use a base local dedicada à prévia.');
  const db=getPool(),auth=await getAuth(),access={origin};
  for(const role of ['admin','client']){
   const email='preview-'+role+'@example.invalid',password=crypto.randomBytes(22).toString('base64url');

@@ -29,7 +29,7 @@ async function verifyPasskeys({call,db,invite,client}){
  const admin=await invite('passkey-qa@example.invalid','admin'),device=authenticator();
  const options=async(action,cookie)=>{const r=await call('/api/passkeys',{action},cookie);assert.equal(r.status,200,JSON.stringify(r.data));return {...r,cookie:[cookie,r.cookie].filter(Boolean).join('; ')};};
  let r=await call('/api/passkeys',{action:'register-options'});assert.equal(r.status,401);
- r=await call('/api/passkeys',{action:'register-options'},client);assert.equal(r.status,403);
+ r=await call('/api/passkeys',{action:'register-options'},client);assert.equal(r.status,200);assert.equal(r.data.options.authenticatorSelection.authenticatorAttachment,undefined);
  r=await call('/api/auth/passkey/generate-register-options');assert.equal(r.status,404,'Sem acesso direto às rotas do plugin');
  let o=await options('register-options',admin);assert.equal(o.data.options.authenticatorSelection.userVerification,'required');
  r=await call('/api/passkeys',{action:'register',name:'Aparelho sintético',response:device.registration(o.data.options,{uv:false})},o.cookie);assert.notEqual(r.status,200);assert.equal((await db.query('SELECT count(*)::int AS n FROM passkey')).rows[0].n,0,'Sem cadastro sem confirmação do usuário');
@@ -42,6 +42,11 @@ async function verifyPasskeys({call,db,invite,client}){
  await db.query('UPDATE app_users SET active=false WHERE auth_subject=$1',[subject]);o=await options('authenticate-options');r=await call('/api/passkeys',{action:'authenticate',response:device.authentication(o.data.options)},o.cookie);assert.notEqual(r.status,200,'Conta suspensa não recebe sessão');await db.query('UPDATE app_users SET active=true WHERE auth_subject=$1',[subject]);
  await db.query('UPDATE session SET "createdAt"=now()-interval \'20 minutes\' WHERE "userId"=$1',[subject]);r=await call('/api/passkeys',{action:'register-options'},admin);assert.equal(r.status,401,'Cadastro exige sessão recente');await db.query('UPDATE session SET "createdAt"=now() WHERE "userId"=$1',[subject]);
  r=await call('/api/passkeys',{action:'revoke',id:key.id},admin);assert.equal(r.status,200,JSON.stringify(r.data));assert.equal((await call('/api/portal',null,signed)).status,401,'Remoção encerra sessões');assert.equal((await db.query('SELECT count(*)::int AS n FROM passkey')).rows[0].n,0);
+ const mobile=authenticator();
+ o=await options('register-options',client);r=await call('/api/passkeys',{action:'register',name:'Celular QA',response:mobile.registration(o.data.options)},o.cookie);assert.equal(r.status,200);
+ o=await options('authenticate-options');r=await call('/api/passkeys',{action:'authenticate',response:mobile.authentication(o.data.options)},o.cookie);assert.equal(r.status,200);
+ assert.equal((await call('/api/portal',null,r.cookie)).data.user.role,'client');
+ assert.equal((await call('/api/portal',{action:'users'},r.cookie)).status,403);
  console.log('PASS: passkeys com assinatura real sintética, UV, origem, desafio único, conta suspensa, sessão recente, isolamento e revogação.');
 }
 module.exports={verifyPasskeys};

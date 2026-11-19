@@ -2,7 +2,7 @@
 
 ## Acessos
 
-Na prévia, use as duas contas fictícias fornecidas com a entrega. A gestão abre em `/gestao/credito` e o cliente entra em `/acompanhar`. Os dois endereços usam o login individual do projeto. A gestão aceita também as chaves de acesso já cadastradas no respectivo domínio. A rota institucional anterior continua válida.
+Na prévia, use as duas contas fictícias fornecidas com a entrega. A gestão abre em `/gestao/credito` e o cliente entra em `/acompanhar`. Os dois endereços usam o login individual do projeto. Clientes com vínculo ativo e administradores podem cadastrar chaves de acesso em Digital e segurança após um login recente. Dê um nome a cada aparelho e confirme pelo Windows Hello, Android, iPhone, iPad ou outro autenticador compatível. O aparelho decide se utiliza digital, rosto ou PIN. Entrar com digital na página inicial usa uma chave anteriormente cadastrada para o domínio. Uma senha provisória de primeiro acesso pede o CPF/CNPJ e a criação da senha pessoal antes de liberar o portal. A prévia local deve ser aberta no computador que a hospeda. Para acessar o portal diretamente em outro aparelho é necessário disponibilizar a versão em um domínio HTTPS acessível nele. A rota institucional anterior continua válida.
 
 No ambiente oficial, Junior usa sua conta administrativa existente. Para o primeiro administrador de um ambiente novo, configure o e-mail autorizado em `SAUVID_ADMIN_EMAIL` e execute `node --env-file=.env.local scripts/prepare-admin.cjs` em uma máquina de confiança. O script de ativação local verifica a existência da conta e oferece um convite temporário. O titular escolhe a senha. O cadastro de uma chave em **Digital e segurança** exige a participação pessoal do titular.
 

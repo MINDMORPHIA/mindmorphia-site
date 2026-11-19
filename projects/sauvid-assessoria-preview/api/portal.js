@@ -20,6 +20,7 @@ module.exports=async(req,res)=>{
     const {rows}=await conn.query('SELECT * FROM access_invites WHERE token_hash=$1 AND used_at IS NULL AND expires_at>now() FOR UPDATE',[crypto.createHash('sha256').update(token).digest('hex')]);
     if(!rows[0])throw problem(400,'Convite inválido ou expirado.');const invite=rows[0];
     if((await conn.query('SELECT id FROM "user" WHERE email=$1',[invite.email])).rows.length)throw problem(409,'Conta já cadastrada. Entre ou recupere seu acesso.');
+    if(/^SV-(?:\d{4}-){3}\d{4}$/.test(password))throw problem(400,'Escolha uma senha pessoal diferente da provisória.');
     const created=await (await getAuth()).api.signUpEmail({body:{email:invite.email,name:invite.full_name,password}});
     const user=await conn.query('INSERT INTO app_users(auth_subject,email,role) VALUES($1,$2,$3) RETURNING id',[created.user.id,invite.email,invite.role]);
     if(invite.client_id)await conn.query('INSERT INTO client_access(user_id,client_id) VALUES($1,$2)',[user.rows[0].id,invite.client_id]);
