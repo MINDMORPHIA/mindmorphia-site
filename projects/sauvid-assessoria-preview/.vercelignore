@@ -2,7 +2,8 @@
 .local-data/
 scripts/
 tests/
-db/
+db/*
+!db/005_credit.sql
 docs/
 README.md
 RELEASE_VERIFICATION.json

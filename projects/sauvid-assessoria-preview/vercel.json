@@ -63,5 +63,7 @@
       "destination": "/gestao.html",
       "permanent": false
     }
-  ]
+  ],
+  "buildCommand": "node release/build.cjs",
+  "outputDirectory": "public"
 }
