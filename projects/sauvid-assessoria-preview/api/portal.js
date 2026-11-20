@@ -50,6 +50,23 @@ module.exports=async(req,res)=>{
     if(actor.role!=='admin')throw problem(403,'Somente o administrador pode revisar a evidência.');
     const r=await db.query('UPDATE case_files SET evidence_reviewed_by=$2,evidence_reviewed_at=now() WHERE id=$1 RETURNING id',[uuid(body.id),actor.id]);if(!r.rowCount)throw problem(404,'Arquivo não encontrado.');return {id:body.id};
    }
+   if(action==='issue-client-first-access'){
+    if(actor.role!=='admin')throw problem(403,'Acesso restrito à gestão.');
+    if(body.verified!==true)throw problem(400,'Confira a identidade e o contato antes da emissão.');
+    const clientId=uuid(body.clientId),email=text(body.email,5,160,'e-mail').toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw problem(400,'Informe um e-mail válido.');
+    await db.query('SELECT pg_advisory_xact_lock(hashtext($1))',[email]);
+    const client=(await db.query('SELECT full_name,email FROM clients WHERE id=$1 AND active FOR UPDATE',[clientId])).rows[0];
+    if(!client)throw problem(404,'Cadastro indisponível.');
+    if(client.email&&client.email.toLowerCase()!==email)throw problem(409,'O e-mail difere do contato cadastrado.');
+    if((await db.query('SELECT id FROM app_users WHERE lower(email)=$1',[email])).rows.length)throw problem(409,'Já existe uma conta com esse e-mail. Use a vinculação ou a recuperação de acesso.');
+    const {temporaryHash,generateTemporaryPassword}=require('./_lib/first-access.cjs');
+    const password=generateTemporaryPassword();
+    await db.query('UPDATE clients SET email=$2,verified_at=now() WHERE id=$1',[clientId,email]);
+    await db.query("UPDATE access_invites SET expires_at=now() WHERE client_id=$1 AND email=$2 AND role='client' AND used_at IS NULL",[clientId,email]);
+    await db.query("INSERT INTO access_invites(token_hash,email,full_name,role,client_id,created_by,expires_at) VALUES($1,$2,$3,'client',$4,$5,now()+interval '48 hours')",[temporaryHash(email,password),email,client.full_name,clientId,actor.id]);
+    return {password};
+   }
    if(action==='invite'){
     if(actor.role!=='admin')throw problem(403,'Somente o administrador pode conceder acesso.');
     const role=choice(body.role,['client','operator','admin','auditor']),clientId=role==='client'?uuid(body.clientId):null,email=text(body.email,5,160,'e-mail').toLowerCase(),name=text(body.name,3,120,'nome');
